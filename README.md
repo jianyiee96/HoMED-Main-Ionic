@@ -1,3 +1,3 @@
 # HoMED-Main-Ionic
 
-HoMED Ionic Client for ordinary users
+HoMED Ionic Client for ordinary users.
