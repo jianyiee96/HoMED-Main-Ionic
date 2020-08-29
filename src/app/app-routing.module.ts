@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from './guards/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'start-screen',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+    path: 'start-screen',
+    loadChildren: () => import('./start-screen/start-screen.module').then(m => m.StartScreenPageModule)
+  },
+  {
+    path: 'login-screen',
+    loadChildren: () => import('./login-screen/login-screen.module').then(m => m.LoginScreenPageModule)
+  },
 ];
 
 @NgModule({

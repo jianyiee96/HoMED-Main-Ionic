@@ -1,0 +1,35 @@
+ion-content {
+    --ion-background-color:#f5f1da;
+}
+
+ion-button {
+  margin-top: 30px;
+  --background: #f8bd7f;
+}
+
+ion-col {
+ display: flex;
+ justify-content: center;
+}
+
+#welcomeText {
+  text-align: center;
+  color: #00416d;
+  margin-top: 30%;
+}
+
+#welcomeSubText {
+  text-align: center;
+  color: #658faa;
+  margin-top: 10px;
+}
+
+.roundedInput {
+  --border-color: #658faa;
+  --border-radius: 15px;
+  --border-width: 1px;
+  --box-shadow: 2px gray;
+  --highlight-height: 0;
+  --background: #e3dfc8;
+  width: 90%;
+ }
