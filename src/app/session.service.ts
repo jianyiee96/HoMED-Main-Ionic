@@ -17,7 +17,7 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-			return "http://192.168.137.1:8080/PointOfSaleSystemV60Rws/Resources/";
+			return "http://192.168.137.1:8080/HoMED-rws/Resources/";
 		}
 		else
 		{
