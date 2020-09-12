@@ -4,7 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { SessionService } from './session.service';
+import { SessionService } from './services/session/session.service';
+import { Serviceman } from './classes/serviceman/serviceman';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +14,22 @@ import { SessionService } from './session.service';
 })
 export class AppComponent implements OnInit {
 
-  public selectedIndex = 0;
+  public selectedIndex
   public appPages = [
+    {
+      title: 'Home',
+      url: '/home-screen',
+      icon: 'home'
+    },
     {
       title: 'Appointment',
       url: '/userFunctions/appointment',
       icon: 'calendar'
     },
     {
-      title: 'User Analytics',
+      title: 'Inbox',
       url: '/userFunctions/userAnalytics',
-      icon: 'analytics'
+      icon: 'mail'
     },
     {
       title: 'Forms',
@@ -31,9 +37,9 @@ export class AppComponent implements OnInit {
       icon: 'pencil'
     },
     {
-      title: 'Consultation Recordings',
-      url: '/userFunctions/consultationRecordings',
-      icon: 'recording'
+      title: 'Account',
+      url: '/account-screen',
+      icon: 'person-circle'
     }
   ];
 

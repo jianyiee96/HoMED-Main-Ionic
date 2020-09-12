@@ -6,11 +6,11 @@
       <ion-content>
         <ion-list id="inbox-list">
 
-          <ion-list-header>Lim Chen Kun Keith</ion-list-header>
-          <ion-note>3 Pending Forms</ion-note>
+          <ion-list-header>Main Menu</ion-list-header>
+          <ion-note>0 Pending Tasks</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" >
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
