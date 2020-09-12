@@ -14,7 +14,7 @@ import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 })
 export class LoginScreenPage implements OnInit {
  
-  nric: string = "s9876543Z"
+  nric: string = "s9876543z"
   password: string = "password"
 
   constructor(

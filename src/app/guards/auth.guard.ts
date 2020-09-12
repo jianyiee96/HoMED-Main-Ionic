@@ -21,16 +21,32 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     console.log('********** AuthGuard.canActivate(): ' + next.url[0]);
 
-    if (this.sessionService.getIsLogin()) {
-      serviceman: Serviceman;
-      let staff = this.sessionService.getCurrentServiceman()
+    try {
 
-      return true
-    } else {
-      this.router.navigate(['/start-screen'])
+      if (next.url[0].path == "start-screen" || next.url[0].path == "login-screen") { 
 
-      return false
+        if (this.sessionService.getIsLogin()) { 
+          this.router.navigate(['/home-screen']); 
+        } else { 
+          return true;
+        }
+
+      } else {
+        if (this.sessionService.getIsLogin()) { 
+          return true;
+        } else {
+          this.router.navigate(['/start-screen']);
+        }
+      }
+
+    } catch (error) {
+      if (this.sessionService.getIsLogin()) { 
+        return true;
+      } else {
+        this.router.navigate(['/start-screen']);
+      }
     }
+    
   }
 
   canActivateChild(

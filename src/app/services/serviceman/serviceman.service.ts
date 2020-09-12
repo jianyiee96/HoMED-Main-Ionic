@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -19,15 +19,15 @@ export class ServicemanService {
 
   constructor(private httpClient: HttpClient, private sessionService: SessionService) {
     this.baseUrl = this.sessionService.getRootPath() + 'Serviceman'
-   }
+  }
 
-   servicemanLogin(nric: string, password: string): Observable<any> {
-     return this.httpClient.get<any>(this.baseUrl + "/servicemanLogin?nric=" + nric + "&password=" + password).pipe(
-       catchError(this.handleError)
-     )
-   }
+  servicemanLogin(nric: string, password: string): Observable<any> {
+    return this.httpClient.post<any>(this.baseUrl + "/servicemanLogin", {nric : nric, password : password}).pipe(
+      catchError(this.handleError)
+    )
+  }
 
-   private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 
     if (error.error instanceof ErrorEvent) {
