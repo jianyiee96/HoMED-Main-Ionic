@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Inbox',
-      url: '/userFunctions/userAnalytics',
+      url: '/userFunctions/inbox',
       icon: 'mail'
     },
     {
