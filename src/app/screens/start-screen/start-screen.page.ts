@@ -20,7 +20,7 @@ export class StartScreenPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.toLoginButtonAnimation = this.animationController.create()
     this.toLoginButtonAnimation
       .addElement(this.toLoginButton.nativeElement)
