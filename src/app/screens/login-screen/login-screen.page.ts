@@ -66,8 +66,8 @@ export class LoginScreenPage implements OnInit {
     this.password = ""
   }
 
-  back() {
-    this.location.back()
+  redirectToStartScreen() {
+    this.router.navigate(['/start-screen']);
   }
 
 }
