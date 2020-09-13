@@ -11,11 +11,23 @@ const routes: Routes = [
   },
   {
     path: 'start-screen',
-    loadChildren: () => import('./start-screen/start-screen.module').then(m => m.StartScreenPageModule)
+    loadChildren: () => import('./screens/start-screen/start-screen.module').then(m => m.StartScreenPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login-screen',
-    loadChildren: () => import('./login-screen/login-screen.module').then(m => m.LoginScreenPageModule)
+    loadChildren: () => import('./screens/login-screen/login-screen.module').then(m => m.LoginScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'home-screen',
+    loadChildren: () => import('./screens/home-screen/home-screen.module').then( m => m.HomeScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'account-screen',
+    loadChildren: () => import('./screens/account-screen/account-screen.module').then( m => m.AccountScreenPageModule),
+    canActivate: [AuthGuard]
   },
 ];
 
