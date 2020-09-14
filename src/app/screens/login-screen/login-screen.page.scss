@@ -33,3 +33,13 @@ ion-col {
   --background: #e3dfc8;
   width: 90%;
  }
+
+ .errorMessage {
+  --border-color: #970505;
+  --border-radius: 10px;
+  --border-width: 1px;
+  --ion-background-color:rgb(228, 220, 220);
+  color: #970505;
+  width: 90%;
+  margin-top: -20px;
+ }
