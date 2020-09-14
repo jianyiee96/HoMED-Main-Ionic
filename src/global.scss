@@ -28,3 +28,22 @@
 ion-toolbar {
     --ion-background-color: #f5f1da;
 }
+
+.activateAccountAlert {
+    --background: #e3dfc8;
+    --backdrop-opacity: 0.7;
+}
+
+.activateAccountAlert .alert-message {
+    color: #970505;
+}
+
+.activateAccountAlert .cancel-button {
+    background-color: #00416d;
+    color: whitesmoke;
+}
+
+.activateAccountAlert .activate-button {
+    background-color: #f8bd7f;
+    color: whitesmoke;
+}

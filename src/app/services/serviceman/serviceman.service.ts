@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -21,10 +21,27 @@ export class ServicemanService {
     this.baseUrl = this.sessionService.getRootPath() + 'Serviceman'
   }
 
-  servicemanLogin(nric: string, password: string): Observable<any> {
-    return this.httpClient.post<any>(this.baseUrl + "/servicemanLogin", {nric : nric, password : password}).pipe(
+  login(nric: string, password: string): Observable<any> {
+    let loginReq = {
+      "nric": nric,
+      "password": password
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/login", loginReq).pipe(
       catchError(this.handleError)
     )
+  }
+
+  changePassword(nric: string, oldPassword: string, newPassword: string) {
+    let changePasswordReq = {
+      "nric": nric,
+      "oldPassword": oldPassword,
+      "newPassword": newPassword
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/changePassword", changePasswordReq).pipe(
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -41,4 +58,5 @@ export class ServicemanService {
 
     return throwError(errorMessage);
   }
+  
 }

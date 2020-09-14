@@ -26,10 +26,20 @@
       </ion-row>
 
       <div id="errorMessage" #errorMessage>
-        <ion-row *ngIf=invalidLogin>
+        <ion-row *ngIf=invalidMessage>
           <ion-col>
             <ion-item class="errorMessage">
-              <ion-input disabled name="errorMessageString" [(ngModel)]="errorMessageString"></ion-input>
+              <ion-input [readonly]=true name="messageString" [(ngModel)]="messageString"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div id="successMessage" #successMessage>
+        <ion-row *ngIf=validMessage>
+          <ion-col>
+            <ion-item class="successMessage">
+              <ion-input [readonly]=true name="messageString" [(ngModel)]="messageString"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

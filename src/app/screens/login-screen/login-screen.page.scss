@@ -12,6 +12,10 @@ ion-col {
  justify-content: center;
 }
 
+ion-item {
+  --highlight-height: 0;
+}
+
 #welcomeText {
   text-align: center;
   color: #00416d;
@@ -39,7 +43,17 @@ ion-col {
   --border-radius: 10px;
   --border-width: 1px;
   --ion-background-color:rgb(228, 220, 220);
-  color: #970505;
+  color: #440000;
+  width: 90%;
+  margin-top: -20px;
+ }
+
+ .successMessage {
+  --border-color: #059731;
+  --border-radius: 10px;
+  --border-width: 1px;
+  --ion-background-color:rgb(228, 220, 220);
+  color: #059731;
   width: 90%;
   margin-top: -20px;
  }

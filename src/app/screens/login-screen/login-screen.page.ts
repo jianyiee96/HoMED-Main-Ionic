@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Animation, AnimationController } from '@ionic/angular';
+import { AlertController, Animation, AnimationController } from '@ionic/angular';
 
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
@@ -16,27 +16,29 @@ import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 export class LoginScreenPage implements OnInit {
 
   @ViewChild('errorMessage') errorMessageViewChild: ElementRef;
+  @ViewChild('successMessage') successMessageViewChild: ElementRef;
 
-  errorMessageAnimation: Animation
+  messageAnimation: Animation
   isPlaying = false
 
   nric: string
   password: string
-  errorMessageString: string
-  invalidLogin: boolean
+  messageString: string
+  invalidMessage: boolean
+  validMessage: boolean
 
   constructor(
     private router: Router,
     private servicemanService: ServicemanService,
     private sessionService: SessionService,
-    private animationController: AnimationController) {
+    private animationController: AnimationController,
+    public alertController: AlertController,) {
   }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
-    this.invalidLogin = false
     this.clear()
   }
 
@@ -47,26 +49,33 @@ export class LoginScreenPage implements OnInit {
       this.sessionService.setNric(this.nric)
       this.sessionService.setPassword(this.password)
 
-      this.servicemanService.servicemanLogin(this.nric, this.password).subscribe(
+      this.invalidMessage = false
+      this.validMessage = false
+
+      this.servicemanService.login(this.nric, this.password).subscribe(
         response => {
           let serviceman: Serviceman = response.serviceman
 
           if (serviceman != null) {
 
-            this.sessionService.setIsLogin(true)
-            this.sessionService.setCurrentServiceman(serviceman)
-            this.router.navigate(['/home-screen'])
-
+            if (serviceman.isActivated) {
+              this.sessionService.setIsLogin(true)
+              this.sessionService.setCurrentServiceman(serviceman)
+              this.router.navigate(['/home-screen'])
+            } else {
+              this.activateAccountPrompt()
+            }
           } else {
-            this.invalidLogin = true
-            this.errorMessageString = "Serviceman account doesn't exist."
+            this.invalidMessage = true
+            this.validMessage = !this.invalidMessage
+            this.messageString = "Serviceman account doesn't exist."
             this.loadErrorMessage()
-
           }
         },
         error => {
-          this.invalidLogin = true
-          this.errorMessageString = "Invalid login credentials."
+          this.invalidMessage = true
+          this.validMessage = !this.invalidMessage
+          this.messageString = "Invalid login credentials."
           this.loadErrorMessage()
         }
       )
@@ -75,15 +84,106 @@ export class LoginScreenPage implements OnInit {
 
   }
 
+  async activateAccountPrompt() {
+    const alert = await this.alertController.create({
+      header: 'Activate Account',
+      subHeader: 'First time users are required to change their password from OTP in order to activate their account.',
+      cssClass: 'activateAccountAlert',
+      inputs: [
+        {
+          name: 'otp',
+          type: 'password',
+          placeholder: 'Given OTP'
+        },
+        ,
+        {
+          name: 'newPassword',
+          type: 'password',
+          placeholder: 'New Password'
+        },
+        {
+          name: 'confirmNewPassword',
+          type: 'password',
+          placeholder: 'Confirm New Password'
+        }
+
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'cancel-button',
+          handler: () => { }
+        },
+        {
+          text: 'Activate',
+          cssClass: 'activate-button',
+          handler: data => {
+            if (data.newPassword != data.confirmNewPassword) {
+              this.updateAlertMessage("The two given passwords do not match.", alert);
+              return false;
+            } else if (data.newPassword.length < 8) {
+              this.updateAlertMessage("New password must be at least 8 characters.", alert);
+              return false;
+            } else if (data.otp == data.newPassword) {
+              this.updateAlertMessage("New password cannot be same as OTP.", alert);
+              return false;
+            } else {
+              this.activateAccount(this.nric, data.otp, data.newPassword)
+            }
+          }
+        }
+      ],
+      backdropDismiss: false
+    });
+
+    await alert.present();
+  }
+
+  updateAlertMessage(message: string, alert: HTMLIonAlertElement) {
+    alert.message = message
+  }
+
+  activateAccount(nric: string, oldPassword: string, newPassword: string) {
+    this.servicemanService.changePassword(nric, oldPassword, newPassword).subscribe(
+      response => {
+        this.validMessage = true
+        this.invalidMessage = !this.validMessage
+        this.messageString = "Account activated"
+        this.loadSuccessMessage()
+        this.password = ""
+      }, error => {
+        this.invalidMessage = true
+        this.validMessage = !this.invalidMessage
+        this.messageString = "Wrong OTP entered"
+        this.loadErrorMessage()
+      }
+    );
+  }
+
+  loadSuccessMessage() {
+    this.messageAnimation = this.animationController.create()
+    this.messageAnimation
+      .addElement(this.successMessageViewChild.nativeElement)
+      .duration(300)
+      .easing('ease-out')
+      .iterations(1)
+      .fromTo('transform', 'translateY(10%)', 'translateY(40%)')
+      .fromTo('opacity', 0, 0.9)
+      .delay(150)
+
+    this.toggleAnimation()
+  }
+
   loadErrorMessage() {
-    this.errorMessageAnimation = this.animationController.create()
-    this.errorMessageAnimation
+    this.messageAnimation = this.animationController.create()
+    this.messageAnimation
       .addElement(this.errorMessageViewChild.nativeElement)
       .duration(300)
       .easing('ease-out')
       .iterations(1)
       .fromTo('transform', 'translateY(10%)', 'translateY(40%)')
-      .fromTo('opacity', 0, 0.8)
+      .fromTo('opacity', 0, 0.9)
       .delay(150)
 
     this.toggleAnimation()
@@ -91,16 +191,17 @@ export class LoginScreenPage implements OnInit {
 
   toggleAnimation() {
     if (this.isPlaying) {
-      this.errorMessageAnimation.pause()
+      this.messageAnimation.pause()
     } else {
-      this.errorMessageAnimation.play()
+      this.messageAnimation.play()
     }
   }
 
   clear() {
     this.nric = ""
     this.password = ""
-    this.invalidLogin = false
+    this.invalidMessage = false
+    this.validMessage = false
   }
 
   redirectToStartScreen() {
