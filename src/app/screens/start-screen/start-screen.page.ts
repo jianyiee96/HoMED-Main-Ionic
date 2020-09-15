@@ -10,7 +10,7 @@ import { AnimationController, Animation } from '@ionic/angular';
 })
 export class StartScreenPage implements OnInit {
 
-  @ViewChild('toLogin') toLoginButton: ElementRef;
+  @ViewChild('toLoginButton') toLoginButtonViewChild: ElementRef;
 
   toLoginButtonAnimation: Animation;
   isPlaying = false;
@@ -23,7 +23,7 @@ export class StartScreenPage implements OnInit {
   ionViewWillEnter() {
     this.toLoginButtonAnimation = this.animationController.create()
     this.toLoginButtonAnimation
-      .addElement(this.toLoginButton.nativeElement)
+      .addElement(this.toLoginButtonViewChild.nativeElement)
       .duration(1000)
       .easing('ease-out')
       .iterations(1)
