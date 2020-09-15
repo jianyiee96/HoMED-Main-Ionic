@@ -95,7 +95,6 @@ export class LoginScreenPage implements OnInit {
           type: 'password',
           placeholder: 'Given OTP'
         },
-        ,
         {
           name: 'newPassword',
           type: 'password',
@@ -106,7 +105,6 @@ export class LoginScreenPage implements OnInit {
           type: 'password',
           placeholder: 'Confirm New Password'
         }
-
       ],
       buttons: [
         {
