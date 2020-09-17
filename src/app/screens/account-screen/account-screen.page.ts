@@ -25,6 +25,7 @@ export class AccountScreenPage implements OnInit {
   address: string
 
   isEditing: boolean
+  fieldsUpdated: boolean
 
   phoneNumberError = false
   emailError = false
@@ -43,6 +44,7 @@ export class AccountScreenPage implements OnInit {
 
   ionViewWillEnter() {
     this.isEditing = false
+    this.fieldsUpdated = false
 
     this.serviceman = this.sessionService.getCurrentServiceman()
     this.name = this.serviceman.name
@@ -130,10 +132,14 @@ export class AccountScreenPage implements OnInit {
   editForm() {
     this.isEditing = !this.isEditing
     this.clearErrors()
-
+    this.fieldsUpdated = false
     this.phoneNumber = this.serviceman.phoneNumber    
     this.email = this.serviceman.email
     this.address = this.serviceman.address
+  }
+
+  fieldChange() {
+    this.fieldsUpdated = true
   }
 
   update(updateForm: NgForm) {
@@ -164,6 +170,7 @@ export class AccountScreenPage implements OnInit {
         }
       )
 
+      this.fieldsUpdated = false
     }
 
   }
