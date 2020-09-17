@@ -7,6 +7,7 @@ import { AlertController, ModalController, ToastController } from '@ionic/angula
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
+import { TimerService } from 'src/app/services/timer/timer.service';
 
 @Component({
   selector: 'app-account-screen',
@@ -35,6 +36,7 @@ export class AccountScreenPage implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private servicemanService: ServicemanService,
+    private timerService: TimerService,
     private alertController: AlertController,
     private toastController: ToastController,
   ) { }
@@ -50,7 +52,7 @@ export class AccountScreenPage implements OnInit {
     this.name = this.serviceman.name
     this.nric = this.serviceman.nric
     this.phoneNumber = this.serviceman.phoneNumber
-    this.rod = this.parseDate(this.serviceman.rod).substring(0,10)
+    this.rod = this.parseDate(this.serviceman.rod).substring(0, 10)
     this.email = this.serviceman.email
     this.address = this.serviceman.address
   }
@@ -133,6 +135,7 @@ export class AccountScreenPage implements OnInit {
     this.isEditing = !this.isEditing
     this.clearErrors()
     this.fieldsUpdated = false
+    
     this.phoneNumber = this.serviceman.phoneNumber    
     this.email = this.serviceman.email
     this.address = this.serviceman.address
@@ -202,13 +205,13 @@ export class AccountScreenPage implements OnInit {
   }
 
   logout() {
+    this.timerService.stopTimer()
     this.sessionService.setIsLogin(false);
     this.sessionService.setCurrentServiceman(null);
     this.router.navigate(["/login-screen"]);
   }
 
   parseDate(date: any) {
-    console.log(date)
     return date.toString().replace('[UTC]', '');
   }
 

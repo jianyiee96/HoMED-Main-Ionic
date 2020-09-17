@@ -7,6 +7,7 @@ import { AlertController, Animation, AnimationController } from '@ionic/angular'
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
+import {TimerService} from 'src/app/services/timer/timer.service'
 
 @Component({
   selector: 'app-login-screen',
@@ -32,6 +33,7 @@ export class LoginScreenPage implements OnInit {
     private router: Router,
     private servicemanService: ServicemanService,
     private sessionService: SessionService,
+    private timerService: TimerService,
     private animationController: AnimationController,
     public alertController: AlertController,) {
   }
@@ -64,6 +66,7 @@ export class LoginScreenPage implements OnInit {
             if (this.serviceman.isActivated) {
               this.sessionService.setIsLogin(true)
               this.sessionService.setCurrentServiceman(this.serviceman)
+              this.timerService.startTimer()
               this.router.navigate(['/home-screen'])
             } else {
               this.activateAccountPrompt()
