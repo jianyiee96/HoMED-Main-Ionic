@@ -7,6 +7,10 @@ HoMED Ionic Client targeted for HomeTeam Servicemen.
 ```bash
 ionic generate page StartScreen
 ```
+- When generating new modal, append 'Modal' to name of page and apply Pascal Casing (e.g. EditProfileModal)
+```bash
+ionic generate page EditProfileModal
+```
 - When generating new service, just the object name would suffice (e.g. Serviceman, Session, Utility)
 ```bash
 ionic generate service Serviceman

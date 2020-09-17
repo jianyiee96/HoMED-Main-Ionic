@@ -1,18 +1,178 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-			<ion-menu-button></ion-menu-button>
-		</ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>My Account</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
+  <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
 
+    <ion-grid>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Name</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="name" [(ngModel)]="name" [disabled]="isEditing" [readonly]=true style="color: #00416d;">
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Password</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <ion-button id="changePasswordButton" size="small" (click)="changePasswordPrompt()">Change Password
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="passwordError">
+        <ion-col size="4">
+          <div>
+            <ion-text></ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="errorMessage">
+            <ion-text>Wrong current password entered.</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>NRIC</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="nric" [(ngModel)]="nric" [disabled]="isEditing" [readonly]="true" style="color: #00416d;">
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Phone Number</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="phoneNumber" [(ngModel)]="phoneNumber" type="tel" minlength="8" maxlength="8"
+              pattern="[0-9]*" [readonly]="!isEditing" style="color: #00416d;" required>
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="phoneNumberError">
+        <ion-col size="4">
+          <div>
+            <ion-text></ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="errorMessage">
+            <ion-text>Phone number already used.</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>ROD</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="rod" [(ngModel)]="rod" [disabled]="isEditing" [readonly]="true" style="color: #00416d;">
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Email</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="email" [(ngModel)]="email" type="email" type="email" minlength="9" maxlength="64"
+              [readonly]="!isEditing" required></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="emailError">
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text></ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="errorMessage">
+            <ion-text>Email already used.</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Address</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-textarea name="address" [(ngModel)]="address" type="text" minlength="8" [readonly]="!isEditing" required>
+            </ion-textarea>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+    <div *ngIf="!isEditing">
+      <ion-button id="editDetailsButton" expand="block" (click)="editForm()">Edit Account Details</ion-button>
+    </div>
+
+    <div *ngIf="isEditing">
+
+      <ion-row>
+
+        <ion-button class="formButtons" (click)="editForm()" style="--background: #f8bd7f;">Cancel</ion-button>
+        <ion-button class="formButtons" type="submit" [disabled]="updateForm.invalid" style="--background: #00416d;">
+          Update</ion-button>
+
+      </ion-row>
+
+    </div>
+
+  </form>
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
-    <ion-button (click)="logout()" expand="block" style="--background: #00416d">Logout</ion-button>
+    <ion-button (click)="logout()" expand="block" style="--background: #f8bd7f">Logout</ion-button>
   </ion-toolbar>
 </ion-footer>

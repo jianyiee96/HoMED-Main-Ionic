@@ -21,6 +21,7 @@ export class LoginScreenPage implements OnInit {
   messageAnimation: Animation
   isPlaying = false
 
+  serviceman: Serviceman
   nric: string
   password: string
   messageString: string
@@ -56,11 +57,13 @@ export class LoginScreenPage implements OnInit {
         response => {
           let serviceman: Serviceman = response.serviceman
 
-          if (serviceman != null) {
+          this.serviceman = response.serviceman
 
-            if (serviceman.isActivated) {
+          if (this.serviceman != null) {
+
+            if (this.serviceman.isActivated) {
               this.sessionService.setIsLogin(true)
-              this.sessionService.setCurrentServiceman(serviceman)
+              this.sessionService.setCurrentServiceman(this.serviceman)
               this.router.navigate(['/home-screen'])
             } else {
               this.activateAccountPrompt()
@@ -91,11 +94,6 @@ export class LoginScreenPage implements OnInit {
       cssClass: 'activateAccountAlert',
       inputs: [
         {
-          name: 'otp',
-          type: 'password',
-          placeholder: 'Given OTP'
-        },
-        {
           name: 'newPassword',
           type: 'password',
           placeholder: 'New Password'
@@ -123,11 +121,11 @@ export class LoginScreenPage implements OnInit {
             } else if (data.newPassword.length < 8) {
               this.updateAlertMessage("New password must be at least 8 characters.", alert);
               return false;
-            } else if (data.otp == data.newPassword) {
+            } else if (this.password == data.newPassword) {
               this.updateAlertMessage("New password cannot be same as OTP.", alert);
               return false;
             } else {
-              this.activateAccount(this.nric, data.otp, data.newPassword)
+              this.activateAccount(this.nric, this.password, data.newPassword)
             }
           }
         }
@@ -150,6 +148,10 @@ export class LoginScreenPage implements OnInit {
         this.messageString = "Account activated"
         this.loadSuccessMessage()
         this.password = ""
+
+        this.sessionService.setIsLogin(true)
+        this.sessionService.setCurrentServiceman(this.serviceman)
+        this.router.navigate(['/home-screen'])
       }, error => {
         this.invalidMessage = true
         this.validMessage = !this.invalidMessage
