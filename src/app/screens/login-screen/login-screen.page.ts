@@ -158,7 +158,7 @@ export class LoginScreenPage implements OnInit {
           handler: () => { }
         },
         {
-          text: 'Activate',
+          text: 'Send OTP',
           cssClass: 'activate-button',
           handler: data => {
             if (data.nric.length != 9) {
