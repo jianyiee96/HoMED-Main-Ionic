@@ -32,6 +32,8 @@ export class AccountScreenPage implements OnInit {
   emailError = false
   passwordError = false
 
+  passwordErrorMessage: string
+
   constructor(
     private router: Router,
     private sessionService: SessionService,
@@ -90,7 +92,7 @@ export class AccountScreenPage implements OnInit {
           handler: () => { }
         },
         {
-          text: 'Activate',
+          text: 'Change',
           cssClass: 'activate-button',
           handler: data => {
             if (data.newPassword != data.confirmNewPassword) {
@@ -123,10 +125,12 @@ export class AccountScreenPage implements OnInit {
       response => {
         this.presentPassedToast("Password changed successfully.");
       }, error => {
+        this.passwordError = true
         if (error.includes("password do not match password associated with account")) {
-          this.passwordError = true
+          this.passwordErrorMessage = "Wrong current password entered."
+        } else {
+          this.passwordErrorMessage = "Unable to change password."
         }
-        this.presentFailedToast("Failed to change password.");
       }
     );
   }
@@ -135,8 +139,8 @@ export class AccountScreenPage implements OnInit {
     this.isEditing = !this.isEditing
     this.clearErrors()
     this.fieldsUpdated = false
-    
-    this.phoneNumber = this.serviceman.phoneNumber    
+
+    this.phoneNumber = this.serviceman.phoneNumber
     this.email = this.serviceman.email
     this.address = this.serviceman.address
   }
@@ -187,19 +191,9 @@ export class AccountScreenPage implements OnInit {
   async presentPassedToast(messageToDisplay: string) {
     const toast = await this.toastController.create({
       message: messageToDisplay,
-      duration: 2500,
-      color: "success",
-      position: "top"
-    });
-    toast.present();
-  }
-
-  async presentFailedToast(messageToDisplay: string) {
-    const toast = await this.toastController.create({
-      message: messageToDisplay,
-      duration: 2500,
-      color: "danger",
-      position: "top"
+      duration: 2000,
+      color: "medium",
+      position: "middle"
     });
     toast.present();
   }

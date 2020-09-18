@@ -19,7 +19,7 @@ export class TimerService {
     this.bnIdle = new BnNgIdleService()
     console.log("Starting timer for mobile application.")
 
-    this.bnIdle.startWatching(900).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(90).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         this.bnIdle.stopTimer()
         this.presentAlert()
@@ -28,8 +28,12 @@ export class TimerService {
   }
 
   stopTimer() {
-    console.log("Stopping timer for mobile application.")
-    this.bnIdle.stopTimer()
+    try {
+      console.log("Stopping timer for mobile application.")
+      this.bnIdle.stopTimer()
+    } catch (error) {
+      console.log("Unable to stop timer as its undefined.")
+    }
   }
 
   async presentAlert() {
