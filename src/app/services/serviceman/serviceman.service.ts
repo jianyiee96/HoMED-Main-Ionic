@@ -45,6 +45,17 @@ export class ServicemanService {
     );
   }
 
+  resetPassword(nric: string, email: string) {
+    let resetPasswordReq = {
+      "nric": nric,
+      "email": email
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/resetPassword", resetPasswordReq, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   updateAccount(accountToUpdate: Serviceman): Observable<any> {
     let updateAccountReq = {
       "serviceman": accountToUpdate

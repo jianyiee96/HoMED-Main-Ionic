@@ -7,7 +7,7 @@ import { AlertController, Animation, AnimationController } from '@ionic/angular'
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
-import {TimerService} from 'src/app/services/timer/timer.service'
+import { TimerService } from 'src/app/services/timer/timer.service'
 
 @Component({
   selector: 'app-login-screen',
@@ -72,17 +72,11 @@ export class LoginScreenPage implements OnInit {
               this.activateAccountPrompt()
             }
           } else {
-            this.invalidMessage = true
-            this.validMessage = !this.invalidMessage
-            this.messageString = "Serviceman account doesn't exist."
-            this.loadErrorMessage()
+            this.presentFailedMessage("Serviceman account doesn't exist.")
           }
         },
         error => {
-          this.invalidMessage = true
-          this.validMessage = !this.invalidMessage
-          this.messageString = "Invalid login credentials."
-          this.loadErrorMessage()
+          this.presentFailedMessage("Invalid login credentials.")
         }
       )
 
@@ -93,7 +87,7 @@ export class LoginScreenPage implements OnInit {
   async activateAccountPrompt() {
     const alert = await this.alertController.create({
       header: 'Activate Account',
-      subHeader: 'First time users are required to change their password from OTP in order to activate their account.',
+      subHeader: 'Users are required to change their password from OTP in order to activate their account.',
       cssClass: 'activateAccountAlert',
       inputs: [
         {
@@ -139,6 +133,52 @@ export class LoginScreenPage implements OnInit {
     await alert.present();
   }
 
+  async forgetPasswordPrompt() {
+    const alert = await this.alertController.create({
+      header: 'Forget Password',
+      subHeader: 'Upon successful reset, your account will be inactivated and you will receive an OTP to reactivate your account.',
+      cssClass: 'activateAccountAlert',
+      inputs: [
+        {
+          name: 'nric',
+          type: 'text',
+          placeholder: 'NRIC/FIN'
+        },
+        {
+          name: 'email',
+          type: 'email',
+          placeholder: 'Email'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'cancel-button',
+          handler: () => { }
+        },
+        {
+          text: 'Activate',
+          cssClass: 'activate-button',
+          handler: data => {
+            if (data.nric.length != 9) {
+              this.updateAlertMessage("Please enter a valid NRIC.", alert);
+              return false;
+            } else if (data.email.length < 10 || data.email.length > 64) {
+              this.updateAlertMessage("Please enter a valid email.", alert);
+              return false;
+            } else {
+              this.resetPassword(data.nric, data.email)
+            }
+          }
+        }
+      ],
+      backdropDismiss: false
+    });
+
+    await alert.present();
+  }
+
   updateAlertMessage(message: string, alert: HTMLIonAlertElement) {
     alert.message = message
   }
@@ -146,22 +186,41 @@ export class LoginScreenPage implements OnInit {
   activateAccount(nric: string, oldPassword: string, newPassword: string) {
     this.servicemanService.changePassword(nric, oldPassword, newPassword).subscribe(
       response => {
-        this.validMessage = true
-        this.invalidMessage = !this.validMessage
-        this.messageString = "Account activated"
-        this.loadSuccessMessage()
-        this.password = ""
+        this.presentSuccessMessage("Account activated.")
 
         this.sessionService.setIsLogin(true)
         this.sessionService.setCurrentServiceman(this.serviceman)
+        this.timerService.startTimer()
         this.router.navigate(['/home-screen'])
       }, error => {
-        this.invalidMessage = true
-        this.validMessage = !this.invalidMessage
-        this.messageString = "Wrong OTP entered"
-        this.loadErrorMessage()
+        this.presentFailedMessage("Invalid password combination.") // password validity not implemented in backend
       }
     );
+  }
+
+  resetPassword(nric: string, email: string) {
+    this.servicemanService.resetPassword(nric, email).subscribe(
+      response => {
+        this.presentSuccessMessage("Password successfully reset. Do check your account email for the new OTP.")
+      }, error => {
+        this.presentFailedMessage("NRIC does not match account email entered. Please try again.")
+      }
+    )
+  }
+
+  presentSuccessMessage(message: string) {
+    this.validMessage = true
+    this.invalidMessage = !this.validMessage
+    this.messageString = message
+    this.loadSuccessMessage()
+    this.password = ""
+  }
+
+  presentFailedMessage(message: string) {
+    this.invalidMessage = true
+    this.validMessage = !this.invalidMessage
+    this.messageString = message
+    this.loadErrorMessage()
   }
 
   loadSuccessMessage() {

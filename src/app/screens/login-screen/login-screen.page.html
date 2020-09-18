@@ -29,7 +29,7 @@
         <ion-row *ngIf=invalidMessage>
           <ion-col>
             <ion-item class="errorMessage">
-              <ion-input [readonly]=true name="messageString" [(ngModel)]="messageString"></ion-input>
+              <ion-textarea [readonly]=true name="messageString" [(ngModel)]="messageString"></ion-textarea>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -39,7 +39,7 @@
         <ion-row *ngIf=validMessage>
           <ion-col>
             <ion-item class="successMessage">
-              <ion-input [readonly]=true name="messageString" [(ngModel)]="messageString"></ion-input>
+              <ion-textarea [readonly]=true name="messageString" [(ngModel)]="messageString"></ion-textarea>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -56,7 +56,15 @@
 
       <ion-row>
         <ion-col>
-          <ion-button style="width: 355px; --background: #00416d" (click)=redirectToStartScreen()>Back</ion-button>
+          <ion-button style="width: 355px; --background: #00416d" (click)=forgetPasswordPrompt()>Forget Password
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button style="width: 355px; --background: #00416d; margin-top: 10px;" (click)=redirectToStartScreen()>
+            Back</ion-button>
         </ion-col>
       </ion-row>
 
