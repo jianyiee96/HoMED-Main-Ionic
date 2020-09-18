@@ -15,12 +15,14 @@ export class SessionService {
 	getRootPath(): string {
 		console.log('this.platform.is("hybrid"): ' + this.platform.is('hybrid'));
 
-		if (this.platform.is('hybrid')) {
-			return "http://192.168.137.1:8080/HoMED-rws/Resources/";
-		}
-		else {
-			return "/api/";
-		}
+		return "/api/";
+
+		// if (this.platform.is('hybrid')) {
+		// 	return "http://192.168.1.4:8080/HoMED-rws/Resources/";
+		// }
+		// else {
+		// 	return "/api/";
+		// }
 	}
 
 	getIsLogin(): boolean {
