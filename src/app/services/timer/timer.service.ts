@@ -19,7 +19,7 @@ export class TimerService {
     this.bnIdle = new BnNgIdleService()
     console.log("Starting timer for mobile application.")
 
-    this.bnIdle.startWatching(90).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(20).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         this.bnIdle.stopTimer()
         this.presentAlert()

@@ -141,7 +141,6 @@ export class LoginScreenPage implements OnInit {
       inputs: [
         {
           name: 'nric',
-          type: 'text',
           placeholder: 'NRIC/FIN'
         },
         {

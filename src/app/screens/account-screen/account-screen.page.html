@@ -173,7 +173,7 @@
   </form>
 </ion-content>
 
-<ion-footer class="ion-no-border">
+<ion-footer *ngIf="!isEditing" class="ion-no-border">
   <ion-toolbar transparent no-border>
     <ion-button (click)="logout()" expand="block" style="--background: #f8bd7f">Logout</ion-button>
   </ion-toolbar>
