@@ -4,7 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { SessionService } from '../session/session.service';
 
-const PRIMARY_TIMER_SEC = 60*4
+const PRIMARY_TIMER_SEC = 60 * 4
 const SECONARY_TIMER_SEC = 60
 
 @Injectable({
@@ -24,6 +24,7 @@ export class TimerService {
 
   startPrimaryTimer() {
     if (this.sessionService.getCurrentServiceman() != null) {
+
       this.validAccess = true
       this.primaryTimer = new BnNgIdleService()
 
@@ -43,7 +44,9 @@ export class TimerService {
             }
           })
         }
+        
       })
+
     }
   }
 
@@ -110,8 +113,8 @@ export class TimerService {
           }
         }
       ]
-    });
-    await alert.present();
+    })
+    await alert.present()
   }
 
 }

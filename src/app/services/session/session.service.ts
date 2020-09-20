@@ -11,53 +11,58 @@ export class SessionService {
 	constructor(private platform: Platform) { }
 
 	getRootPath(): string {
+
 		// for mobile phone deployment
-		return "/api/";
+		return "/api/"
 
 		// if (this.platform.is('hybrid')) {
-		// 	return "http://172.25.104.239:8080/HoMED-rws/Resources/";
+		// 	return "http://172.25.104.239:8080/HoMED-rws/Resources/"
 		// }
 		// else {
-		// 	return "/api/";
+		// 	return "/api/"
 		// }
 
 	}
 
 	getIsLogin(): boolean {
 		if (sessionStorage.isLogin == "true") {
-			return true;
+			return true
 		}
 		else {
-			return false;
+			return false
 		}
 	}
 
 	setIsLogin(isLogin: boolean): void {
-		sessionStorage.isLogin = isLogin;
+		sessionStorage.isLogin = isLogin
 	}
 
 	getCurrentServiceman(): Serviceman {
-		return JSON.parse(sessionStorage.currentServiceman);
+		try {
+			return JSON.parse(sessionStorage.currentServiceman)
+		} catch (error) {
+			return
+		}
 	}
 
 	setCurrentServiceman(currentServiceman: Serviceman): void {
-		sessionStorage.currentServiceman = JSON.stringify(currentServiceman);
+		sessionStorage.currentServiceman = JSON.stringify(currentServiceman)
 	}
 
 	getNric(): string {
-		return sessionStorage.nric;
+		return sessionStorage.nric
 	}
 
 	setNric(nric: string): void {
-		sessionStorage.nric = nric;
+		sessionStorage.nric = nric
 	}
 
 	getPassword(): string {
-		return sessionStorage.password;
+		return sessionStorage.password
 	}
 
 	setPassword(password: string): void {
-		sessionStorage.password = password;
+		sessionStorage.password = password
 	}
 
 }
