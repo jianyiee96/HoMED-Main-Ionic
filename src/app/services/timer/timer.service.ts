@@ -18,26 +18,27 @@ export class TimerService {
     private router: Router) { }
 
   startTimer() {
-    this.validAccess = true
-    this.bnIdle = new BnNgIdleService()
-    console.log("Starting timer for mobile application.")
+    if (this.sessionService.getCurrentServiceman() != null) {
+      this.validAccess = true
+      this.bnIdle = new BnNgIdleService()
+      console.log("Starting timer for mobile application.")
 
-    this.bnIdle.startWatching(240).subscribe((isTimedOut: boolean) => {
+      this.bnIdle.startWatching(240).subscribe((isTimedOut: boolean) => {
 
-      if (isTimedOut) {
-        this.bnIdle.stopTimer()
-        this.presentWarning()
-        this.bnIdle = new BnNgIdleService()
+        if (isTimedOut) {
+          this.bnIdle.stopTimer()
+          this.presentWarning()
+          this.bnIdle = new BnNgIdleService()
 
-        this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
-          if (isTimedOut) {
-            this.bnIdle.stopTimer()
-            this.validAccess = false
-          }
-        })
-      }
-
-    })
+          this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
+            if (isTimedOut) {
+              this.bnIdle.stopTimer()
+              this.validAccess = false
+            }
+          })
+        }
+      })
+    }
   }
 
   stopTimer() {

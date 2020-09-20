@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { SessionService } from './services/session/session.service';
 import { Serviceman } from './classes/serviceman/serviceman';
+import { TimerService } from './services/timer/timer.service';
 
 @Component({
   selector: 'app-root',
@@ -47,7 +48,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private timerService: TimerService
   ) {
     this.initializeApp();
   }
@@ -60,6 +62,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.timerService.startTimer();
+
     const path = window.location.pathname;
     
     if (path !== undefined) {
