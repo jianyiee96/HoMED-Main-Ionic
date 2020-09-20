@@ -66,7 +66,7 @@ export class LoginScreenPage implements OnInit {
             if (this.serviceman.isActivated) {
               this.sessionService.setIsLogin(true)
               this.sessionService.setCurrentServiceman(this.serviceman)
-              this.timerService.startTimer()
+              this.timerService.startPrimaryTimer()
               this.router.navigate(['/home-screen'])
             } else {
               this.activateAccountPrompt()
@@ -141,7 +141,6 @@ export class LoginScreenPage implements OnInit {
       inputs: [
         {
           name: 'nric',
-          type: 'text',
           placeholder: 'NRIC/FIN'
         },
         {
@@ -190,7 +189,7 @@ export class LoginScreenPage implements OnInit {
 
         this.sessionService.setIsLogin(true)
         this.sessionService.setCurrentServiceman(this.serviceman)
-        this.timerService.startTimer()
+        this.timerService.startPrimaryTimer()
         this.router.navigate(['/home-screen'])
       }, error => {
         this.presentFailedMessage("Invalid password combination.") // password validity not implemented in backend

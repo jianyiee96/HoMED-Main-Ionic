@@ -7,20 +7,20 @@ import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 @Injectable({
 	providedIn: 'root'
 })
-
 export class SessionService {
-
 	constructor(private platform: Platform) { }
 
 	getRootPath(): string {
-		console.log('this.platform.is("hybrid"): ' + this.platform.is('hybrid'));
+		// for mobile phone deployment
+		return "/api/";
 
-		if (this.platform.is('hybrid')) {
-			return "http://192.168.137.1:8080/HoMED-rws/Resources/";
-		}
-		else {
-			return "/api/";
-		}
+		// if (this.platform.is('hybrid')) {
+		// 	return "http://172.25.104.239:8080/HoMED-rws/Resources/";
+		// }
+		// else {
+		// 	return "/api/";
+		// }
+
 	}
 
 	getIsLogin(): boolean {

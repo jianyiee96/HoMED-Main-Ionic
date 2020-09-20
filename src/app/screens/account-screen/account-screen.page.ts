@@ -28,9 +28,9 @@ export class AccountScreenPage implements OnInit {
   isEditing: boolean
   fieldsUpdated: boolean
 
-  phoneNumberError = false
-  emailError = false
-  passwordError = false
+  phoneNumberError: boolean
+  emailError: boolean
+  passwordError: boolean
 
   passwordErrorMessage: string
 
@@ -49,6 +49,10 @@ export class AccountScreenPage implements OnInit {
   ionViewWillEnter() {
     this.isEditing = false
     this.fieldsUpdated = false
+
+    this.phoneNumberError = false
+    this.emailError = false
+    this.passwordError = false
 
     this.serviceman = this.sessionService.getCurrentServiceman()
     this.name = this.serviceman.name
@@ -168,10 +172,10 @@ export class AccountScreenPage implements OnInit {
         },
         error => {
           this.serviceman = this.sessionService.getCurrentServiceman()
-          if (error.includes("for key 'EMAIL'")) {
+          if (error.includes("EMAIL")) {
             this.emailError = true
           }
-          if (error.includes("for key 'PHONENUMBER'")) {
+          if (error.includes("PHONENUMBER")) {
             this.phoneNumberError = true
           }
         }
@@ -199,7 +203,7 @@ export class AccountScreenPage implements OnInit {
   }
 
   logout() {
-    this.timerService.stopTimer()
+    this.timerService.stopAllTimer()
     this.sessionService.setIsLogin(false);
     this.sessionService.setCurrentServiceman(null);
     this.router.navigate(["/login-screen"]);

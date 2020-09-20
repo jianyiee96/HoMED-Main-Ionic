@@ -4,57 +4,113 @@ import { AlertController } from '@ionic/angular';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { SessionService } from '../session/session.service';
 
+const PRIMARY_TIMER_SEC = 60*4
+const SECONARY_TIMER_SEC = 60
+
 @Injectable({
   providedIn: 'root'
 })
 export class TimerService {
 
+  validAccess: boolean // determines if user can continue using the app
+
+  primaryTimer: BnNgIdleService
+  secondaryTimer: BnNgIdleService
+
   constructor(
-    private bnIdle: BnNgIdleService,
     private alertController: AlertController,
     private sessionService: SessionService,
     private router: Router) { }
 
-  startTimer() {
-    this.bnIdle = new BnNgIdleService()
-    console.log("Starting timer for mobile application.")
+  startPrimaryTimer() {
+    if (this.sessionService.getCurrentServiceman() != null) {
+      this.validAccess = true
+      this.primaryTimer = new BnNgIdleService()
 
-    this.bnIdle.startWatching(90).subscribe((isTimedOut: boolean) => {
-      if (isTimedOut) {
-        this.bnIdle.stopTimer()
-        this.presentAlert()
-      }
-    });
+      this.primaryTimer.startWatching(PRIMARY_TIMER_SEC).subscribe((isTimedOut: boolean) => {
+
+        if (isTimedOut) {
+          this.primaryTimer.stopTimer()
+          this.primaryTimer = new BnNgIdleService()
+          this.presentWarning()
+          this.secondaryTimer = new BnNgIdleService()
+
+
+          this.secondaryTimer.startWatching(SECONARY_TIMER_SEC).subscribe((isSecondaryTimedOut: boolean) => {
+            if (isSecondaryTimedOut) {
+              this.secondaryTimer.stopTimer()
+              this.validAccess = false
+            }
+          })
+        }
+      })
+    }
   }
 
-  stopTimer() {
+  stopAllTimer() {
     try {
-      console.log("Stopping timer for mobile application.")
-      this.bnIdle.stopTimer()
+      this.primaryTimer.stopTimer()
     } catch (error) {
-      console.log("Unable to stop timer as its undefined.")
     }
+    try {
+      this.secondaryTimer.stopTimer()
+    } catch (error) {
+    }
+  }
+
+  async presentWarning() {
+    const alert = await this.alertController.create({
+      header: 'HoMED Warning Alert',
+      backdropDismiss: false,
+      message: 'Sorry! Your session has timed out. Do you wish to continue?',
+      cssClass: 'activateAccountAlert',
+      buttons: [
+        {
+          text: 'No',
+          cssClass: 'cancel-button',
+          handler: () => {
+            this.stopAllTimer()
+            this.sessionService.setIsLogin(false)
+            this.sessionService.setCurrentServiceman(null)
+            this.router.navigate(["/login-screen"])
+          }
+        },
+        {
+          text: 'Yes',
+          cssClass: 'activate-button',
+          handler: () => {
+            if (this.validAccess) {
+              this.stopAllTimer()
+              this.startPrimaryTimer()
+            } else {
+              this.presentAlert()
+            }
+          }
+        }
+      ]
+    })
+    await alert.present()
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'You have been inactive for the past 15 minutes.',
+      header: 'HoMED Security Alert',
+      message: 'For your security, the session has timed out. Please re-login.',
+      cssClass: 'activateAccountAlert',
       backdropDismiss: false,
-      message: 'You will have to log back in for security reasons.',
       buttons: [
         {
-          text: 'Logout',
-          role: 'cancel',
+          text: "Ok",
+          cssClass: 'activate-button',
           handler: () => {
+            this.stopAllTimer()
             this.sessionService.setIsLogin(false)
             this.sessionService.setCurrentServiceman(null)
             this.router.navigate(["/login-screen"])
-            return
           }
         }
-      ],
+      ]
     });
-
     await alert.present();
   }
 
