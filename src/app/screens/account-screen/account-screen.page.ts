@@ -28,9 +28,9 @@ export class AccountScreenPage implements OnInit {
   isEditing: boolean
   fieldsUpdated: boolean
 
-  phoneNumberError = false
-  emailError = false
-  passwordError = false
+  phoneNumberError: boolean
+  emailError: boolean
+  passwordError: boolean
 
   passwordErrorMessage: string
 
@@ -49,6 +49,10 @@ export class AccountScreenPage implements OnInit {
   ionViewWillEnter() {
     this.isEditing = false
     this.fieldsUpdated = false
+
+    this.phoneNumberError = false
+    this.emailError = false
+    this.passwordError = false
 
     this.serviceman = this.sessionService.getCurrentServiceman()
     this.name = this.serviceman.name

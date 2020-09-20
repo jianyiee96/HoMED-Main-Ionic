@@ -15,10 +15,8 @@ export class SessionService {
 	getRootPath(): string {
 		console.log('this.platform.is("hybrid"): ' + this.platform.is('hybrid'));
 
-
 		if (this.platform.is('hybrid')) {
-			return "/api/";
-			// return "http://172.25.104.239:8080/HoMED-rws/Resources/";
+			return "http://172.25.104.239:8080/HoMED-rws/Resources/";
 		}
 		else {
 			return "/api/";

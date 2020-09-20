@@ -1,6 +1,6 @@
 {
 	"/api": {
-		"target": "http://172.25.104.239:8080/HoMED-rws/Resources",
+		"target": "http://localhost:8080/HoMED-rws/Resources",
 		"secure": false,
 		"pathRewrite": {
 			"^/api": ""

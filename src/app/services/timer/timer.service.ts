@@ -9,6 +9,8 @@ import { SessionService } from '../session/session.service';
 })
 export class TimerService {
 
+  validAccess: boolean // determines if user can use the app
+
   constructor(
     private bnIdle: BnNgIdleService,
     private alertController: AlertController,
@@ -16,15 +18,26 @@ export class TimerService {
     private router: Router) { }
 
   startTimer() {
+    this.validAccess = true
     this.bnIdle = new BnNgIdleService()
     console.log("Starting timer for mobile application.")
 
-    this.bnIdle.startWatching(20).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(5).subscribe((isTimedOut: boolean) => {
+
       if (isTimedOut) {
         this.bnIdle.stopTimer()
-        this.presentAlert()
+        this.presentWarning()
+        this.bnIdle = new BnNgIdleService()
+
+        this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
+          if (isTimedOut) {
+            this.bnIdle.stopTimer()
+            this.validAccess = false
+          }
+        })
       }
-    });
+
+    })
   }
 
   stopTimer() {
@@ -36,25 +49,57 @@ export class TimerService {
     }
   }
 
-  async presentAlert() {
+  async presentWarning() {
     const alert = await this.alertController.create({
-      header: 'You have been inactive for the past 15 minutes.',
+      header: 'HoMED Warning Alert',
       backdropDismiss: false,
-      message: 'You will have to log back in for security reasons.',
+      message: 'Sorry! Your session has timed out. Do you wish to continue?',
+      cssClass: 'activateAccountAlert',
       buttons: [
         {
-          text: 'Logout',
-          role: 'cancel',
+          text: 'No',
+          cssClass: 'cancel-button',
           handler: () => {
             this.sessionService.setIsLogin(false)
             this.sessionService.setCurrentServiceman(null)
             this.router.navigate(["/login-screen"])
-            return
+          }
+        },
+        {
+          text: 'Yes',
+          cssClass: 'activate-button',
+          handler: () => {
+            if (this.validAccess) {
+              this.stopTimer()
+              this.startTimer()
+            } else {
+              this.presentAlert()
+            }
           }
         }
-      ],
-    });
+      ]
+    })
+    await alert.present()
+  }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'HoMED Security Alert',
+      message: 'For your security, the session has timed out. Please re-login.',
+      cssClass: 'activateAccountAlert',
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: "Ok",
+          cssClass: 'activate-button',
+          handler: () => {
+            this.sessionService.setIsLogin(false)
+            this.sessionService.setCurrentServiceman(null)
+            this.router.navigate(["/login-screen"])
+          }
+        }
+      ]
+    });
     await alert.present();
   }
 

@@ -76,7 +76,7 @@
         <ion-col>
           <div class="formAns">
             <ion-input name="phoneNumber" [(ngModel)]="phoneNumber" type="tel" minlength="8" maxlength="8"
-              pattern="[0-9]*" [readonly]="!isEditing" style="color: #00416d;" (ngModelChange)="fieldChange()" required>
+              pattern="^[89]\d{7}" [readonly]="!isEditing" style="color: #00416d;" (ngModelChange)="fieldChange()" required>
             </ion-input>
           </div>
         </ion-col>
