@@ -203,7 +203,7 @@ export class AccountScreenPage implements OnInit {
   }
 
   logout() {
-    this.timerService.stopTimer()
+    this.timerService.stopAllTimer()
     this.sessionService.setIsLogin(false);
     this.sessionService.setCurrentServiceman(null);
     this.router.navigate(["/login-screen"]);

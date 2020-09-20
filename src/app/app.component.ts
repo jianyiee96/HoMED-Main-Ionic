@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timerService.startTimer();
+    this.timerService.startPrimaryTimer();
 
     const path = window.location.pathname;
     
