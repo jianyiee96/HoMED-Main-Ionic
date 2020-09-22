@@ -122,7 +122,7 @@ export class LoginScreenPage implements OnInit {
               this.updateAlertMessage("New password cannot be same as OTP.", alert);
               return false;
             } else {
-              this.activateAccount(this.nric, this.password, data.newPassword)
+              this.activateAccount(this.nric, data.newPassword, data.confirmNewPassword)
             }
           }
         }
@@ -182,8 +182,8 @@ export class LoginScreenPage implements OnInit {
     alert.message = message
   }
 
-  activateAccount(nric: string, oldPassword: string, newPassword: string) {
-    this.servicemanService.changePassword(nric, oldPassword, newPassword).subscribe(
+  activateAccount(nric: string, newPassword: string, confirmNewPassword: string) {
+    this.servicemanService.activateAccount(nric, newPassword, confirmNewPassword).subscribe(
       response => {
         this.presentSuccessMessage("Account activated.")
 
