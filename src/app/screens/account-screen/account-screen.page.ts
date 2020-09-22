@@ -109,7 +109,7 @@ export class AccountScreenPage implements OnInit {
               this.updateAlertMessage("New password cannot be same as current password.", alert);
               return false;
             } else {
-              this.changePassword(this.nric, data.currentPassword, data.newPassword)
+              this.changePassword(this.nric, data.currentPassword, data.newPassword, data.confirmNewPassword)
             }
           }
         }
@@ -124,8 +124,8 @@ export class AccountScreenPage implements OnInit {
     alert.message = message
   }
 
-  changePassword(nric: string, oldPassword: string, newPassword: string) {
-    this.servicemanService.changePassword(nric, oldPassword, newPassword).subscribe(
+  changePassword(nric: string, oldPassword: string, newPassword: string, confirmNewPassword: string) {
+    this.servicemanService.changePassword(nric, oldPassword, newPassword, confirmNewPassword).subscribe(
       response => {
         this.presentPassedToast("Password changed successfully.");
       }, error => {
