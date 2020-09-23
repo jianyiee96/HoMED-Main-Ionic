@@ -28,6 +28,6 @@ ionic generate class Serviceman
 
 - Organize import statements according to their respective frameworks. (e.g. @ionic, @angular, local directories)
 - As much as possible, place styling in .scss file rather than inline
-- Avoid putting ';' when coding in TypeScript
+- Apart from import statements, avoid putting ';' when coding in TypeScript
 - Enforce access modifiers to be as secure as possible
 - Make sure image also has 'alt' text (preferably same as file name)

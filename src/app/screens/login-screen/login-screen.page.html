@@ -3,15 +3,15 @@
   <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
 
     <h1 id="welcomeText">Welcome!</h1>
-    <p id="welcomeSubText">Log in with your NRIC to get started.</p>
+    <p id="welcomeSubText">Log in with your email to get started.</p>
 
     <ion-grid>
 
       <ion-row style="margin-top: 20px;">
         <ion-col>
           <ion-item class="roundedInput">
-            <ion-label position="floating" style="color: #00416d;">NRIC</ion-label>
-            <ion-input name="nric" [(ngModel)]="nric" minlength="9" maxlength="9" required></ion-input>
+            <ion-label position="floating" style="color: #00416d;">Email</ion-label>
+            <ion-input name="email" [(ngModel)]="email" minlength="9" maxlength="64" type="email" required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -19,7 +19,7 @@
       <ion-row style="margin-top: 10px;">
         <ion-col>
           <ion-item class="roundedInput">
-            <ion-label position="floating" style="color: #00416d;">Password</ion-label>
+            <ion-label position="floating" style="color: #00416d;">Password / OTP</ion-label>
             <ion-input name="password" [(ngModel)]="password" type="password" required></ion-input>
           </ion-item>
         </ion-col>
