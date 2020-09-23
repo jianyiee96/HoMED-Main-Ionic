@@ -19,20 +19,26 @@ export class AccountScreenPage implements OnInit {
   serviceman: Serviceman
   name: string
   password: string
-  nric: string
   phoneNumber: string
   rod: Date
   email: string
-  address: string
+  streetName: string
+  unitNumber: string
+  buildingName: string
+  postal: string
 
   isEditing: boolean
   fieldsUpdated: boolean
 
-  phoneNumberError: boolean
-  emailError: boolean
   passwordError: boolean
+  phoneNumberError: boolean
+  streetNameError: boolean
+  postalError: boolean
 
   passwordErrorMessage: string
+  phoneNumberErrorMessage: string
+  streetNameErrorMessage: string
+  postalErrorMessage: string
 
   constructor(
     private router: Router,
@@ -51,16 +57,19 @@ export class AccountScreenPage implements OnInit {
     this.fieldsUpdated = false
 
     this.phoneNumberError = false
-    this.emailError = false
     this.passwordError = false
+    this.streetNameError = false
+    this.postalError = false
 
     this.serviceman = this.sessionService.getCurrentServiceman()
     this.name = this.serviceman.name
-    this.nric = this.serviceman.nric
     this.phoneNumber = this.serviceman.phoneNumber
     this.rod = this.parseDate(this.serviceman.rod).substring(0, 10)
     this.email = this.serviceman.email
-    this.address = this.serviceman.address
+    this.streetName = this.serviceman.address.streetName
+    this.unitNumber = this.serviceman.address.unitNumber
+    this.buildingName = this.serviceman.address.buildingName
+    this.postal = this.serviceman.address.postal
   }
 
   async changePasswordPrompt() {
@@ -109,7 +118,7 @@ export class AccountScreenPage implements OnInit {
               this.updateAlertMessage("New password cannot be same as current password.", alert);
               return false;
             } else {
-              this.changePassword(this.nric, data.currentPassword, data.newPassword, data.confirmNewPassword)
+              this.changePassword(this.email, data.currentPassword, data.newPassword, data.confirmNewPassword)
             }
           }
         }
@@ -124,17 +133,13 @@ export class AccountScreenPage implements OnInit {
     alert.message = message
   }
 
-  changePassword(nric: string, oldPassword: string, newPassword: string, confirmNewPassword: string) {
-    this.servicemanService.changePassword(nric, oldPassword, newPassword, confirmNewPassword).subscribe(
+  changePassword(email: string, oldPassword: string, newPassword: string, confirmNewPassword: string) {
+    this.servicemanService.changePassword(email, oldPassword, newPassword, confirmNewPassword).subscribe(
       response => {
         this.presentPassedToast("Password changed successfully.");
       }, error => {
+        this.passwordErrorMessage = error.substring(37)
         this.passwordError = true
-        if (error.includes("password do not match password associated with account")) {
-          this.passwordErrorMessage = "Wrong current password entered."
-        } else {
-          this.passwordErrorMessage = "Unable to change password."
-        }
       }
     );
   }
@@ -144,9 +149,12 @@ export class AccountScreenPage implements OnInit {
     this.clearErrors()
     this.fieldsUpdated = false
 
+    // when user taps 'Cancel' after tapping 'Edit Account Details'
     this.phoneNumber = this.serviceman.phoneNumber
-    this.email = this.serviceman.email
-    this.address = this.serviceman.address
+    this.streetName = this.serviceman.address.streetName
+    this.unitNumber = this.serviceman.address.unitNumber
+    this.buildingName = this.serviceman.address.buildingName
+    this.postal = this.serviceman.address.postal
   }
 
   fieldChange() {
@@ -160,8 +168,10 @@ export class AccountScreenPage implements OnInit {
     if (updateForm.valid) {
 
       this.serviceman.phoneNumber = this.phoneNumber
-      this.serviceman.email = this.email
-      this.serviceman.address = this.address
+      this.serviceman.address.streetName = this.streetName
+      this.serviceman.address.unitNumber = this.unitNumber
+      this.serviceman.address.buildingName = this.buildingName
+      this.serviceman.address.postal = this.postal
 
       this.servicemanService.updateAccount(this.serviceman).subscribe(
         response => {
@@ -172,11 +182,18 @@ export class AccountScreenPage implements OnInit {
         },
         error => {
           this.serviceman = this.sessionService.getCurrentServiceman()
-          if (error.includes("EMAIL")) {
-            this.emailError = true
-          }
-          if (error.includes("PHONENUMBER")) {
+
+          if (error.toLowerCase().includes("phone number")) {
+            this.phoneNumberErrorMessage = error.substring(37)
             this.phoneNumberError = true
+          }
+          if (error.toLowerCase().includes("street name")) {
+            this.streetNameErrorMessage = error.substring(37)
+            this.streetNameError = true
+          }
+          if (error.toLowerCase().includes("postal")) {
+            this.postalErrorMessage = error.substring(37)
+            this.postalError = true
           }
         }
       )
@@ -187,9 +204,10 @@ export class AccountScreenPage implements OnInit {
   }
 
   clearErrors() {
-    this.phoneNumberError = false
-    this.emailError = false
     this.passwordError = false
+    this.phoneNumberError = false
+    this.streetNameError = false
+    this.postalError = false
   }
 
   async presentPassedToast(messageToDisplay: string) {

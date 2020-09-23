@@ -23,7 +23,7 @@ export class LoginScreenPage implements OnInit {
   isPlaying = false
 
   serviceman: Serviceman
-  nric: string
+  email: string
   password: string
   messageString: string
   invalidMessage: boolean
@@ -49,13 +49,13 @@ export class LoginScreenPage implements OnInit {
 
     if (loginForm.valid) {
 
-      this.sessionService.setNric(this.nric)
+      this.sessionService.setEmail(this.email)
       this.sessionService.setPassword(this.password)
 
       this.invalidMessage = false
       this.validMessage = false
 
-      this.servicemanService.login(this.nric, this.password).subscribe(
+      this.servicemanService.login(this.email, this.password).subscribe(
         response => {
           let serviceman: Serviceman = response.serviceman
 
@@ -71,12 +71,13 @@ export class LoginScreenPage implements OnInit {
             } else {
               this.activateAccountPrompt()
             }
+            
           } else {
             this.presentFailedMessage("Serviceman account doesn't exist.")
           }
         },
         error => {
-          this.presentFailedMessage("Invalid login credentials.")
+          this.presentFailedMessage(error.substring(37))
         }
       )
 
@@ -122,7 +123,7 @@ export class LoginScreenPage implements OnInit {
               this.updateAlertMessage("New password cannot be same as OTP.", alert);
               return false;
             } else {
-              this.activateAccount(this.nric, data.newPassword, data.confirmNewPassword)
+              this.activateAccount(this.email, data.newPassword, data.confirmNewPassword)
             }
           }
         }
@@ -140,13 +141,14 @@ export class LoginScreenPage implements OnInit {
       cssClass: 'activateAccountAlert',
       inputs: [
         {
-          name: 'nric',
-          placeholder: 'NRIC/FIN'
-        },
-        {
           name: 'email',
           type: 'email',
           placeholder: 'Email'
+        },
+        {
+          name: 'phoneNumber',
+          type: 'number',
+          placeholder: 'Phone Number'
         }
       ],
       buttons: [
@@ -157,17 +159,17 @@ export class LoginScreenPage implements OnInit {
           handler: () => { }
         },
         {
-          text: 'Send OTP',
+          text: 'Reset Password',
           cssClass: 'activate-button',
           handler: data => {
-            if (data.nric.length != 9) {
-              this.updateAlertMessage("Please enter a valid NRIC.", alert);
+            if (data.phoneNumber.length != 8) {
+              this.updateAlertMessage("Please enter a valid phone number.", alert);
               return false;
             } else if (data.email.length < 10 || data.email.length > 64) {
               this.updateAlertMessage("Please enter a valid email.", alert);
               return false;
             } else {
-              this.resetPassword(data.nric, data.email)
+              this.resetPassword(data.email, data.phoneNumber)
             }
           }
         }
@@ -182,8 +184,8 @@ export class LoginScreenPage implements OnInit {
     alert.message = message
   }
 
-  activateAccount(nric: string, newPassword: string, confirmNewPassword: string) {
-    this.servicemanService.activateAccount(nric, newPassword, confirmNewPassword).subscribe(
+  activateAccount(email: string, newPassword: string, confirmNewPassword: string) {
+    this.servicemanService.activateAccount(email, newPassword, confirmNewPassword).subscribe(
       response => {
         this.presentSuccessMessage("Account activated.")
 
@@ -192,17 +194,17 @@ export class LoginScreenPage implements OnInit {
         this.timerService.startPrimaryTimer()
         this.router.navigate(['/home-screen'])
       }, error => {
-        this.presentFailedMessage("Invalid password combination.") // password validity not implemented in backend
+        this.presentFailedMessage(error.substring(37)) // password validity not implemented in backend
       }
     );
   }
 
-  resetPassword(nric: string, email: string) {
-    this.servicemanService.resetPassword(nric, email).subscribe(
+  resetPassword(email: string, phoneNumber: string) {
+    this.servicemanService.resetPassword(email, phoneNumber).subscribe(
       response => {
         this.presentSuccessMessage("Password successfully reset. Do check your account email for the new OTP.")
       }, error => {
-        this.presentFailedMessage("NRIC does not match account email entered. Please try again.")
+        this.presentFailedMessage(error.substring(37))
       }
     )
   }
@@ -259,7 +261,7 @@ export class LoginScreenPage implements OnInit {
   }
 
   clear() {
-    this.nric = ""
+    this.email = ""
     this.password = ""
     this.invalidMessage = false
     this.validMessage = false

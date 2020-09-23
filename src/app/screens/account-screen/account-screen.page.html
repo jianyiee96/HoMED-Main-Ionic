@@ -20,7 +20,7 @@
         </ion-col>
         <ion-col>
           <div class="formAns">
-            <ion-input name="name" [(ngModel)]="name" [disabled]="isEditing" [readonly]=true style="color: #00416d;">
+            <ion-input name="name" [(ngModel)]="name" [disabled]="isEditing" [readonly]=true>
             </ion-input>
           </div>
         </ion-col>
@@ -56,27 +56,13 @@
       <ion-row>
         <ion-col size="4">
           <div class="formQns">
-            <ion-text>NRIC</ion-text>
-          </div>
-        </ion-col>
-        <ion-col>
-          <div class="formAns">
-            <ion-input name="nric" [(ngModel)]="nric" [disabled]="isEditing" [readonly]="true" style="color: #00416d;">
-            </ion-input>
-          </div>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size="4">
-          <div class="formQns">
             <ion-text>Phone Number</ion-text>
           </div>
         </ion-col>
         <ion-col>
           <div class="formAns">
             <ion-input name="phoneNumber" [(ngModel)]="phoneNumber" type="tel" minlength="8" maxlength="8"
-              pattern="^[89]\d{7}" [readonly]="!isEditing" style="color: #00416d;" (ngModelChange)="fieldChange()" required>
+              pattern="^[89]\d{7}" [readonly]="!isEditing" (ngModelChange)="fieldChange()" required>
             </ion-input>
           </div>
         </ion-col>
@@ -90,7 +76,7 @@
         </ion-col>
         <ion-col>
           <div class="errorMessage">
-            <ion-text>Phone number already used.</ion-text>
+            <ion-text>{{phoneNumberErrorMessage}}</ion-text>
           </div>
         </ion-col>
       </ion-row>
@@ -103,7 +89,7 @@
         </ion-col>
         <ion-col>
           <div class="formAns">
-            <ion-input name="rod" [(ngModel)]="rod" [disabled]="isEditing" [readonly]="true" style="color: #00416d;">
+            <ion-input name="rod" [(ngModel)]="rod" [disabled]="isEditing" [readonly]="true">
             </ion-input>
           </div>
         </ion-col>
@@ -117,21 +103,8 @@
         </ion-col>
         <ion-col>
           <div class="formAns">
-            <ion-input name="email" [(ngModel)]="email" type="email" type="email" minlength="9" maxlength="64"
-              [readonly]="!isEditing" (ngModelChange)="fieldChange()" required></ion-input>
-          </div>
-        </ion-col>
-      </ion-row>
-
-      <ion-row *ngIf="emailError">
-        <ion-col size="4">
-          <div class="formQns">
-            <ion-text></ion-text>
-          </div>
-        </ion-col>
-        <ion-col>
-          <div class="errorMessage">
-            <ion-text>Email already used.</ion-text>
+            <ion-input name="email" [(ngModel)]="email" type="email" minlength="9" maxlength="64" [disabled]="isEditing"
+              [readonly]="true"></ion-input>
           </div>
         </ion-col>
       </ion-row>
@@ -139,14 +112,85 @@
       <ion-row>
         <ion-col size="4">
           <div class="formQns">
-            <ion-text>Address</ion-text>
+            <ion-text>Street Name*</ion-text>
           </div>
         </ion-col>
         <ion-col>
           <div class="formAns">
-            <ion-textarea name="address" [(ngModel)]="address" type="text" minlength="8" [readonly]="!isEditing"
+            <ion-textarea name="streetName" [(ngModel)]="streetName" type="text" minlength="6" [readonly]="!isEditing"
               (ngModelChange)="fieldChange()" required>
             </ion-textarea>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="streetNameError">
+        <ion-col size="4">
+          <div>
+            <ion-text></ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="errorMessage">
+            <ion-text>{{streetNameErrorMessage}}</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Unit Number</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="unitNumber" [(ngModel)]="unitNumber" type="text" [readonly]="!isEditing"
+              (ngModelChange)="fieldChange()">
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Building Name</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="buildingName" [(ngModel)]="buildingName" type="text" [readonly]="!isEditing"
+              (ngModelChange)="fieldChange()">
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
+            <ion-text>Postal*</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="postal" [(ngModel)]="postal" type="number" pattern="^\d{6}" [readonly]="!isEditing"
+              (ngModelChange)="fieldChange()" required>
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="postalError">
+        <ion-col size="4">
+          <div>
+            <ion-text></ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="errorMessage">
+            <ion-text>{{postalErrorMessage}}</ion-text>
           </div>
         </ion-col>
       </ion-row>

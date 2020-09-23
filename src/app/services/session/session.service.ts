@@ -49,12 +49,12 @@ export class SessionService {
 		sessionStorage.currentServiceman = JSON.stringify(currentServiceman)
 	}
 
-	getNric(): string {
-		return sessionStorage.nric
+	getEmail(): string {
+		return sessionStorage.email
 	}
 
-	setNric(nric: string): void {
-		sessionStorage.nric = nric
+	setEmail(email: string): void {
+		sessionStorage.email = email
 	}
 
 	getPassword(): string {
