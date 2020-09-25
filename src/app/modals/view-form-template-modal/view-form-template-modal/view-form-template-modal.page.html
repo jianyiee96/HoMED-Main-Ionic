@@ -1,0 +1,265 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{formTemplate.formTemplateName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-row *ngFor="let ff of formTemplate.formFields">
+
+    <div *ngIf="ff.inputType == 'HEADER'">
+      <ion-card style="--background: #00416d;">
+        <ion-card-header>
+
+          <ion-card-title style="color: whitesmoke;">
+            {{ff.question}}
+          </ion-card-title>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'TEXT'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" fill="clear">
+                  Open-Ended
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger" *ngIf="ff.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'NUMBER'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" fill="clear">
+                  Numerical Values
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger" *ngIf="ff.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'DATE'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" fill="clear">
+                  Date
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger" *ngIf="ff.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'TIME'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" fill="clear">
+                  Time
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger" *ngIf="ff.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'RADIO_BUTTON'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
+                  <u>Radio Options</u>
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'CHECK_BOX'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
+                  <u>Checkbox Options</u>
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'SINGLE_DROPDOWN'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
+                  <u>Single Select</u>
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'MULTI_DROPDOWN'">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            {{ff.question}}
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                Answer Type:
+                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
+                  <u>Multi Select</u>
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="danger">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+  </ion-row>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button class="addToFormInstancesButton" (click)="redirectToFormRepo()" expand="block">
+      Add to my form instances
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
