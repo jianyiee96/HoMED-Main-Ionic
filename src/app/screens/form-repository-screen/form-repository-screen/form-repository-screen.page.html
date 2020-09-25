@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Form Repository</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="redirectToFormScreen()">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card *ngFor="let ft of formTemplates">
+    <ion-card-header>
+
+      <ion-card-title>
+        {{ft.formTemplateName}}
+      </ion-card-title>
+
+      <ion-card-subtitle>
+        Date Published: {{ft.datePublished}}
+      </ion-card-subtitle>
+
+      <ion-card-subtitle>
+        Privacy:
+        <ion-chip color="secondary" *ngIf="!isPublic">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-label>Private</ion-label>
+        </ion-chip>
+        <ion-chip color="warning" *ngIf="isPublic">
+          <ion-icon name="lock-open-outline"></ion-icon>
+          <ion-label>Public</ion-label>
+        </ion-chip>
+        <ion-button class="viewFormTemplateBtn" (click)="presentFormTemplate(ft)" size="small" fill="outline">
+          View
+        </ion-button>
+      </ion-card-subtitle>
+
+    </ion-card-header>
+  </ion-card>
+
+</ion-content>

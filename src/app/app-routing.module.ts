@@ -21,12 +21,27 @@ const routes: Routes = [
   },
   {
     path: 'home-screen',
-    loadChildren: () => import('./screens/home-screen/home-screen.module').then( m => m.HomeScreenPageModule),
+    loadChildren: () => import('./screens/home-screen/home-screen.module').then(m => m.HomeScreenPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'account-screen',
-    loadChildren: () => import('./screens/account-screen/account-screen.module').then( m => m.AccountScreenPageModule),
+    loadChildren: () => import('./screens/account-screen/account-screen.module').then(m => m.AccountScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'form-screen',
+    loadChildren: () => import('./screens/form-screen/form-screen.module').then(m => m.FormScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'form-repository-screen',
+    loadChildren: () => import('./screens/form-repository-screen/form-repository-screen/form-repository-screen.module').then(m => m.FormRepositoryScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'view-form-template-modal',
+    loadChildren: () => import('./modals/view-form-template-modal/view-form-template-modal/view-form-template-modal.module').then(m => m.ViewFormTemplateModalPageModule),
     canActivate: [AuthGuard]
   },
 ];
@@ -37,4 +52,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

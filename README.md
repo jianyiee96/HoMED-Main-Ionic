@@ -11,7 +11,7 @@ ionic generate page StartScreen
 ```bash
 ionic generate page EditProfileModal
 ```
-- When generating new service, just the object name would suffice (e.g. Serviceman, Session, Utility)
+- When generating new service, just the object name would suffice in Pascal Casing (e.g. Serviceman, Session, Utility, FormTemplate)
 ```bash
 ionic generate service Serviceman
 ```
