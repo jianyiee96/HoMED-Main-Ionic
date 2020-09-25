@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, Animation, AnimationController } from '@ionic/angular';
 
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
@@ -15,6 +15,11 @@ import { TimerService } from 'src/app/services/timer/timer.service';
   styleUrls: ['./account-screen.page.scss'],
 })
 export class AccountScreenPage implements OnInit {
+
+  @ViewChild('successMessage') successMessageViewChild: ElementRef
+
+  messageAnimation: Animation
+  isPlaying = false
 
   serviceman: Serviceman
   name: string
@@ -29,6 +34,9 @@ export class AccountScreenPage implements OnInit {
 
   isEditing: boolean
   fieldsUpdated: boolean
+
+  updateSuccess: boolean
+  updateSuccessMessage: string
 
   passwordError: boolean
   phoneNumberError: boolean
@@ -46,7 +54,7 @@ export class AccountScreenPage implements OnInit {
     private servicemanService: ServicemanService,
     private timerService: TimerService,
     private alertController: AlertController,
-    private toastController: ToastController,
+    private animationController: AnimationController,
   ) { }
 
   ngOnInit() {
@@ -55,6 +63,8 @@ export class AccountScreenPage implements OnInit {
   ionViewWillEnter() {
     this.isEditing = false
     this.fieldsUpdated = false
+
+    this.updateSuccess = false
 
     this.phoneNumberError = false
     this.passwordError = false
@@ -74,6 +84,7 @@ export class AccountScreenPage implements OnInit {
 
   async changePasswordPrompt() {
 
+    this.updateSuccess = false
     this.clearErrors()
 
     const alert = await this.alertController.create({
@@ -136,7 +147,7 @@ export class AccountScreenPage implements OnInit {
   changePassword(email: string, oldPassword: string, newPassword: string, confirmNewPassword: string) {
     this.servicemanService.changePassword(email, oldPassword, newPassword, confirmNewPassword).subscribe(
       response => {
-        this.presentPassedToast("Password changed successfully.");
+        this.presentSuccessMessage("Password changed successfully.")
       }, error => {
         this.passwordErrorMessage = error.substring(37)
         this.passwordError = true
@@ -146,6 +157,7 @@ export class AccountScreenPage implements OnInit {
 
   editForm() {
     this.isEditing = !this.isEditing
+    this.updateSuccess = false // can't place in clearErrors() as success message shld remain update successfully
     this.clearErrors()
     this.fieldsUpdated = false
 
@@ -163,6 +175,7 @@ export class AccountScreenPage implements OnInit {
 
   update(updateForm: NgForm) {
 
+    this.updateSuccess = false
     this.clearErrors()
 
     if (updateForm.valid) {
@@ -175,10 +188,10 @@ export class AccountScreenPage implements OnInit {
 
       this.servicemanService.updateAccount(this.serviceman).subscribe(
         response => {
-          this.presentPassedToast("Account updated successfully");
           this.serviceman = response.serviceman
           this.sessionService.setCurrentServiceman(this.serviceman)
           this.editForm()
+          this.presentSuccessMessage("Account updated successfully.")
         },
         error => {
           this.serviceman = this.sessionService.getCurrentServiceman()
@@ -203,21 +216,39 @@ export class AccountScreenPage implements OnInit {
 
   }
 
+  presentSuccessMessage(message: string) {
+    this.updateSuccessMessage = message
+    this.updateSuccess = true
+    this.loadSuccessMessage()
+  }
+
+  loadSuccessMessage() {
+    this.messageAnimation = this.animationController.create()
+    this.messageAnimation
+      .addElement(this.successMessageViewChild.nativeElement)
+      .duration(300)
+      .easing('ease-out')
+      .iterations(1)
+      .fromTo('transform', 'translateY(30%)', 'translateY(40%)')
+      .fromTo('opacity', 0, 0.9)
+      .delay(150)
+
+    this.toggleAnimation()
+  }
+
+  toggleAnimation() {
+    if (this.isPlaying) {
+      this.messageAnimation.pause()
+    } else {
+      this.messageAnimation.play()
+    }
+  }
+
   clearErrors() {
     this.passwordError = false
     this.phoneNumberError = false
     this.streetNameError = false
     this.postalError = false
-  }
-
-  async presentPassedToast(messageToDisplay: string) {
-    const toast = await this.toastController.create({
-      message: messageToDisplay,
-      duration: 2000,
-      color: "medium",
-      position: "middle"
-    });
-    toast.present();
   }
 
   logout() {

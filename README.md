@@ -23,7 +23,10 @@ ionic generate class Serviceman
 ```bash
 // create file with name: bloodtype-enum.ts
 ```
-
+- When creating new standalone TS file, seperate each subword by period, and all lower casing (e.g. HttpConfigInterceptor)
+```bash
+// create file with name: http.config.interceptor.ts
+```
 # Coding Conventions
 
 - Organize import statements according to their respective frameworks. (e.g. @ionic, @angular, local directories)

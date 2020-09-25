@@ -34,7 +34,8 @@
         </ion-col>
         <ion-col>
           <div>
-            <ion-button id="changePasswordButton" size="small" (click)="changePasswordPrompt()">Change Password
+            <ion-button id="changePasswordButton" [disabled]="isEditing" size="small" (click)="changePasswordPrompt()">
+              Change Password
             </ion-button>
           </div>
         </ion-col>
@@ -194,6 +195,14 @@
           </div>
         </ion-col>
       </ion-row>
+
+      <div id="successMessage" #successMessage>
+        <ion-row *ngIf="updateSuccess">
+          <ion-item class="successMessage">
+            <ion-input style="color: #059731;" [readonly]=true>{{updateSuccessMessage}}</ion-input>
+          </ion-item>
+        </ion-row>
+      </div>
 
     </ion-grid>
 

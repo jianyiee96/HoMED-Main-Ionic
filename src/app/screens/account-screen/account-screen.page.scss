@@ -40,6 +40,17 @@ ion-button {
     border-bottom: 1px solid #d4c98e;
 }
 
+.successMessage {
+    --border-color: #059731;
+    --border-radius: 10px;
+    --border-width: 1px;
+    --ion-background-color:rgb(228, 220, 220);
+    color: #059731;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .errorMessage {
     color: red;
     margin-left: 8px;
