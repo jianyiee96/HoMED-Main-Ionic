@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'form-repository-screen',
-    loadChildren: () => import('./screens/form-repository-screen/form-repository-screen/form-repository-screen.module').then(m => m.FormRepositoryScreenPageModule),
+    loadChildren: () => import('./screens/form-repository-screen/form-repository-screen.module').then(m => m.FormRepositoryScreenPageModule),
     canActivate: [AuthGuard]
   },
   {
