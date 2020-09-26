@@ -39,7 +39,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     async startLoading() {
         this.isLoading = true;
         return await this.loadingController.create({
-            // duration: 5000,
             message: "loading",
             mode: "ios",
             showBackdrop: false

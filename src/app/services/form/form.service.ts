@@ -24,6 +24,17 @@ export class FormService {
     this.baseUrl = this.sessionService.getRootPath() + 'Form'
   }
 
+  createFormInstance(formTemplateId: number): Observable<any> {
+    let createFormInstanceReq = {
+      "servicemanId": this.sessionService.getCurrentServiceman().servicemanId,
+      "formTemplateId": formTemplateId
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/createFormInstance", createFormInstanceReq, httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   retrieveAllFormTemplates(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveAllFormTemplates").pipe(
       catchError(this.handleError)
