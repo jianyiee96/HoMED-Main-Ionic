@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { FormInstance } from 'src/app/classes/form-instance/form-instance';
 import { FormService } from 'src/app/services/form/form.service';
 
 @Component({
@@ -10,8 +11,13 @@ import { FormService } from 'src/app/services/form/form.service';
 })
 export class FormScreenPage implements OnInit {
 
+  formInstances: FormInstance[]
+
+  isShown: boolean
+
   constructor(
     private formService: FormService,
+    private ngZone: NgZone,
     private router: Router
   ) { }
 
@@ -19,6 +25,17 @@ export class FormScreenPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.isShown = true
+
+    this.formService.retrieveAllServicemanFormInstances().subscribe(
+      response => {
+        this.formInstances = response.formInstances
+      },
+      error => {
+        console.error(error);
+      }
+    )
+
     this.formService.retrieveAllFormTemplates().subscribe(
       response => {
         this.formService.formTemplates = response.formTemplates
@@ -27,6 +44,18 @@ export class FormScreenPage implements OnInit {
         console.log(error)
       }
     )
+  }
+
+  scrollHandler(event) {
+    this.ngZone.run(() => {
+      this.isShown = false
+    })
+  }
+
+  scrollStop(event) {
+    this.ngZone.run(() => {
+      this.isShown = true
+    })
   }
 
   redirectToFormRepo() {

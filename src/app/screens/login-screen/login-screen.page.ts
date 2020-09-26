@@ -43,6 +43,8 @@ export class LoginScreenPage implements OnInit {
 
   ionViewWillEnter() {
     this.clear()
+    this.email = "keithlck96@gmail.com"
+    this.password = "password"
   }
 
   login(loginForm: NgForm) {

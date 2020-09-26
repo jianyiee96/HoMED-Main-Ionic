@@ -7,34 +7,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  <ion-card>
+<ion-content fullscreen scrollEvents (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
+
+  <ion-card *ngFor="let fi of formInstances">
+
     <ion-card-header>
-      <ion-card-title>HIV Screening</ion-card-title>
-      <ion-card-subtitle>Updated: 10/10/2010</ion-card-subtitle>
+      <ion-card-title>{{fi.formTemplateMapping.formTemplateName}}</ion-card-title>
       <ion-card-subtitle>Status:
-        <ion-chip color="danger">
-          <ion-label>Not Submitted</ion-label>
+        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'DRAFT'" color="primary">
+          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip
+          *ngIf="fi.formInstanceStatusEnum == 'PRE_CONSULTATION || fi.formInstanceStatusEnum == NON_BOARD_REVIEW || fi.formInstanceStatusEnum == PRE_BOARD_REVIEW'"
+          color="secondary">
+          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'PENDING'" color="tertiary">
+          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'APPROVED'" color="success">
+          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'REJECTED'" color="danger">
+          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
         </ion-chip>
       </ion-card-subtitle>
     </ion-card-header>
+
   </ion-card>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Health Declaration</ion-card-title>
-      <ion-card-subtitle>Updated: 12/11/2010</ion-card-subtitle>
-      <ion-card-subtitle>Status:
-        <ion-chip color="success">
-          <ion-label>Submitted</ion-label>
-        </ion-chip>
-      </ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isShown">
+    <ion-fab-button (click)="redirectToFormRepo()" mode="ios">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
-
-<ion-footer class="ion-no-border">
-  <ion-toolbar transparent no-border>
-    <ion-button (click)="redirectToFormRepo()" expand="block">+</ion-button>
-  </ion-toolbar>
-</ion-footer>

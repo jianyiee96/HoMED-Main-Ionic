@@ -35,6 +35,12 @@ export class FormService {
     )
   }
 
+  retrieveAllServicemanFormInstances() {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllServicemanFormInstances?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   retrieveAllFormTemplates(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveAllFormTemplates").pipe(
       catchError(this.handleError)
