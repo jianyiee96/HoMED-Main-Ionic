@@ -59,6 +59,12 @@ export class FormService {
     );
   }
 
+  deleteFormInstance(formInstanceId: number): Observable<any> {
+    return this.httpClient.delete<any>(this.baseUrl + "/deleteFormInstance?formInstanceId=" + formInstanceId).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

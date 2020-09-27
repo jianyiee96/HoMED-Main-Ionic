@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { ModalController, NavParams } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavParams } from '@ionic/angular';
 
 import { FormInstance, FormInstanceFieldValue } from 'src/app/classes/form-instance/form-instance';
 import { FormService } from 'src/app/services/form/form.service';
@@ -22,7 +22,8 @@ export class EditFormInstanceModalPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParam: NavParams,
-    private formService: FormService
+    private formService: FormService,
+    public actionSheetController: ActionSheetController
   ) {
     this.formInstance = navParam.get("formInstance")
     this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
@@ -31,7 +32,6 @@ export class EditFormInstanceModalPage implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   // unloading the backend data to local JSON object, "formInstanceInputNgModels" for binding
@@ -60,8 +60,8 @@ export class EditFormInstanceModalPage implements OnInit {
         // necessary or the View will display an option twice, one with 'isChecked' property and another without
         this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
           .filter(function (fifv) {
-            return fifv.isChecked !== undefined;
-          });
+            return fifv.isChecked !== undefined
+          })
 
       }
       else if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
@@ -105,7 +105,7 @@ export class EditFormInstanceModalPage implements OnInit {
               const newFifv = new FormInstanceFieldValue(undefined, fifv.inputValue, undefined)
               return newFifv
             }
-          });
+          })
       }
 
       if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
@@ -164,10 +164,64 @@ export class EditFormInstanceModalPage implements OnInit {
 
   }
 
+  delete() {
+    this.formService.deleteFormInstance(this.formInstance.formInstanceId).subscribe(
+      response => {
+        this.dismiss()
+
+      }, error => {
+        console.log("Delte failed")
+
+      }
+    )
+  }
+
+  async presentOptions(updateForm: NgForm) {
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Options',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.delete()
+        }
+      }, {
+        text: 'Save',
+        icon: 'save',
+        handler: () => {
+          this.update(updateForm)
+        }
+      }, {
+        text: 'Consultations',
+        icon: 'git-network',
+        handler: () => {
+          console.log('Consultations clicked')
+        }
+      }, {
+        text: 'Submit',
+        icon: 'send',
+        handler: () => {
+          console.log('Submit clicked')
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => { }
+      }]
+    })
+
+    await actionSheet.present()
+
+  }
+
   dismiss() {
     this.modalController.dismiss({
       'dismissed': true
-    });
+    })
   }
 
 }
