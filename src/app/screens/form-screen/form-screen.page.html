@@ -9,7 +9,7 @@
 
 <ion-content fullscreen scrollEvents (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
 
-  <ion-card *ngFor="let fi of formInstances">
+  <ion-card *ngFor="let fi of formInstances" (click)="editFormInstance(fi)">
 
     <ion-card-header>
       <ion-card-title>{{fi.formTemplateMapping.formTemplateName}}</ion-card-title>

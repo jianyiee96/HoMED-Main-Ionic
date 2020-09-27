@@ -1,0 +1,227 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Form Editor</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+
+    <div>
+      <ion-card class="formTitle">
+        <ion-card-header>
+
+          <ion-card-title style="color: whitesmoke;">
+            {{formInstance.formTemplateMapping.formTemplateName}}
+          </ion-card-title>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngFor="let fif of formInstance.formInstanceFields">
+
+      <ion-card class="headerInput" *ngIf="fif.formFieldMapping.inputType == 'HEADER'">
+        <ion-card-header>
+
+          <ion-card-title style="color: whitesmoke;">
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="textInput" *ngIf="fif.formFieldMapping.inputType == 'TEXT'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-textarea placeholder="Enter more information here." [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+            </ion-textarea>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="numberInput" *ngIf="fif.formFieldMapping.inputType == 'NUMBER'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-input placeholder="Enter value here." [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}" type="number">
+            </ion-input>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="dateInput" *ngIf="fif.formFieldMapping.inputType == 'DATE'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-datetime placeholder="Select Date" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+            </ion-datetime>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="timeInput" *ngIf="fif.formFieldMapping.inputType == 'TIME'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-datetime placeholder="Select Time" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}" display-format="HH:mm"
+              picker-format="HH:mm">
+            </ion-datetime>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="radioInput" *ngIf="fif.formFieldMapping.inputType == 'RADIO_BUTTON'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-radio-group [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+                value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+                <ion-item *ngFor="let rb of fif.formFieldMapping.formFieldOptions">
+
+                  <ion-label>{{rb.formFieldOptionValue}}</ion-label>
+                  <ion-radio value="{{rb.formFieldOptionValue}}" slot="end" color="warning"></ion-radio>
+
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="checkInput" *ngIf="fif.formFieldMapping.inputType == 'CHECK_BOX'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
+
+                <ion-label>{{cb.formFieldOptionValue}}</ion-label>
+                <ion-checkbox [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked" slot="end"
+                  color="warning">
+                </ion-checkbox>
+
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="singleInput" *ngIf="fif.formFieldMapping.inputType == 'SINGLE_DROPDOWN'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+
+                <ion-label>Select an option</ion-label>
+                <ion-select [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+                  value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+
+                  <ion-select-option value="{{sd.formFieldOptionValue}}"
+                    *ngFor="let sd of fif.formFieldMapping.formFieldOptions">
+                    {{sd.formFieldOptionValue}}
+                  </ion-select-option>
+
+                </ion-select>
+
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card class="multiInput" *ngIf="fif.formFieldMapping.inputType == 'MULTI_DROPDOWN'">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+
+                <ion-label>Select an option(s)</ion-label>
+                <ion-select [ngModelOptions]="{standalone: true}" multiple="true"
+                  [(ngModel)]="formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId]">
+
+                  <ion-select-option *ngFor="let md of fif.formFieldMapping.formFieldOptions"
+                    value="{{md.formFieldOptionValue}}">
+                    {{md.formFieldOptionValue}}
+                  </ion-select-option>
+
+                </ion-select>
+
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-header>
+      </ion-card>
+
+    </div>
+
+    <ion-button type="submit" ion-button block>
+      Update
+    </ion-button>
+
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button type="submit">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+
+  </form>
+</ion-content>

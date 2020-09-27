@@ -23,11 +23,11 @@
 
       <ion-card-subtitle>
         Privacy:
-        <ion-chip color="secondary" *ngIf="!isPublic">
+        <ion-chip color="danger" *ngIf="ft.isPublic == false">
           <ion-icon name="lock-closed-outline"></ion-icon>
           <ion-label>Private</ion-label>
         </ion-chip>
-        <ion-chip color="warning" *ngIf="isPublic">
+        <ion-chip color="success" *ngIf="ft.isPublic == true">
           <ion-icon name="lock-open-outline"></ion-icon>
           <ion-label>Public</ion-label>
         </ion-chip>

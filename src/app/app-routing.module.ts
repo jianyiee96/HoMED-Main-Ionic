@@ -41,7 +41,12 @@ const routes: Routes = [
   },
   {
     path: 'view-form-template-modal',
-    loadChildren: () => import('./modals/view-form-template-modal/view-form-template-modal/view-form-template-modal.module').then(m => m.ViewFormTemplateModalPageModule),
+    loadChildren: () => import('./modals/view-form-template-modal/view-form-template-modal.module').then(m => m.ViewFormTemplateModalPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-form-instance-modal',
+    loadChildren: () => import('./modals/edit-form-instance-modal/edit-form-instance-modal.module').then(m => m.EditFormInstanceModalPageModule),
     canActivate: [AuthGuard]
   },
 ];

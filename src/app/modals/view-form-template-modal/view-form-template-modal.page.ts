@@ -47,7 +47,7 @@ export class ViewFormTemplateModalPage implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
-      message: 'Click ok to be redirected to the forms screen.',
+      message: 'Tap Ok to be redirected to the forms screen.',
       cssClass: "activateAccountAlert",
       buttons: [
         {

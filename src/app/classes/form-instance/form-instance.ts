@@ -27,16 +27,35 @@ export class FormInstanceField {
 
     formInstanceFieldId: number
     formFieldMapping: FormFieldMapping
-    formInstanceFieldValues: []
+    formInstanceFieldValues: FormInstanceFieldValue[]
 
     constructor(
         formInstanceFieldId?: number,
         formFieldMapping?: FormFieldMapping,
-        formInstanceFieldValues?: []
+        formInstanceFieldValues?: FormInstanceFieldValue[]
     ) {
         this.formInstanceFieldId = formInstanceFieldId
         this.formFieldMapping = formFieldMapping
         this.formInstanceFieldValues = formInstanceFieldValues
+    }
+
+}
+
+export class FormInstanceFieldValue {
+
+    formInstanceFieldValueId: number
+    inputValue: string
+
+    isChecked: boolean
+
+    constructor(
+        formInstanceFieldValueId?: number,
+        inputValue?: string,
+        isChecked?: boolean
+    ) {
+        this.formInstanceFieldValueId = formInstanceFieldValueId
+        this.inputValue = inputValue
+        this.isChecked = isChecked
     }
 
 }

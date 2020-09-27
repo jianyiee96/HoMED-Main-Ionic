@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { FormTemplate } from 'src/app/classes/form-template/form-template';
-import { ViewFormTemplateModalPage } from 'src/app/modals/view-form-template-modal/view-form-template-modal/view-form-template-modal.page';
+import { ViewFormTemplateModalPage } from 'src/app/modals/view-form-template-modal/view-form-template-modal.page';
 import { FormService } from 'src/app/services/form/form.service';
 
 @Component({

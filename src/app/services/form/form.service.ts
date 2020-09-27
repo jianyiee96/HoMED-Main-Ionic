@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 
 import { SessionService } from '../session/session.service';
 import { FormTemplate } from 'src/app/classes/form-template/form-template';
+import { FormInstance } from 'src/app/classes/form-instance/form-instance';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,6 +20,7 @@ export class FormService {
   baseUrl: string
 
   formTemplates: FormTemplate[]
+  currentFormInstance: FormInstance
 
   constructor(private httpClient: HttpClient, private sessionService: SessionService) {
     this.baseUrl = this.sessionService.getRootPath() + 'Form'
@@ -43,6 +45,16 @@ export class FormService {
 
   retrieveAllFormTemplates(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveAllFormTemplates").pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateFormInstanceFieldValues(formInstance: FormInstance) {
+    let updateFormInstanceReq = {
+      "formInstance": formInstance
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/updateFormInstanceFieldValues", updateFormInstanceReq, httpOptions).pipe(
       catchError(this.handleError)
     );
   }

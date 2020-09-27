@@ -1,7 +1,9 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 import { FormInstance } from 'src/app/classes/form-instance/form-instance';
+import { EditFormInstanceModalPage } from 'src/app/modals/edit-form-instance-modal/edit-form-instance-modal.page';
 import { FormService } from 'src/app/services/form/form.service';
 
 @Component({
@@ -16,6 +18,7 @@ export class FormScreenPage implements OnInit {
   isShown: boolean
 
   constructor(
+    private modalController: ModalController,
     private formService: FormService,
     private ngZone: NgZone,
     private router: Router
@@ -58,6 +61,20 @@ export class FormScreenPage implements OnInit {
     })
   }
 
+  async editFormInstance(formInstance: FormInstance) {
+    const modal = await this.modalController.create({
+      component: EditFormInstanceModalPage,
+      componentProps: {
+        formInstance: formInstance
+      }
+    });
+
+    modal.onDidDismiss().then(() => {
+      this.ionViewWillEnter()
+    })
+    return await modal.present();
+  }
+  
   redirectToFormRepo() {
     this.router.navigate(["/form-repository-screen"])
   }
