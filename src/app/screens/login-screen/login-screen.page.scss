@@ -16,10 +16,16 @@ ion-item {
   --highlight-height: 0;
 }
 
+#logo {
+  display: block;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #welcomeText {
   text-align: center;
   color: #00416d;
-  margin-top: 30%;
 }
 
 #welcomeSubText {
