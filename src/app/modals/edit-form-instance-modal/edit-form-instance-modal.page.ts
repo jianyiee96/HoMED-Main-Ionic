@@ -180,7 +180,7 @@ export class EditFormInstanceModalPage implements OnInit {
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
-      cssClass: 'my-custom-class',
+      cssClass: 'activateAccountAlert',
       buttons: [{
         text: 'Delete',
         role: 'destructive',
@@ -216,6 +216,10 @@ export class EditFormInstanceModalPage implements OnInit {
 
     await actionSheet.present()
 
+  }
+
+  singleDropdownOptions: any = {
+    cssClass: 'activateAccountAlert'
   }
 
   dismiss() {

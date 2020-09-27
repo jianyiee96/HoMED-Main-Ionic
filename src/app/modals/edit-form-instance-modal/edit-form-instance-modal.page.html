@@ -34,7 +34,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="textInput" *ngIf="fif.formFieldMapping.inputType == 'TEXT'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TEXT'">
         <ion-card-header>
 
           <ion-card-title>
@@ -44,14 +44,25 @@
           <ion-card-content>
             <ion-textarea placeholder="Enter more information here." [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
-              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [disabled]="!fif.formFieldMapping.isServicemanEditable">
             </ion-textarea>
           </ion-card-content>
+
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="numberInput" *ngIf="fif.formFieldMapping.inputType == 'NUMBER'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'NUMBER'">
         <ion-card-header>
 
           <ion-card-title>
@@ -61,14 +72,25 @@
           <ion-card-content>
             <ion-input placeholder="Enter value here." [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
-              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}" type="number">
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [disabled]="!fif.formFieldMapping.isServicemanEditable" type="number">
             </ion-input>
           </ion-card-content>
 
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
+
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="dateInput" *ngIf="fif.formFieldMapping.inputType == 'DATE'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'DATE'">
         <ion-card-header>
 
           <ion-card-title>
@@ -76,16 +98,27 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-datetime placeholder="Select Date" [ngModelOptions]="{standalone: true}"
+            <ion-datetime placeholder="Select Date." [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
-              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [disabled]="!fif.formFieldMapping.isServicemanEditable">
             </ion-datetime>
           </ion-card-content>
+
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="timeInput" *ngIf="fif.formFieldMapping.inputType == 'TIME'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TIME'">
         <ion-card-header>
 
           <ion-card-title>
@@ -93,17 +126,27 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-datetime placeholder="Select Time" [ngModelOptions]="{standalone: true}"
+            <ion-datetime placeholder="Select Time." [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
-              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}" display-format="HH:mm"
-              picker-format="HH:mm">
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [disabled]="!fif.formFieldMapping.isServicemanEditable" display-format="HH:mm" picker-format="HH:mm">
             </ion-datetime>
           </ion-card-content>
+
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="radioInput" *ngIf="fif.formFieldMapping.inputType == 'RADIO_BUTTON'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'RADIO_BUTTON'">
         <ion-card-header>
 
           <ion-card-title>
@@ -112,23 +155,34 @@
 
           <ion-card-content>
             <ion-list>
-              <ion-radio-group [ngModelOptions]="{standalone: true}"
+              <ion-radio-group [ngModelOptions]="{standalone: true}" allowEmptySelection="true"
                 [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
                 value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
                 <ion-item *ngFor="let rb of fif.formFieldMapping.formFieldOptions">
 
                   <ion-label>{{rb.formFieldOptionValue}}</ion-label>
-                  <ion-radio value="{{rb.formFieldOptionValue}}" slot="end" color="warning"></ion-radio>
+                  <ion-radio value="{{rb.formFieldOptionValue}}" [disabled]="!fif.formFieldMapping.isServicemanEditable"
+                    slot="end" color="primary"></ion-radio>
 
                 </ion-item>
               </ion-radio-group>
             </ion-list>
           </ion-card-content>
 
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
+
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="checkInput" *ngIf="fif.formFieldMapping.inputType == 'CHECK_BOX'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'CHECK_BOX'">
         <ion-card-header>
 
           <ion-card-title>
@@ -141,18 +195,28 @@
 
                 <ion-label>{{cb.formFieldOptionValue}}</ion-label>
                 <ion-checkbox [ngModelOptions]="{standalone: true}"
-                  [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked" slot="end"
-                  color="warning">
+                  [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
                 </ion-checkbox>
 
               </ion-item>
             </ion-list>
           </ion-card-content>
 
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
+
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="singleInput" *ngIf="fif.formFieldMapping.inputType == 'SINGLE_DROPDOWN'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'SINGLE_DROPDOWN'">
         <ion-card-header>
 
           <ion-card-title>
@@ -164,9 +228,10 @@
               <ion-item>
 
                 <ion-label>Select an option</ion-label>
-                <ion-select [ngModelOptions]="{standalone: true}"
+                <ion-select [ngModelOptions]="{standalone: true}" [interfaceOptions]="singleDropdownOptions"
                   [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
-                  value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+                  value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable">
 
                   <ion-select-option value="{{sd.formFieldOptionValue}}"
                     *ngFor="let sd of fif.formFieldMapping.formFieldOptions">
@@ -179,10 +244,20 @@
             </ion-list>
           </ion-card-content>
 
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
+
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="multiInput" *ngIf="fif.formFieldMapping.inputType == 'MULTI_DROPDOWN'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'MULTI_DROPDOWN'">
         <ion-card-header>
 
           <ion-card-title>
@@ -195,7 +270,9 @@
 
                 <ion-label>Select an option(s)</ion-label>
                 <ion-select [ngModelOptions]="{standalone: true}" multiple="true"
-                  [(ngModel)]="formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId]">
+                  [interfaceOptions]="singleDropdownOptions"
+                  [(ngModel)]="formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId]"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable">
 
                   <ion-select-option *ngFor="let md of fif.formFieldMapping.formFieldOptions"
                     value="{{md.formFieldOptionValue}}">
@@ -208,14 +285,27 @@
             </ion-list>
           </ion-card-content>
 
+          <ion-chip color="danger" *ngIf="fif.formFieldMapping.isRequired">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-label>Blocked</ion-label>
+          </ion-chip>
+
         </ion-card-header>
       </ion-card>
 
     </div>
 
-    <ion-button (click)="presentOptions(updateForm)" ion-button block>
-      Options
-    </ion-button>
-
   </form>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button (click)="presentOptions(updateForm)" expand="block"
+      style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">Options</ion-button>
+  </ion-toolbar>
+</ion-footer>

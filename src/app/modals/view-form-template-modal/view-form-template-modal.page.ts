@@ -66,6 +66,7 @@ export class ViewFormTemplateModalPage implements OnInit {
 
   async openPicker(options: FormFieldOption[]) {
     const picker = await this.pickerController.create({
+      cssClass: 'activateAccountAlert',
       backdropDismiss: false,
       buttons: [{
         text: "Close",

@@ -1,3 +1,20 @@
+ion-content {
+    --ion-background-color:#e3dfc8;
+}
+
+ion-card {
+    --background: #f5f1da;
+}
+
+ion-card-content {
+    padding-left: 0%;
+    color: black;
+}
+
+ion-list {
+    background-color: #e3dfc8;
+}
+
 .formTitle {
     text-align: center;
     --background: #00416d;
@@ -7,36 +24,4 @@
 .headerInput {
     --background: #03558b;
     color: whitesmoke;
-}
-
-.textInput {
-    --background: #f5f1da;
-}
-
-.numberInput {
-    --background: #f5f1da;
-}
-
-.dateInput {
-    --background: #f5f1da;
-}
-
-.timeInput {
-    --background: #f5f1da;
-}
-
-.radioInput {
-    --background: #f5f1da;
-}
-
-.checkInput {
-    --background: #f5f1da;
-}
-
-.singleInput {
-    --background: #f5f1da;
-}
-
-.multiInput {
-    --background: #f5f1da;
 }
