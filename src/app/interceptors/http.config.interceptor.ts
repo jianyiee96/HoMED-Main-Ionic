@@ -18,26 +18,26 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
 
             map((event: HttpEvent<any>) => {
-                // if (event instanceof HttpResponse) {
-                //     console.log('event returned to interceptot--->>>', event)
-                // }
+                if (event instanceof HttpResponse) {
+                    console.log('event returned to interceptor--->>>', event)
+                    this.dismissLoading()
+                }
 
-                this.isLoading = false
                 return event
             }),
             catchError((error: HttpErrorResponse) => {
                 console.error('error returned to interceptor--->>>', error)
+                this.dismissLoading()
 
-                this.isLoading = false
                 return throwError(error)
             })
 
-        );
+        )
 
     }
 
     async startLoading() {
-        this.isLoading = true;
+        this.isLoading = true
         return await this.loadingController.create({
             message: "loading",
             mode: "ios",
@@ -47,13 +47,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (!this.isLoading) {
                     loadingElement.dismiss().then()
                 }
-            });
-        });
+            })
+        })
     }
 
-    // async dismissLoading() {
-    //     this.isLoading = false;
-    //     // return await this.loadingController.dismiss().then(() => console.log('dismissed'));
-    // }
+    async dismissLoading() {
+        this.isLoading = false
+        return await this.loadingController.dismiss().then(() => console.log('Dismissed Loading Spinner.'))
+    }
 
 }

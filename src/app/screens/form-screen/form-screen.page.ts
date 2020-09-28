@@ -39,14 +39,6 @@ export class FormScreenPage implements OnInit {
       }
     )
 
-    this.formService.retrieveAllFormTemplates().subscribe(
-      response => {
-        this.formService.formTemplates = response.formTemplates
-      },
-      error => {
-        console.log(error)
-      }
-    )
   }
 
   scrollHandler(event) {

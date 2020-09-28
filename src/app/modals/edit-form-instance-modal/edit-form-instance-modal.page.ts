@@ -170,7 +170,7 @@ export class EditFormInstanceModalPage implements OnInit {
         this.dismiss()
 
       }, error => {
-        console.log("Delte failed")
+        console.log("Delete failed")
 
       }
     )

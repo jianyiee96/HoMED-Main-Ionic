@@ -26,10 +26,19 @@ export class FormRepositoryScreenPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.formTemplates = this.formService.formTemplates
-    this.formTemplates.forEach(ft => {
-      ft.datePublished = this.parseDate(ft.datePublished).substring(0, 10)
-    })
+    this.formService.retrieveAllFormTemplates().subscribe(
+      response => {
+        this.formService.formTemplates = response.formTemplates
+        
+        this.formTemplates = this.formService.formTemplates
+        this.formTemplates.forEach(ft => {
+          ft.datePublished = this.parseDate(ft.datePublished).substring(0, 10)
+        })
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   async presentFormTemplate(formTemplate: FormTemplate) {
