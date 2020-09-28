@@ -19,7 +19,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
-                    console.log('event returned to interceptor--->>>', event)
+                    // console.log('event returned to interceptor--->>>', event)
                     this.dismissLoading()
                 }
 
@@ -53,7 +53,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     async dismissLoading() {
         this.isLoading = false
-        return await this.loadingController.dismiss().then(() => console.log('Dismissed Loading Spinner.'))
+        return await this.loadingController.dismiss().then(() => { })
     }
 
 }

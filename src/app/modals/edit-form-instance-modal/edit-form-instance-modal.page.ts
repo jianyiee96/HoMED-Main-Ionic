@@ -26,7 +26,6 @@ export class EditFormInstanceModalPage implements OnInit {
     public actionSheetController: ActionSheetController
   ) {
     this.formInstance = navParam.get("formInstance")
-    this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
 
     this.unloadNgModels()
   }

@@ -24,7 +24,6 @@ export class ViewFormTemplateModalPage implements OnInit {
     private router: Router,
   ) {
     this.formTemplate = navParam.get("formTemplate")
-    this.formTemplate.formFields.sort((x, y) => (x.position - y.position))
   }
 
   ngOnInit() {
