@@ -42,7 +42,7 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-textarea placeholder="Enter more information here." [ngModelOptions]="{standalone: true}"
+            <ion-textarea placeholder="Enter text input here." [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
               value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
               [readonly]="!fif.formFieldMapping.isServicemanEditable">
