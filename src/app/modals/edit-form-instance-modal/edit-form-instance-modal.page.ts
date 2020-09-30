@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { ActionSheetController, ModalController, NavParams } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavParams, ToastController } from '@ionic/angular';
 
 import { FormInstance, FormInstanceFieldValue } from 'src/app/classes/form-instance/form-instance';
 import { FormService } from 'src/app/services/form/form.service';
@@ -23,7 +23,8 @@ export class EditFormInstanceModalPage implements OnInit {
     private modalController: ModalController,
     private navParam: NavParams,
     private formService: FormService,
-    public actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private toastController: ToastController,
   ) {
     this.formInstance = navParam.get("formInstance")
 
@@ -147,30 +148,27 @@ export class EditFormInstanceModalPage implements OnInit {
   }
 
   update(updateForm: NgForm) {
-
     if (updateForm.valid) {
       this.loadNgModels()
 
       this.formService.updateFormInstanceFieldValues(this.formInstance).subscribe(
         response => {
-          console.log("swee")
           this.dismiss()
         }, error => {
-          console.log("losted")
+          console.log(error)
+          this.presentFailedToast(error.substring(37))
         }
       )
     }
-
   }
 
   delete() {
     this.formService.deleteFormInstance(this.formInstance.formInstanceId).subscribe(
       response => {
         this.dismiss()
-
       }, error => {
-        console.log("Delete failed")
-
+        console.log(error)
+        this.presentFailedToast(error.substring(37))
       }
     )
   }
@@ -215,6 +213,16 @@ export class EditFormInstanceModalPage implements OnInit {
 
     await actionSheet.present()
 
+  }
+
+  async presentFailedToast(messageToDisplay: string) {
+    const toast = await this.toastController.create({
+      message: messageToDisplay,
+      duration: 1500,
+      color: "danger",
+      position: "bottom"
+    })
+    toast.present()
   }
 
   singleDropdownOptions: any = {
