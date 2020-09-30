@@ -1,4 +1,4 @@
-import { FormField } from '../form-template/form-template'
+import { FormField, FormTemplate } from '../form-template/form-template'
 import { FormInstanceStatusEnum } from '../forminstancestatus-enum'
 import { FormTemplateStatusEnum } from '../formtemplatestatus-enum'
 
@@ -7,13 +7,13 @@ export class FormInstance {
     formInstanceId: number
     formInstanceStatusEnum: FormInstanceStatusEnum // DRAFT, PENDING, APPROVED
     formInstanceFields: FormInstanceField[]
-    formTemplateMapping: FormTemplateMapping
+    formTemplateMapping: FormTemplate
 
     constructor(
         formInstanceId?: number,
         formInstanceStatusEnum?: FormInstanceStatusEnum,
         formInstanceFields?: FormInstanceField[],
-        formTemplateMapping?: FormTemplateMapping
+        formTemplateMapping?: FormTemplate
     ) {
         this.formInstanceId = formInstanceId
         this.formInstanceStatusEnum = formInstanceStatusEnum
@@ -56,36 +56,6 @@ export class FormInstanceFieldValue {
         this.formInstanceFieldValueId = formInstanceFieldValueId
         this.inputValue = inputValue
         this.isChecked = isChecked
-    }
-
-}
-
-export class FormTemplateMapping {
-
-    formTemplateId: number
-    dateCreated: Date
-    datePublished: Date
-    formTemplateName: string // induction form
-    formTemplateStatus: FormTemplateStatusEnum // draft, deleted, published, archived
-    isPublic: boolean
-    formFields: FormField[]
-
-    constructor(
-        formTemplateId?: number,
-        dateCreated?: Date,
-        datePublished?: Date,
-        formTemplateName?: string,
-        formTemplateStatus?: FormTemplateStatusEnum,
-        isPublic?: boolean,
-        formFields?: FormField[]
-    ) {
-        this.formTemplateId = formTemplateId
-        this.dateCreated = dateCreated
-        this.datePublished = datePublished
-        this.formTemplateName = formTemplateName
-        this.formTemplateStatus = formTemplateStatus
-        this.isPublic = isPublic
-        this.formFields = formFields
     }
 
 }

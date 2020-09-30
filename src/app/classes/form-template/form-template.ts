@@ -1,18 +1,20 @@
+import { FormTemplateStatusEnum } from '../formtemplatestatus-enum'
+
 export class FormTemplate {
 
-    dateCreated: string
-    datePublished: string
+    dateCreated: Date
+    datePublished: Date
     formFields: FormField[]
-    formTemplateStatus: string
+    formTemplateStatus: FormTemplateStatusEnum
     formTemplateId: number
     formTemplateName: string
     isPublic: boolean
 
     constructor(
-        dateCreated?: string,
-        datePublished?: string,
+        dateCreated?: Date,
+        datePublished?: Date,
         formFields?: FormField[],
-        formTemplateStatus?: string,
+        formTemplateStatus?: FormTemplateStatusEnum,
         formTemplateId?: number,
         formTemplateName?: string,
         isPublic?: boolean,
