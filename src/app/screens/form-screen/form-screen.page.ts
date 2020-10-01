@@ -13,7 +13,7 @@ import { FormService } from 'src/app/services/form/form.service';
 })
 export class FormScreenPage implements OnInit {
 
-  formInstances: FormInstance[]
+  formInstances: FormInstance[] = []
 
   isShown: boolean
 

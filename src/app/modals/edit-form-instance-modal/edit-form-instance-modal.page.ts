@@ -27,6 +27,7 @@ export class EditFormInstanceModalPage implements OnInit {
     private toastController: ToastController,
   ) {
     this.formInstance = navParam.get("formInstance")
+    this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
 
     this.unloadNgModels()
   }

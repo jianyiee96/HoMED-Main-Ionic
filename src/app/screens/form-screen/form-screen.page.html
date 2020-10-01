@@ -9,6 +9,10 @@
 
 <ion-content fullscreen scrollEvents (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
 
+  <div class="zeroFormsLabel" *ngIf="formInstances.length === 0">
+    <ion-text>Add a form from the form repository to get started!</ion-text>
+  </div>
+
   <ion-card *ngFor="let fi of formInstances" (click)="editFormInstance(fi)">
 
     <ion-card-header>
@@ -17,18 +21,10 @@
         <ion-chip *ngIf="fi.formInstanceStatusEnum == 'DRAFT'" color="primary">
           <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
         </ion-chip>
-        <ion-chip
-          *ngIf="fi.formInstanceStatusEnum == 'PRE_CONSULTATION || fi.formInstanceStatusEnum == NON_BOARD_REVIEW || fi.formInstanceStatusEnum == PRE_BOARD_REVIEW'"
-          color="secondary">
+        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'ARCHIVED'" color="secondary">
           <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
         </ion-chip>
-        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'PENDING'" color="tertiary">
-          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
-        </ion-chip>
-        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'APPROVED'" color="success">
-          <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
-        </ion-chip>
-        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'REJECTED'" color="danger">
+        <ion-chip *ngIf="fi.formInstanceStatusEnum == 'SUBMITTED'" color="success">
           <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
         </ion-chip>
       </ion-card-subtitle>

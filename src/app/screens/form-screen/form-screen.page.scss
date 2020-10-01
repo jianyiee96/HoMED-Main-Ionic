@@ -21,3 +21,11 @@ ion-button {
 ion-fab-button {
     --background: #00416d;
 }
+
+.zeroFormsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
+}
