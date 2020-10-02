@@ -9,7 +9,6 @@
 
 <ion-content>
 
-
   <div>
     <ion-card class="formTitle">
       <ion-card-header>
@@ -23,7 +22,6 @@
   </div>
 
   <div *ngFor="let fif of formInstance.formInstanceFields; let i = index">
-
     <ion-card class="headerInput" *ngIf="fif.formFieldMapping.inputType == 'HEADER'">
       <ion-card-header>
 
@@ -44,7 +42,8 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-textarea placeholder="Enter text input here." value="{{fif.formInstanceFieldValues[0].inputValue}}" [readonly]=true>
+          <ion-textarea placeholder="Enter text input here." value="{{fif.formInstanceFieldValues[0].inputValue}}"
+            [readonly]=true>
           </ion-textarea>
         </ion-card-content>
 
@@ -66,8 +65,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-input placeholder="Enter value here."
-            value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-input placeholder="Enter value here." value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]="true" type="number">
           </ion-input>
         </ion-card-content>
@@ -90,8 +88,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-datetime placeholder="Select Date." 
-            value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-datetime placeholder="Select Date." value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]="true">
           </ion-datetime>
         </ion-card-content>
@@ -114,8 +111,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-datetime placeholder="Select Time." 
-            value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-datetime placeholder="Select Time." value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]="true" display-format="HH:mm" picker-format="HH:mm">
           </ion-datetime>
         </ion-card-content>
@@ -139,16 +135,20 @@
 
         <ion-card-content>
           <ion-list>
-            <ion-radio-group
-              value="{{fif.formInstanceFieldValues[0].inputValue}}">
-              <ion-item *ngFor="let rb of fif.formFieldMapping.formFieldOptions">
-
-                <ion-label>{{rb.formFieldOptionValue}}</ion-label>
-                <ion-radio value="{{rb.formFieldOptionValue}}" [disabled]="true"
-                  slot="end" color="primary"></ion-radio>
-
-              </ion-item>
-            </ion-radio-group>
+            <ion-item *ngFor="let rb of fif.formFieldMapping.formFieldOptions">
+              <ion-label>
+                <div *ngIf="fif.formInstanceFieldValues[0].inputValue == rb.formFieldOptionValue">
+                  <b>{{rb.formFieldOptionValue}}</b>
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                    <ion-label>Selected</ion-label>
+                  </ion-chip>
+                </div>
+                <div *ngIf="fif.formInstanceFieldValues[0].inputValue != rb.formFieldOptionValue">
+                  {{rb.formFieldOptionValue}}
+                </div>
+              </ion-label>
+            </ion-item>
           </ion-list>
         </ion-card-content>
 
@@ -171,11 +171,18 @@
 
         <ion-card-content>
           <ion-list>
-            <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
-              <ion-label>{{cb.formFieldOptionValue}}</ion-label>
-              <ion-checkbox [(ngModel)]="checkboxState[cb.formFieldOptionId]"
-                [disabled]="true" slot="end" color="primary">
-              </ion-checkbox>
+            <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions">
+              <ion-label>
+                <div *ngIf="checkboxState[cb.formFieldOptionId]">
+                  <b>{{cb.formFieldOptionValue}}</b>
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                    <ion-label>Selected</ion-label>
+                  </ion-chip>
+                </div>
+                <div *ngIf="!checkboxState[cb.formFieldOptionId]">
+                  {{cb.formFieldOptionValue}}</div>
+              </ion-label>
             </ion-item>
           </ion-list>
         </ion-card-content>
@@ -199,20 +206,18 @@
 
         <ion-card-content>
           <ion-list>
-            <ion-item>
-
-              <ion-label>Select an option</ion-label>
-              <ion-select 
-                value="{{fif.formInstanceFieldValues[0].inputValue}}"
-                [disabled]="true">
-
-                <ion-select-option value="{{sd.formFieldOptionValue}}"
-                  *ngFor="let sd of fif.formFieldMapping.formFieldOptions">
-                  {{sd.formFieldOptionValue}}
-                </ion-select-option>
-
-              </ion-select>
-
+            <ion-item *ngFor="let sd of fif.formFieldMapping.formFieldOptions">
+              <ion-label>
+                <div *ngIf="fif.formInstanceFieldValues[0].inputValue == sd.formFieldOptionValue">
+                  <b>{{sd.formFieldOptionValue}}</b>
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                    <ion-label>Selected</ion-label>
+                  </ion-chip>
+                </div>
+                <div *ngIf="fif.formInstanceFieldValues[0].inputValue != sd.formFieldOptionValue">
+                  {{sd.formFieldOptionValue}}</div>
+              </ion-label>
             </ion-item>
           </ion-list>
         </ion-card-content>
@@ -236,21 +241,20 @@
 
         <ion-card-content>
           <ion-list>
-            <ion-item>
-
-              <ion-label>Select an option(s)</ion-label>
-              <ion-select
-                [(ngModel)]="multiSelectValues[fif.formInstanceFieldId]"
-                [disabled]="true">
-
-                <ion-select-option *ngFor="let md of fif.formFieldMapping.formFieldOptions"
-                  value="{{md.formFieldOptionValue}}">
-                  {{md.formFieldOptionValue}}
-                </ion-select-option>
-
-              </ion-select>
-
+            <ion-item *ngFor="let md of fif.formFieldMapping.formFieldOptions">
+              <ion-label>
+                <div *ngIf="multiSelectValues[fif.formInstanceFieldId].includes(md.formFieldOptionValue)">
+                  <b>{{md.formFieldOptionValue}}</b>
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                    <ion-label>Selected</ion-label>
+                  </ion-chip>
+                </div>
+                <div *ngIf="!multiSelectValues[fif.formInstanceFieldId].includes(md.formFieldOptionValue)">
+                  {{md.formFieldOptionValue}}</div>
+              </ion-label>
             </ion-item>
+
           </ion-list>
         </ion-card-content>
 
@@ -261,7 +265,6 @@
 
       </ion-card-header>
     </ion-card>
-
   </div>
 
 </ion-content>
