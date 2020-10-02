@@ -35,7 +35,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'TEXT'">
+    <div *ngIf="ff.inputType == 'TEXT' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -63,7 +63,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'NUMBER'">
+    <div *ngIf="ff.inputType == 'NUMBER' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -91,7 +91,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'DATE'">
+    <div *ngIf="ff.inputType == 'DATE' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -119,7 +119,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'TIME'">
+    <div *ngIf="ff.inputType == 'TIME' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -147,7 +147,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'RADIO_BUTTON'">
+    <div *ngIf="ff.inputType == 'RADIO_BUTTON' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -175,7 +175,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'CHECK_BOX'">
+    <div *ngIf="ff.inputType == 'CHECK_BOX' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -203,7 +203,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'SINGLE_DROPDOWN'">
+    <div *ngIf="ff.inputType == 'SINGLE_DROPDOWN' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 
@@ -231,7 +231,7 @@
       </ion-card>
     </div>
 
-    <div *ngIf="ff.inputType == 'MULTI_DROPDOWN'">
+    <div *ngIf="ff.inputType == 'MULTI_DROPDOWN' && ff.isServicemanEditable">
       <ion-card>
         <ion-card-header>
 

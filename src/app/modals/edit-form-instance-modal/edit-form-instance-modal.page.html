@@ -34,7 +34,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TEXT'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TEXT' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -64,7 +64,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'NUMBER'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'NUMBER' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -94,7 +94,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'DATE'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'DATE' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -124,7 +124,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TIME'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TIME' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -154,7 +154,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'RADIO_BUTTON'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'RADIO_BUTTON' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -192,7 +192,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'CHECK_BOX'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'CHECK_BOX' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -225,7 +225,8 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'SINGLE_DROPDOWN'">
+      <ion-card
+        *ngIf="fif.formFieldMapping.inputType == 'SINGLE_DROPDOWN' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>
@@ -268,7 +269,7 @@
         </ion-card-header>
       </ion-card>
 
-      <ion-card *ngIf="fif.formFieldMapping.inputType == 'MULTI_DROPDOWN'">
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'MULTI_DROPDOWN' && fif.formFieldMapping.isServicemanEditable">
         <ion-card-header>
 
           <ion-card-title>

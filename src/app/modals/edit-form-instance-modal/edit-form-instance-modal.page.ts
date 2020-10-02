@@ -209,6 +209,16 @@ export class EditFormInstanceModalPage implements OnInit {
     if (updateForm.valid) {
       this.loadNgModels()
 
+      this.formInstance.formInstanceFields.forEach(fif => {
+        let newFormInstanceFieldValues = []
+        fif.formInstanceFieldValues.forEach(fifv => {
+          if (fifv.inputValue != null && fifv.inputValue != "") {
+            newFormInstanceFieldValues.push(fifv)
+          }
+        })
+        fif.formInstanceFieldValues = newFormInstanceFieldValues
+      })
+      
       this.formService.updateFormInstanceFieldValues(this.formInstance).subscribe(
         response => {
           this.dismiss()
@@ -225,7 +235,7 @@ export class EditFormInstanceModalPage implements OnInit {
 
     var formValidty = true
 
-    this.formInstance.formInstanceFields.forEach( fif => {
+    this.formInstance.formInstanceFields.forEach(fif => {
       this.formInstanceErrorChips[fif.formInstanceFieldId] = false
     })
 
@@ -233,7 +243,7 @@ export class EditFormInstanceModalPage implements OnInit {
       this.loadNgModels()
 
       formInstanceFields: for (let fif of this.formInstance.formInstanceFields) {
-        
+
         // checking for checkbox & multi_select input types
         if (fif.formInstanceFieldValues.length < 1 && fif.formFieldMapping.isServicemanEditable == true) {
           console.log(`${fif.formFieldMapping.question} not answered`);
@@ -241,7 +251,7 @@ export class EditFormInstanceModalPage implements OnInit {
           this.formInstanceErrorChips[fif.formInstanceFieldId] = true
           formValidty = false
           // break formInstanceFields
-        } 
+        }
 
         _: for (let fifv of fif.formInstanceFieldValues) {
 
