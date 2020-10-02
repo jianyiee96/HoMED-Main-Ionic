@@ -262,6 +262,7 @@ export class EditFormInstanceModalPage implements OnInit {
         this.formService.submitFormInstance(this.formInstance).subscribe(
           response => {
             console.log(`submitted successfully`);
+            this.dismiss()
           },
           error => {
             console.log(error);
