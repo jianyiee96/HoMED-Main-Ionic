@@ -56,10 +56,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -86,10 +86,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -116,10 +116,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -146,10 +146,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -184,10 +184,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -204,13 +204,10 @@
           <ion-card-content>
             <ion-list>
               <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
-
                 <ion-label>{{cb.formFieldOptionValue}}</ion-label>
-                <ion-checkbox [ngModelOptions]="{standalone: true}"
-                  [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked"
+                <ion-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="checkboxState[cb.formFieldOptionId]"
                   [disabled]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
                 </ion-checkbox>
-
               </ion-item>
             </ion-list>
           </ion-card-content>
@@ -220,10 +217,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -263,10 +260,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>
@@ -306,10 +303,10 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
-          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <ion-label>Required Field</ion-label>
-          </ion-chip> -->
+          </ion-chip>
 
         </ion-card-header>
       </ion-card>

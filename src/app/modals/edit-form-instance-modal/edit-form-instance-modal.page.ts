@@ -15,9 +15,13 @@ export class EditFormInstanceModalPage implements OnInit {
 
   formInstance: FormInstance
 
+  checkboxState: { [key: number]: boolean } = {}
+
   formInstanceInputNgModels: { [key: number]: FormInstanceFieldValue[] } = {}
 
   formInstanceInputNgModelsMultiSelect: { [key: number]: string[] } = {}
+
+  formInstanceErrorChips: { [key: number]: boolean } = {}
 
   constructor(
     private modalController: ModalController,
@@ -44,29 +48,17 @@ export class EditFormInstanceModalPage implements OnInit {
   //         ]
   //      }
   unloadNgModels() {
-
     this.formInstance.formInstanceFields.forEach((fif) => {
 
       this.formInstanceInputNgModels[fif.formInstanceFieldId] = fif.formInstanceFieldValues
 
       if (fif.formFieldMapping.inputType == "CHECK_BOX") {
-
         fif.formFieldMapping.formFieldOptions.forEach((option) => {
-          var optionValue = option.formFieldOptionValue
+
           var isChecked = this.isChecked(option.formFieldOptionValue, fif.formInstanceFieldValues)
+          this.checkboxState[option.formFieldOptionId] = isChecked
 
-          this.injectCheckboxFormInstanceFieldValue(fif.formInstanceFieldId, optionValue, isChecked)
         })
-
-        // necessary or the View will display an option twice, one with 'isChecked' property and another without
-        this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
-          .filter(function (fifv) {
-            return fifv.isChecked !== undefined
-          })
-
-          console.log(this.formInstanceInputNgModels[fif.formInstanceFieldId]);
-          
-
       }
       else if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
 
@@ -94,25 +86,31 @@ export class EditFormInstanceModalPage implements OnInit {
       }
 
     })
-
   }
 
   loadNgModels() {
 
-    this.formInstance.formInstanceFields.forEach((fif) => {
+    for (let i = 0; i < this.formInstance.formInstanceFields.length; i++) {
+
+      let fif = this.formInstance.formInstanceFields[i]
 
       // have to 'clean' the fifvs for checkbox, as backend model does not have 'isChecked' property
       if (fif.formFieldMapping.inputType == "CHECK_BOX") {
-        this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
-          .filter(function (fifv) {
-            if (fifv.isChecked) { // only adding fifv that has been checked back to ngModel formInstance
-              const newFifv = new FormInstanceFieldValue(undefined, fifv.inputValue, undefined)
-              return newFifv
-            }
-          })
-      }
 
-      if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
+        let newFifvs = []
+
+        fif.formFieldMapping.formFieldOptions.forEach(ffo => {
+          if (this.checkboxState[ffo.formFieldOptionId]) {
+            let newFifv = new FormInstanceFieldValue(undefined, ffo.formFieldOptionValue, undefined)
+            newFifvs.push(newFifv)
+            // console.log("Loading value: " + newFifv.inputValue)
+          }
+        })
+
+        fif.formInstanceFieldValues = newFifvs
+
+      }
+      else if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
 
         this.formInstanceInputNgModels[fif.formInstanceFieldId] = []
 
@@ -122,11 +120,14 @@ export class EditFormInstanceModalPage implements OnInit {
             this.formInstanceInputNgModels[fif.formInstanceFieldId].push(newFifv)
           })
         }
+        fif.formInstanceFieldValues = this.formInstanceInputNgModels[fif.formInstanceFieldId]
+
+      }
+      else {
+        fif.formInstanceFieldValues = this.formInstanceInputNgModels[fif.formInstanceFieldId]
       }
 
-      fif.formInstanceFieldValues = this.formInstanceInputNgModels[fif.formInstanceFieldId]
-
-    })
+    }
 
   }
 
@@ -208,9 +209,6 @@ export class EditFormInstanceModalPage implements OnInit {
     if (updateForm.valid) {
       this.loadNgModels()
 
-      console.log(this.formInstance);
-
-
       this.formService.updateFormInstanceFieldValues(this.formInstance).subscribe(
         response => {
           this.dismiss()
@@ -227,19 +225,23 @@ export class EditFormInstanceModalPage implements OnInit {
 
     var formValidty = true
 
-    if (form.valid) {
+    this.formInstance.formInstanceFields.forEach( fif => {
+      this.formInstanceErrorChips[fif.formInstanceFieldId] = false
+    })
 
+    if (form.valid) {
       this.loadNgModels()
 
       formInstanceFields: for (let fif of this.formInstance.formInstanceFields) {
-
+        
         // checking for checkbox & multi_select input types
         if (fif.formInstanceFieldValues.length < 1 && fif.formFieldMapping.isServicemanEditable == true) {
           console.log(`${fif.formFieldMapping.question} not answered`);
 
+          this.formInstanceErrorChips[fif.formInstanceFieldId] = true
           formValidty = false
-          break formInstanceFields
-        }
+          // break formInstanceFields
+        } 
 
         _: for (let fifv of fif.formInstanceFieldValues) {
 
@@ -247,16 +249,16 @@ export class EditFormInstanceModalPage implements OnInit {
           if (fif.formFieldMapping.isRequired == true && fifv.inputValue.length == 0 && fif.formFieldMapping.isServicemanEditable == true) {
             console.log(`${fif.formFieldMapping.question} not answered`);
 
+            this.formInstanceErrorChips[fif.formInstanceFieldId] = true
             formValidty = false
-            break formInstanceFields
+            // break formInstanceFields
           }
-          
+
         }
 
       }
 
       if (formValidty == true) {
-
         this.formService.submitFormInstance(this.formInstance).subscribe(
           response => {
             console.log(`submitted successfully`);
@@ -265,11 +267,9 @@ export class EditFormInstanceModalPage implements OnInit {
             console.log(error);
           }
         )
-
-      } else {
-
+      }
+      else {
         this.formInstance.formInstanceFields.forEach((fif) => {
-
           // have to 'clean' the fifvs for checkbox, or the checkbox might have duplicate fields cause extra fifv was injected with isChecked
           if (fif.formFieldMapping.inputType == "CHECK_BOX") {
             for (var index = 0; fif.formInstanceFieldValues.length; index++) {
@@ -277,24 +277,14 @@ export class EditFormInstanceModalPage implements OnInit {
                 fif.formInstanceFieldValues.splice(index, 1)
               }
             }
-
-
           }
-          
         })
-
-        this.unloadNgModels()
-
       }
-
     } else {
-
       console.log('Form failed ngForm validity check');
-
     }
 
   }
-
 
   async presentFailedToast(messageToDisplay: string) {
     const toast = await this.toastController.create({
