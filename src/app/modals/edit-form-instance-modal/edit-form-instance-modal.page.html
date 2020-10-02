@@ -203,11 +203,20 @@
 
           <ion-card-content>
             <ion-list>
-              <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
+              <!-- <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
 
-                <ion-label>{{cb.formFieldOptionValue}}</ion-label>
+                <ion-label>{{cb.formFieldOptionValue}} - {{formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked}}</ion-label>
                 <ion-checkbox [ngModelOptions]="{standalone: true}"
                   [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
+                </ion-checkbox>
+
+              </ion-item> -->
+
+              <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
+                <ion-label>{{cb.formFieldOptionValue}} - {{checkboxState[cb.formFieldOptionId]}}</ion-label>
+                <ion-checkbox [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="checkboxState[cb.formFieldOptionId]"
                   [disabled]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
                 </ion-checkbox>
 

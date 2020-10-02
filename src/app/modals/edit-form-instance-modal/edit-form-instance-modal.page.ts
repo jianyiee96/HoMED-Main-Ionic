@@ -15,6 +15,8 @@ export class EditFormInstanceModalPage implements OnInit {
 
   formInstance: FormInstance
 
+  checkboxState: { [id: number]: boolean } = {}
+
   formInstanceInputNgModels: { [key: number]: FormInstanceFieldValue[] } = {}
 
   formInstanceInputNgModelsMultiSelect: { [key: number]: string[] } = {}
@@ -44,30 +46,32 @@ export class EditFormInstanceModalPage implements OnInit {
   //         ]
   //      }
   unloadNgModels() {
-
+    console.log("unload called")
     this.formInstance.formInstanceFields.forEach((fif) => {
+
 
       this.formInstanceInputNgModels[fif.formInstanceFieldId] = fif.formInstanceFieldValues
 
       if (fif.formFieldMapping.inputType == "CHECK_BOX") {
 
         fif.formFieldMapping.formFieldOptions.forEach((option) => {
+
           var optionValue = option.formFieldOptionValue
           var isChecked = this.isChecked(option.formFieldOptionValue, fif.formInstanceFieldValues)
+          console.log("Checkbox option: " + option.formFieldOptionValue + " - " + isChecked + " - " + option.formFieldOptionId)
 
-          this.injectCheckboxFormInstanceFieldValue(fif.formInstanceFieldId, optionValue, isChecked)
+          this.checkboxState[option.formFieldOptionId] = isChecked
+
+          // this.injectCheckboxFormInstanceFieldValue(fif.formInstanceFieldId, optionValue, isChecked)
         })
 
         // necessary or the View will display an option twice, one with 'isChecked' property and another without
-        this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
-          .filter(function (fifv) {
-            console.log(">> fifv >>>")
-            console.log(fifv)
-            return fifv.isChecked !== undefined
-          })
+        // this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
+        //   .filter(function (fifv) {
+        //     return fifv.isChecked !== undefined
+        //   })
 
-          console.log(this.formInstanceInputNgModels[fif.formInstanceFieldId]);
-          
+
 
       }
       else if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
@@ -101,20 +105,43 @@ export class EditFormInstanceModalPage implements OnInit {
 
   loadNgModels() {
 
-    this.formInstance.formInstanceFields.forEach((fif) => {
+
+    for (let i = 0; i < this.formInstance.formInstanceFields.length; i++) {
+      let fif = this.formInstance.formInstanceFields[i]
+
 
       // have to 'clean' the fifvs for checkbox, as backend model does not have 'isChecked' property
       if (fif.formFieldMapping.inputType == "CHECK_BOX") {
-        this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
-          .filter(function (fifv) {
-            if (fifv.isChecked) { // only adding fifv that has been checked back to ngModel formInstance
-              const newFifv = new FormInstanceFieldValue(undefined, fifv.inputValue, undefined)
-              return newFifv
-            }
-          })
-      }
 
-      if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
+        let newFifvs = []
+
+        fif.formFieldMapping.formFieldOptions.forEach(ffo => {
+
+          console.log(ffo.formFieldOptionId)
+          console.log(this.checkboxState[ffo.formFieldOptionId])
+
+
+          if (this.checkboxState[ffo.formFieldOptionId]) {
+            let newFifv = new FormInstanceFieldValue(undefined, ffo.formFieldOptionValue, undefined)
+            newFifvs.push(newFifv)
+            console.log("Loading value: " + newFifv.inputValue)
+          }
+        })
+
+        console.log('New FIFVs ' + JSON.stringify(newFifvs));
+
+
+        fif.formInstanceFieldValues = newFifvs
+
+
+        // this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
+        //   .filter(function (fifv) {
+        //     if (fifv.isChecked) { // only adding fifv that has been checked back to ngModel formInstance
+        //       const newFifv = new FormInstanceFieldValue(undefined, fifv.inputValue, undefined)
+        //       return newFifv
+        //     }
+        //   })
+      } else if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
 
         this.formInstanceInputNgModels[fif.formInstanceFieldId] = []
 
@@ -124,11 +151,15 @@ export class EditFormInstanceModalPage implements OnInit {
             this.formInstanceInputNgModels[fif.formInstanceFieldId].push(newFifv)
           })
         }
+        fif.formInstanceFieldValues = this.formInstanceInputNgModels[fif.formInstanceFieldId]
+
+      } else {
+        fif.formInstanceFieldValues = this.formInstanceInputNgModels[fif.formInstanceFieldId]
+
       }
 
-      fif.formInstanceFieldValues = this.formInstanceInputNgModels[fif.formInstanceFieldId]
 
-    })
+    }
 
   }
 
@@ -252,7 +283,7 @@ export class EditFormInstanceModalPage implements OnInit {
             formValidty = false
             break formInstanceFields
           }
-          
+
         }
 
       }
@@ -282,10 +313,10 @@ export class EditFormInstanceModalPage implements OnInit {
 
 
           }
-          
+
         })
 
-        this.unloadNgModels()
+        // this.unloadNgModels()
 
       }
 
