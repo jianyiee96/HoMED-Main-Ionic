@@ -49,6 +49,11 @@ const routes: Routes = [
     loadChildren: () => import('./modals/edit-form-instance-modal/edit-form-instance-modal.module').then(m => m.EditFormInstanceModalPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'view-submitted-form-modal',
+    loadChildren: () => import('./modals/view-submitted-form-modal/view-submitted-form-modal.module').then( m => m.ViewSubmittedFormModalPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

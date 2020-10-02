@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 
 import { FormInstance } from 'src/app/classes/form-instance/form-instance';
 import { EditFormInstanceModalPage } from 'src/app/modals/edit-form-instance-modal/edit-form-instance-modal.page';
+import { ViewSubmittedFormModalPage } from 'src/app/modals/view-submitted-form-modal/view-submitted-form-modal.page';
 import { FormService } from 'src/app/services/form/form.service';
 
 @Component({
@@ -53,6 +54,14 @@ export class FormScreenPage implements OnInit {
     })
   }
 
+  redirectToModal(formInstance: FormInstance) {
+    if (formInstance.formInstanceStatusEnum.toString() == "DRAFT") {
+      this.editFormInstance(formInstance)
+    } else if (formInstance.formInstanceStatusEnum.toString() == "SUBMITTED") {
+      this.viewFormInstance(formInstance)
+    }
+  }
+
   async editFormInstance(formInstance: FormInstance) {
     const modal = await this.modalController.create({
       component: EditFormInstanceModalPage,
@@ -66,7 +75,21 @@ export class FormScreenPage implements OnInit {
     })
     return await modal.present();
   }
-  
+
+  async viewFormInstance(formInstance: FormInstance) {
+    const modal = await this.modalController.create({
+      component: ViewSubmittedFormModalPage,
+      componentProps: {
+        formInstance: formInstance
+      }
+    });
+
+    modal.onDidDismiss().then(() => {
+      this.ionViewWillEnter()
+    })
+    return await modal.present();
+  }
+
   redirectToFormRepo() {
     this.router.navigate(["/form-repository-screen"])
   }

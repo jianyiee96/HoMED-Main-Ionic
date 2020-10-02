@@ -13,7 +13,7 @@
     <ion-text>Add a form from the form repository to get started!</ion-text>
   </div>
 
-  <ion-card *ngFor="let fi of formInstances" (click)="editFormInstance(fi)">
+  <ion-card *ngFor="let fi of formInstances" (click)="redirectToModal(fi)">
 
     <ion-card-header>
       <ion-card-title>{{fi.formTemplateMapping.formTemplateName}}</ion-card-title>

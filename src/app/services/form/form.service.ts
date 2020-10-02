@@ -75,6 +75,16 @@ export class FormService {
     );
   }
 
+  archiveFormInstance(formInstance: FormInstance) {
+    let updateFormInstanceReq = {
+      "formInstance": formInstance
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/archiveFormInstance", updateFormInstanceReq, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 
