@@ -4,6 +4,7 @@ export class FormTemplate {
 
     dateCreated: Date
     datePublished: Date
+    declaration: String
     formFields: FormField[]
     formTemplateStatus: FormTemplateStatusEnum
     formTemplateId: number
@@ -13,6 +14,7 @@ export class FormTemplate {
     constructor(
         dateCreated?: Date,
         datePublished?: Date,
+        declaration?: String,
         formFields?: FormField[],
         formTemplateStatus?: FormTemplateStatusEnum,
         formTemplateId?: number,
@@ -21,6 +23,7 @@ export class FormTemplate {
     ) {
         this.dateCreated = dateCreated
         this.datePublished = datePublished
+        this.declaration = declaration
         this.formFields = formFields
         this.formTemplateStatus = formTemplateStatus
         this.formTemplateId = formTemplateId

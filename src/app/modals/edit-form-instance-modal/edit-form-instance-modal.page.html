@@ -314,6 +314,54 @@
 
     </div>
 
+    <ion-card *ngIf="formInstance.formTemplateMapping.declaration != null">
+      <ion-card-header>
+
+        <ion-card-title>
+          Declaration
+
+          <ion-chip color="danger" *ngIf="declarationRequiredShow">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Declaration Is Required</ion-label>
+          </ion-chip>
+        </ion-card-title>
+
+        <ion-card-content>
+          <div>
+            {{formInstance.formTemplateMapping.declaration}}
+
+          </div>
+
+
+
+
+          <ion-list class="declaration-list">
+            <ion-item class="declaration-item">
+              <ion-label>I AGREE</ion-label>
+              <ion-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="declarationChecked"
+                color="danger">
+              </ion-checkbox>
+            </ion-item>
+          </ion-list>
+
+
+        </ion-card-content>
+
+        <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+          <ion-icon name="hand-left-outline"></ion-icon>
+          <ion-label>Doctor To Fill</ion-label>
+        </ion-chip>
+
+        <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <ion-label>Required Field</ion-label>
+        </ion-chip>
+
+      </ion-card-header>
+    </ion-card>
+
+
+
   </form>
 </ion-content>
 

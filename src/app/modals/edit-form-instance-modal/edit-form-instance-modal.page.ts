@@ -23,6 +23,10 @@ export class EditFormInstanceModalPage implements OnInit {
 
   formInstanceErrorChips: { [key: number]: boolean } = {}
 
+  declarationChecked: boolean
+
+  declarationRequiredShow: boolean
+
   constructor(
     private modalController: ModalController,
     private navParam: NavParams,
@@ -34,6 +38,11 @@ export class EditFormInstanceModalPage implements OnInit {
     this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
 
     this.unloadNgModels()
+  }
+
+  ionViewWillEnter() {
+    this.declarationChecked = false
+    this.declarationRequiredShow = false
   }
 
   ngOnInit() {
@@ -218,7 +227,7 @@ export class EditFormInstanceModalPage implements OnInit {
         })
         fif.formInstanceFieldValues = newFormInstanceFieldValues
       })
-      
+
       this.formService.updateFormInstanceFieldValues(this.formInstance).subscribe(
         response => {
           this.dismiss()
@@ -266,9 +275,21 @@ export class EditFormInstanceModalPage implements OnInit {
 
         }
 
+
       }
 
+      if (!this.declarationChecked && this.formInstance.formTemplateMapping.declaration != null) {
+        this.declarationRequiredShow = true;
+        formValidty = false
+      } else {
+        this.declarationRequiredShow = false;
+      }
+
+
       if (formValidty == true) {
+
+
+
         this.formService.submitFormInstance(this.formInstance).subscribe(
           response => {
             console.log(`submitted successfully`);
