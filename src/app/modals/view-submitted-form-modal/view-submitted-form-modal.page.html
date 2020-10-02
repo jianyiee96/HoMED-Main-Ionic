@@ -269,9 +269,9 @@
 
 </ion-content>
 
-<ion-footer class="ion-no-border">
+<ion-footer class="ion-no-border" *ngIf="formInstance.formInstanceStatusEnum == 'SUBMITTED'">
   <ion-toolbar transparent no-border>
-    <ion-button expand="block" style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">
+    <ion-button (click)="archiveForm()" expand="block" style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">
       Archive</ion-button>
   </ion-toolbar>
 </ion-footer>

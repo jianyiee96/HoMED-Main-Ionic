@@ -48,7 +48,7 @@ export class ViewFormTemplateModalPage implements OnInit {
       header: header,
       subHeader: subHeader,
       message: 'Tap Ok to be redirected to the forms screen.',
-      cssClass: "activateAccountAlert",
+      cssClass: "formInstanceAddedAlert",
       buttons: [
         {
           text: 'Ok',

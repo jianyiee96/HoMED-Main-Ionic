@@ -42,14 +42,22 @@ export class FormScreenPage implements OnInit {
         this.allFormInstances = response.formInstances
         this.archivedFormInstances = []
         this.formInstances = []
-        
+
         this.allFormInstances.forEach(formInstance => {
+          formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
+          formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
+
           if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
             this.archivedFormInstances.push(formInstance)
           } else {
             this.formInstances.push(formInstance)
           }
-
+        })
+        this.formInstances.sort(function (a, b) {
+          return b.dateCreated.getTime() - a.dateCreated.getTime()
+        })
+        this.formInstances.sort(function (a, b) {
+          return b.dateCreated.getTime() - a.dateCreated.getTime()
         })
       },
       error => {
@@ -113,6 +121,19 @@ export class FormScreenPage implements OnInit {
 
   redirectToFormRepo() {
     this.router.navigate(["/form-repository-screen"])
+  }
+
+  convertUTCStringToSingaporeDate(dateCreated) {
+    if (dateCreated != null) {
+      let stringUtcTime = dateCreated.toLocaleString().substring(0, 19)
+      return new Date(Date.UTC(
+        parseInt(stringUtcTime.substring(0, 4)),
+        parseInt(stringUtcTime.substring(5, 7)),
+        parseInt(stringUtcTime.substring(8, 10)),
+        parseInt(stringUtcTime.substring(11, 13)),
+        parseInt(stringUtcTime.substring(14, 16)),
+        parseInt(stringUtcTime.substring(17, 19))));
+    }
   }
 
 }

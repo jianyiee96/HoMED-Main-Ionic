@@ -3,7 +3,8 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>My Form Instances</ion-title>
+    <ion-title *ngIf="!viewArchived">My Forms</ion-title>
+    <ion-title *ngIf="viewArchived">My Archived Forms</ion-title>
     <ion-buttons slot="end">
       <ion-button class="override-ion-button-flip" fill="outline" *ngIf="!viewArchived" (click)="toggleView()">
         View Archived
@@ -41,6 +42,8 @@
 
       <ion-card-header>
         <ion-card-title>{{fi.formTemplateMapping.formTemplateName}}</ion-card-title>
+        <ion-card-subtitle>Date Added: {{fi.dateCreated | date:'HH:mm, MMM d, y'}}</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="fi.formInstanceStatusEnum == 'SUBMITTED'">Date Submitted: {{fi.dateSubmitted | date:'HH:mm, MMM d, y'}}</ion-card-subtitle>
         <ion-card-subtitle>Status:
           <ion-chip *ngIf="fi.formInstanceStatusEnum == 'DRAFT'" color="primary">
             <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>

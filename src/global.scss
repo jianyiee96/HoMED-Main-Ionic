@@ -47,3 +47,17 @@ ion-toolbar {
     background-color: #00416d;
     color: whitesmoke;
 }
+
+.formInstanceAddedAlert {
+    --background: #e3dfc8;
+    --backdrop-opacity: 0.7;
+}
+
+.formInstanceAddedAlert .alert-message {
+    color: #00416d;
+}
+
+.formInstanceAddedAlert .activate-button {
+    background-color: #00416d;
+    color: whitesmoke;
+}

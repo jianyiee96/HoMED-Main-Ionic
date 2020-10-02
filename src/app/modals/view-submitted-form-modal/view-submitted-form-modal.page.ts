@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
 import { FormInstance, FormInstanceFieldValue } from 'src/app/classes/form-instance/form-instance';
+import { FormService } from 'src/app/services/form/form.service';
 
 @Component({
   selector: 'app-view-submitted-form-modal',
@@ -15,15 +16,16 @@ export class ViewSubmittedFormModalPage implements OnInit {
 
   checkboxState: { [key: number]: boolean } = {}
 
-  multiSelectValues: { [key: number]: string[]} = {} 
+  multiSelectValues: { [key: number]: string[] } = {}
 
   constructor(
     private navParam: NavParams,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private formService: FormService
   ) {
     this.formInstance = navParam.get("formInstance")
     this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
-    console.log(this.formInstance);
+
     this.processCheckboxValues()
     this.processMultiSelectValues()
   }
@@ -42,16 +44,6 @@ export class ViewSubmittedFormModalPage implements OnInit {
           this.multiSelectValues[fif.formInstanceFieldId].push(fifv.inputValue)
         })
       }
-
-      // this.formInstanceInputNgModels[fif.formInstanceFieldId].forEach((fifv) => {
-
-      //   if (this.formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId] == undefined) {
-      //     this.formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId] = []
-      //   }
-      //   // multi_dropdown selected values need to be loaded in a string[] for comparison in View
-      //   this.formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId].push(fifv.inputValue)
-
-      // })
     })
   }
 
@@ -77,6 +69,17 @@ export class ViewSubmittedFormModalPage implements OnInit {
       }
     })
     return checkedBefore
+  }
+
+  archiveForm() {
+    this.formService.archiveFormInstance(this.formInstance).subscribe(
+      response => {
+        this.dismiss()
+      },
+      error => {
+        console.log('error');
+      }
+    )
   }
 
   dismiss() {

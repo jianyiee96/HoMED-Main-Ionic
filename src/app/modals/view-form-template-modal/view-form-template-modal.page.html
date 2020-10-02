@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{formTemplate.formTemplateName}}</ion-title>
+    <ion-title>Preview Form</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">Close</ion-button>
     </ion-buttons>
@@ -8,6 +8,18 @@
 </ion-header>
 
 <ion-content fullscreen>
+
+  <div>
+    <ion-card class="formTitle">
+      <ion-card-header>
+
+        <ion-card-title style="color: whitesmoke;">
+          {{formTemplate.formTemplateName}}
+        </ion-card-title>
+
+      </ion-card-header>
+    </ion-card>
+  </div>
 
   <ion-row *ngFor="let ff of formTemplate.formFields">
 
