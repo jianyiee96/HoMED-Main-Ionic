@@ -14,9 +14,15 @@ import { FormService } from 'src/app/services/form/form.service';
 })
 export class FormScreenPage implements OnInit {
 
+  allFormInstances: FormInstance[] = []
+
   formInstances: FormInstance[] = []
 
+  archivedFormInstances: FormInstance[] = []
+
   isShown: boolean
+
+  viewArchived: boolean
 
   constructor(
     private modalController: ModalController,
@@ -33,7 +39,18 @@ export class FormScreenPage implements OnInit {
 
     this.formService.retrieveAllServicemanFormInstances().subscribe(
       response => {
-        this.formInstances = response.formInstances
+        this.allFormInstances = response.formInstances
+        this.archivedFormInstances = []
+        this.formInstances = []
+        
+        this.allFormInstances.forEach(formInstance => {
+          if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
+            this.archivedFormInstances.push(formInstance)
+          } else {
+            this.formInstances.push(formInstance)
+          }
+
+        })
       },
       error => {
         console.error(error);
@@ -57,9 +74,13 @@ export class FormScreenPage implements OnInit {
   redirectToModal(formInstance: FormInstance) {
     if (formInstance.formInstanceStatusEnum.toString() == "DRAFT") {
       this.editFormInstance(formInstance)
-    } else if (formInstance.formInstanceStatusEnum.toString() == "SUBMITTED") {
+    } else {
       this.viewFormInstance(formInstance)
     }
+  }
+
+  toggleView() {
+    this.viewArchived = !this.viewArchived
   }
 
   async editFormInstance(formInstance: FormInstance) {
