@@ -61,8 +61,13 @@ export class EditFormInstanceModalPage implements OnInit {
         // necessary or the View will display an option twice, one with 'isChecked' property and another without
         this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
           .filter(function (fifv) {
+            console.log(">> fifv >>>")
+            console.log(fifv)
             return fifv.isChecked !== undefined
           })
+
+          console.log(this.formInstanceInputNgModels[fif.formInstanceFieldId]);
+          
 
       }
       else if (fif.formFieldMapping.inputType == "MULTI_DROPDOWN") {
@@ -102,7 +107,7 @@ export class EditFormInstanceModalPage implements OnInit {
       if (fif.formFieldMapping.inputType == "CHECK_BOX") {
         this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
           .filter(function (fifv) {
-            if (fifv.isChecked) { // only adding fifv that has been checked back to formInstance
+            if (fifv.isChecked) { // only adding fifv that has been checked back to ngModel formInstance
               const newFifv = new FormInstanceFieldValue(undefined, fifv.inputValue, undefined)
               return newFifv
             }
@@ -148,33 +153,7 @@ export class EditFormInstanceModalPage implements OnInit {
     return checkedBefore
   }
 
-  update(updateForm: NgForm) {
-    if (updateForm.valid) {
-      this.loadNgModels()
-
-      this.formService.updateFormInstanceFieldValues(this.formInstance).subscribe(
-        response => {
-          this.dismiss()
-        }, error => {
-          console.log(error)
-          this.presentFailedToast(error.substring(37))
-        }
-      )
-    }
-  }
-
-  delete() {
-    this.formService.deleteFormInstance(this.formInstance.formInstanceId).subscribe(
-      response => {
-        this.dismiss()
-      }, error => {
-        console.log(error)
-        this.presentFailedToast(error.substring(37))
-      }
-    )
-  }
-
-  async presentOptions(updateForm: NgForm) {
+  async presentOptions(form: NgForm) {
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
@@ -190,7 +169,7 @@ export class EditFormInstanceModalPage implements OnInit {
         text: 'Save',
         icon: 'save',
         handler: () => {
-          this.update(updateForm)
+          this.update(form)
         }
       }, {
         text: 'Consultations',
@@ -202,7 +181,7 @@ export class EditFormInstanceModalPage implements OnInit {
         text: 'Submit',
         icon: 'send',
         handler: () => {
-          console.log('Submit clicked')
+          this.submit(form)
         }
       }, {
         text: 'Cancel',
@@ -215,6 +194,109 @@ export class EditFormInstanceModalPage implements OnInit {
     await actionSheet.present()
 
   }
+
+  delete() {
+    this.formService.deleteFormInstance(this.formInstance.formInstanceId).subscribe(
+      response => {
+        this.dismiss()
+      }, error => {
+        console.log(error)
+        this.presentFailedToast(error.substring(37))
+      }
+    )
+  }
+
+  update(updateForm: NgForm) {
+    if (updateForm.valid) {
+      this.loadNgModels()
+
+      console.log(this.formInstance);
+
+
+      this.formService.updateFormInstanceFieldValues(this.formInstance).subscribe(
+        response => {
+          this.dismiss()
+        },
+        error => {
+          console.log(error)
+          this.presentFailedToast(error.substring(37))
+        }
+      )
+    }
+  }
+
+  submit(form: NgForm) {
+
+    var formValidty = true
+
+    if (form.valid) {
+
+      this.loadNgModels()
+
+      formInstanceFields: for (let fif of this.formInstance.formInstanceFields) {
+
+        // checking for checkbox & multi_select input types
+        if (fif.formInstanceFieldValues.length < 1 && fif.formFieldMapping.isServicemanEditable == true) {
+          console.log(`${fif.formFieldMapping.question} not answered`);
+
+          formValidty = false
+          break formInstanceFields
+        }
+
+        _: for (let fifv of fif.formInstanceFieldValues) {
+
+          // checking for all other input types
+          if (fif.formFieldMapping.isRequired == true && fifv.inputValue.length == 0 && fif.formFieldMapping.isServicemanEditable == true) {
+            console.log(`${fif.formFieldMapping.question} not answered`);
+
+            formValidty = false
+            break formInstanceFields
+          }
+          
+        }
+
+      }
+
+      if (formValidty == true) {
+
+        this.formService.submitFormInstance(this.formInstance).subscribe(
+          response => {
+            console.log(`submitted successfully`);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+
+      } else {
+
+        this.formInstance.formInstanceFields.forEach((fif) => {
+
+          // have to 'clean' the fifvs for checkbox, or the checkbox might have duplicate fields cause extra fifv was injected with isChecked
+          if (fif.formFieldMapping.inputType == "CHECK_BOX") {
+            for (var index = 0; fif.formInstanceFieldValues.length; index++) {
+              if (fif.formInstanceFieldValues[index].isChecked == undefined) {
+                fif.formInstanceFieldValues.splice(index, 1)
+              }
+            }
+
+
+          }
+          
+        })
+
+        this.unloadNgModels()
+
+      }
+
+    } else {
+
+      console.log('Form failed ngForm validity check');
+
+    }
+
+  }
+
 
   async presentFailedToast(messageToDisplay: string) {
     const toast = await this.toastController.create({

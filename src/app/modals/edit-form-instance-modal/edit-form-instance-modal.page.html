@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+  <form #form="ngForm" (ngSubmit)="update(form)">
 
     <div>
       <ion-card class="formTitle">
@@ -56,6 +56,11 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
+
         </ion-card-header>
       </ion-card>
 
@@ -80,6 +85,11 @@
             <ion-icon name="hand-left-outline"></ion-icon>
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
+
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
 
         </ion-card-header>
       </ion-card>
@@ -106,6 +116,11 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
+
         </ion-card-header>
       </ion-card>
 
@@ -131,6 +146,11 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
+
         </ion-card-header>
       </ion-card>
 
@@ -151,7 +171,7 @@
                 <ion-item *ngFor="let rb of fif.formFieldMapping.formFieldOptions">
 
                   <ion-label>{{rb.formFieldOptionValue}}</ion-label>
-                  <ion-radio value="{{rb.formFieldOptionValue}}" [readonly]="!fif.formFieldMapping.isServicemanEditable"
+                  <ion-radio value="{{rb.formFieldOptionValue}}" [disabled]="!fif.formFieldMapping.isServicemanEditable"
                     slot="end" color="primary"></ion-radio>
 
                 </ion-item>
@@ -163,6 +183,11 @@
             <ion-icon name="hand-left-outline"></ion-icon>
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
+
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
 
         </ion-card-header>
       </ion-card>
@@ -183,7 +208,7 @@
                 <ion-label>{{cb.formFieldOptionValue}}</ion-label>
                 <ion-checkbox [ngModelOptions]="{standalone: true}"
                   [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][i].isChecked"
-                  [readonly]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
                 </ion-checkbox>
 
               </ion-item>
@@ -194,6 +219,11 @@
             <ion-icon name="hand-left-outline"></ion-icon>
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
+
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
 
         </ion-card-header>
       </ion-card>
@@ -215,7 +245,7 @@
                 <ion-select [ngModelOptions]="{standalone: true}" [interfaceOptions]="singleDropdownOptions"
                   [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
                   value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
-                  [readonly]="!fif.formFieldMapping.isServicemanEditable">
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable">
 
                   <ion-select-option value="{{sd.formFieldOptionValue}}"
                     *ngFor="let sd of fif.formFieldMapping.formFieldOptions">
@@ -232,6 +262,11 @@
             <ion-icon name="hand-left-outline"></ion-icon>
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
+
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
 
         </ion-card-header>
       </ion-card>
@@ -253,7 +288,7 @@
                 <ion-select [ngModelOptions]="{standalone: true}" multiple="true"
                   [interfaceOptions]="singleDropdownOptions"
                   [(ngModel)]="formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId]"
-                  [readonly]="!fif.formFieldMapping.isServicemanEditable">
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable">
 
                   <ion-select-option *ngFor="let md of fif.formFieldMapping.formFieldOptions"
                     value="{{md.formFieldOptionValue}}">
@@ -271,6 +306,11 @@
             <ion-label>Doctor To Fill</ion-label>
           </ion-chip>
 
+          <!-- <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip> -->
+
         </ion-card-header>
       </ion-card>
 
@@ -281,7 +321,7 @@
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
-    <ion-button (click)="presentOptions(updateForm)" expand="block"
+    <ion-button (click)="presentOptions(form)" expand="block"
       style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">Options</ion-button>
   </ion-toolbar>
 </ion-footer>

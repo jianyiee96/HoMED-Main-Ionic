@@ -5,17 +5,23 @@ import { FormTemplateStatusEnum } from '../formtemplatestatus-enum'
 export class FormInstance {
 
     formInstanceId: number
+    dateCreated: Date
+    dateSubmitted: Date
     formInstanceStatusEnum: FormInstanceStatusEnum // DRAFT, PENDING, APPROVED
     formInstanceFields: FormInstanceField[]
     formTemplateMapping: FormTemplate
 
     constructor(
         formInstanceId?: number,
+        dateCreated?: Date,
+        dateSubmitted?: Date,
         formInstanceStatusEnum?: FormInstanceStatusEnum,
         formInstanceFields?: FormInstanceField[],
         formTemplateMapping?: FormTemplate
     ) {
         this.formInstanceId = formInstanceId
+        this.dateCreated = dateCreated
+        this.dateSubmitted = dateSubmitted
         this.formInstanceStatusEnum = formInstanceStatusEnum
         this.formInstanceFields = formInstanceFields
         this.formTemplateMapping = formTemplateMapping

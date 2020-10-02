@@ -65,6 +65,16 @@ export class FormService {
     );
   }
 
+  submitFormInstance(formInstance: FormInstance) {
+    let updateFormInstanceReq = {
+      "formInstance": formInstance
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/submitFormInstance", updateFormInstanceReq, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 
