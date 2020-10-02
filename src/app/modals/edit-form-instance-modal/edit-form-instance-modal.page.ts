@@ -61,8 +61,6 @@ export class EditFormInstanceModalPage implements OnInit {
         // necessary or the View will display an option twice, one with 'isChecked' property and another without
         this.formInstanceInputNgModels[fif.formInstanceFieldId] = this.formInstanceInputNgModels[fif.formInstanceFieldId]
           .filter(function (fifv) {
-            console.log(">> fifv >>>")
-            console.log(fifv)
             return fifv.isChecked !== undefined
           })
 
