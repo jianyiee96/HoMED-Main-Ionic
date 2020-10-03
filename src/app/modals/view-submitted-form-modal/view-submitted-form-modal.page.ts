@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ModalController, NavParams } from '@ionic/angular';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
 
 import { FormInstance, FormInstanceFieldValue } from 'src/app/classes/form-instance/form-instance';
 import { FormService } from 'src/app/services/form/form.service';
@@ -21,6 +21,7 @@ export class ViewSubmittedFormModalPage implements OnInit {
   constructor(
     private navParam: NavParams,
     private modalController: ModalController,
+    private alertController: AlertController,
     private formService: FormService
   ) {
     this.formInstance = navParam.get("formInstance")
@@ -69,6 +70,30 @@ export class ViewSubmittedFormModalPage implements OnInit {
       }
     })
     return checkedBefore
+  }
+
+  async presentArchiveConfirm() {
+    const alert = await this.alertController.create({
+      header: `Confirm Archive of ${this.formInstance.formTemplateMapping.formTemplateName}?`,
+      message: 'Note that this action cannot be <strong>undone</strong>!',
+      cssClass: 'homedThemeAlert',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'false-button',
+          handler: () => { }
+        }, {
+          text: 'Archive',
+          cssClass: 'true-button',
+          handler: () => {
+            this.archiveForm()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   archiveForm() {

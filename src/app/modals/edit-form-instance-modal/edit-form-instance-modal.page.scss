@@ -15,17 +15,6 @@ ion-list {
     background-color: #e3dfc8;
 }
 
-.declaration-list{
-    background: #f5f1da;
-}
-
-.declaration-item{
-    background: #FFFFFF;
-     border-width: 1px !important;
-     border-style: solid !important;
-     border-radius: 4px;
-}
-
 .formTitle {
     text-align: center;
     --background: #00416d;
@@ -40,4 +29,15 @@ ion-list {
 .requiredMark {
     margin-left: 1%;
     color: red;
+}
+
+.declaration-list{
+    background: #f5f1da;
+}
+
+.declaration-item{
+    background: #FFFFFF;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-radius: 4px;
 }

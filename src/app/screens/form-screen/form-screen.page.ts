@@ -64,7 +64,6 @@ export class FormScreenPage implements OnInit {
         console.error(error);
       }
     )
-
   }
 
   scrollHandler(event) {

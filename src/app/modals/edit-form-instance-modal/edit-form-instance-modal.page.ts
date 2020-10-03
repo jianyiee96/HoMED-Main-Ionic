@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { ActionSheetController, ModalController, NavParams, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
 
 import { FormInstance, FormInstanceFieldValue } from 'src/app/classes/form-instance/form-instance';
 import { FormService } from 'src/app/services/form/form.service';
@@ -33,6 +33,7 @@ export class EditFormInstanceModalPage implements OnInit {
     private formService: FormService,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
+    private alertController: AlertController,
   ) {
     this.formInstance = navParam.get("formInstance")
     this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
@@ -171,7 +172,7 @@ export class EditFormInstanceModalPage implements OnInit {
         role: 'destructive',
         icon: 'trash',
         handler: () => {
-          this.delete()
+          this.presentDeleteConfirm()
         }
       }, {
         text: 'Save',
@@ -201,6 +202,62 @@ export class EditFormInstanceModalPage implements OnInit {
 
     await actionSheet.present()
 
+  }
+
+  async presentDeleteConfirm() {
+    const alert = await this.alertController.create({
+      header: `Confirm Deletion of ${this.formInstance.formTemplateMapping.formTemplateName}?`,
+      message: 'Note that this action cannot be <strong>undone</strong>!',
+      cssClass: 'homedThemeAlert',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'false-button',
+          handler: () => { }
+        }, {
+          text: 'Delete',
+          cssClass: 'delete-button',
+          handler: () => {
+            this.delete()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentSubmitConfirm() {
+    const alert = await this.alertController.create({
+      header: `Confirm Submission of ${this.formInstance.formTemplateMapping.formTemplateName}?`,
+      message: 'Note that this action cannot be <strong>undone</strong>!',
+      cssClass: 'homedThemeAlert',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'false-button',
+          handler: () => { }
+        }, {
+          text: 'Submit',
+          cssClass: 'true-button',
+          handler: () => {
+            this.formService.submitFormInstance(this.formInstance).subscribe(
+              response => {
+                console.log(`submitted successfully`);
+                this.dismiss()
+              },
+              error => {
+                console.log(error);
+              }
+            )
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   delete() {
@@ -275,7 +332,6 @@ export class EditFormInstanceModalPage implements OnInit {
 
         }
 
-
       }
 
       if (!this.declarationChecked && this.formInstance.formTemplateMapping.declaration != null) {
@@ -285,20 +341,8 @@ export class EditFormInstanceModalPage implements OnInit {
         this.declarationRequiredShow = false;
       }
 
-
       if (formValidty == true) {
-
-
-
-        this.formService.submitFormInstance(this.formInstance).subscribe(
-          response => {
-            console.log(`submitted successfully`);
-            this.dismiss()
-          },
-          error => {
-            console.log(error);
-          }
-        )
+        this.presentSubmitConfirm()
       }
       else {
         this.formInstance.formInstanceFields.forEach((fif) => {
@@ -312,7 +356,8 @@ export class EditFormInstanceModalPage implements OnInit {
           }
         })
       }
-    } else {
+    }
+    else {
       console.log('Form failed ngForm validity check');
     }
 
