@@ -90,7 +90,7 @@
         </ion-col>
         <ion-col>
           <div class="formAns">
-            <ion-input name="rod" [(ngModel)]="rod" [disabled]="isEditing" [readonly]="true">
+            <ion-input name="rod" value="{{rod | date:'dd/MM/yyyy'}}" [disabled]="isEditing" [readonly]="true">
             </ion-input>
           </div>
         </ion-col>
