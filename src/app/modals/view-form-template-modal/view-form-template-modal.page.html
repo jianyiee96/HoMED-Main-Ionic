@@ -1,0 +1,296 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Preview Form</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <div>
+    <ion-card class="formTitle">
+      <ion-card-header>
+
+        <ion-card-title style="color: whitesmoke;">
+          {{formTemplate.formTemplateName}}
+        </ion-card-title>
+
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  <ion-row *ngFor="let ff of formTemplate.formFields">
+
+    <div *ngIf="ff.inputType == 'HEADER'">
+      <ion-card class="headerInput">
+        <ion-card-header>
+
+          <ion-card-title style="color: whitesmoke;">
+            {{ff.question}}
+          </ion-card-title>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'TEXT' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Text</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop">Insert Text</ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'NUMBER' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Number</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop">Insert Number</ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'DATE' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Date</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop">Insert Date (DD/MM/YYYY)</ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'TIME' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Time</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop">Insert Time (HH:MM)</ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'RADIO_BUTTON' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Radio Button</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'CHECK_BOX' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Checkbox</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'SINGLE_DROPDOWN' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Single Dropdown</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngIf="ff.inputType == 'MULTI_DROPDOWN' && ff.isServicemanEditable">
+      <ion-card>
+        <ion-card-header>
+
+          <ion-card-title>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Multi Dropdown</ion-badge>
+            </ion-row>
+          </ion-card-title>
+
+          <ion-card-subtitle>
+            <ion-grid>
+              <ion-row>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-card-subtitle>
+
+          <ion-chip color="tertiary" *ngIf="!ff.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+  </ion-row>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button class="addToFormInstancesButton" (click)="addToFormInstances()" expand="block">
+      Add to my form instances
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

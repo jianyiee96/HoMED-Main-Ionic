@@ -1,0 +1,353 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Form Editor</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="update(form)">
+
+    <div>
+      <ion-card class="formTitle">
+        <ion-card-header>
+
+          <ion-card-title style="color: whitesmoke;">
+            {{formInstance.formTemplateMapping.formTemplateName}}
+          </ion-card-title>
+
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div *ngFor="let fif of formInstance.formInstanceFields">
+
+      <ion-card class="headerInput" *ngIf="fif.formFieldMapping.inputType == 'HEADER'">
+        <ion-card-header>
+
+          <ion-card-title style="color: whitesmoke;">
+            {{fif.formFieldMapping.question}}
+          </ion-card-title>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TEXT' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-textarea placeholder="Insert Text" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [readonly]="!fif.formFieldMapping.isServicemanEditable">
+            </ion-textarea>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'NUMBER' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-input placeholder="Insert Number" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [readonly]="!fif.formFieldMapping.isServicemanEditable" type="number">
+            </ion-input>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'DATE' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-datetime placeholder="Insert Date (DD/MM/YYYY)" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [readonly]="!fif.formFieldMapping.isServicemanEditable">
+            </ion-datetime>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'TIME' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-datetime placeholder="Insert Time (HH:MM)" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+              value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+              [readonly]="!fif.formFieldMapping.isServicemanEditable" display-format="HH:mm" picker-format="HH:mm">
+            </ion-datetime>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'RADIO_BUTTON' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-radio-group [ngModelOptions]="{standalone: true}" allowEmptySelection="true"
+                [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+                value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}">
+                <ion-item *ngFor="let rb of fif.formFieldMapping.formFieldOptions">
+
+                  <ion-label>{{rb.formFieldOptionValue}}</ion-label>
+                  <ion-radio value="{{rb.formFieldOptionValue}}" [disabled]="!fif.formFieldMapping.isServicemanEditable"
+                    slot="end" color="primary"></ion-radio>
+
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'CHECK_BOX' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let cb of fif.formFieldMapping.formFieldOptions; let i = index">
+                <ion-label>{{cb.formFieldOptionValue}}</ion-label>
+                <ion-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="checkboxState[cb.formFieldOptionId]"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable" slot="end" color="primary">
+                </ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card
+        *ngIf="fif.formFieldMapping.inputType == 'SINGLE_DROPDOWN' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+
+                <ion-label>Select an option</ion-label>
+                <ion-select [ngModelOptions]="{standalone: true}" [interfaceOptions]="singleDropdownOptions"
+                  [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
+                  value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable">
+
+                  <ion-select-option value="{{sd.formFieldOptionValue}}"
+                    *ngFor="let sd of fif.formFieldMapping.formFieldOptions">
+                    {{sd.formFieldOptionValue}}
+                  </ion-select-option>
+
+                </ion-select>
+
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngIf="fif.formFieldMapping.inputType == 'MULTI_DROPDOWN' && fif.formFieldMapping.isServicemanEditable">
+        <ion-card-header>
+
+          <ion-card-title>
+            {{fif.formFieldMapping.question}}
+            <ion-text class="requiredMark" *ngIf="fif.formFieldMapping.isRequired">*
+            </ion-text>
+          </ion-card-title>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+
+                <ion-label>Select an option(s)</ion-label>
+                <ion-select [ngModelOptions]="{standalone: true}" multiple="true"
+                  [interfaceOptions]="singleDropdownOptions"
+                  [(ngModel)]="formInstanceInputNgModelsMultiSelect[fif.formInstanceFieldId]"
+                  [disabled]="!fif.formFieldMapping.isServicemanEditable">
+
+                  <ion-select-option *ngFor="let md of fif.formFieldMapping.formFieldOptions"
+                    value="{{md.formFieldOptionValue}}">
+                    {{md.formFieldOptionValue}}
+                  </ion-select-option>
+
+                </ion-select>
+
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+          <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
+            <ion-icon name="hand-left-outline"></ion-icon>
+            <ion-label>Doctor To Fill</ion-label>
+          </ion-chip>
+
+          <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Required Field</ion-label>
+          </ion-chip>
+
+        </ion-card-header>
+      </ion-card>
+
+    </div>
+
+    <ion-card *ngIf="formInstance.formTemplateMapping.declaration != null">
+      <ion-card-header>
+
+        <ion-card-title>
+          Declaration
+          <ion-chip color="danger" *ngIf="declarationRequiredShow">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Declaration Is Required</ion-label>
+          </ion-chip>
+        </ion-card-title>
+
+        <ion-card-content>
+          <div>
+            {{formInstance.formTemplateMapping.declaration}}
+          </div>
+
+          <ion-list class="declaration-list">
+            <ion-item class="declaration-item">
+              <ion-label>I AGREE</ion-label>
+              <ion-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="declarationChecked" color="danger">
+              </ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+
+      </ion-card-header>
+    </ion-card>
+
+  </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button (click)="presentOptions(form)" expand="block"
+      style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">Options</ion-button>
+  </ion-toolbar>
+</ion-footer>

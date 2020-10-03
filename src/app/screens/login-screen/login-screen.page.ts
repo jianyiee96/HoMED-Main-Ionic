@@ -16,8 +16,8 @@ import { TimerService } from 'src/app/services/timer/timer.service'
 })
 export class LoginScreenPage implements OnInit {
 
-  @ViewChild('errorMessage') errorMessageViewChild: ElementRef;
-  @ViewChild('successMessage') successMessageViewChild: ElementRef;
+  @ViewChild('errorMessage') errorMessageViewChild: ElementRef
+  @ViewChild('successMessage') successMessageViewChild: ElementRef
 
   messageAnimation: Animation
   isPlaying = false
@@ -71,7 +71,7 @@ export class LoginScreenPage implements OnInit {
             } else {
               this.activateAccountPrompt()
             }
-            
+
           } else {
             this.presentFailedMessage("Serviceman account doesn't exist.")
           }

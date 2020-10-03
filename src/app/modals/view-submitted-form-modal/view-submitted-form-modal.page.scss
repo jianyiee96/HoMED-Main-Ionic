@@ -1,0 +1,36 @@
+ion-content {
+    --ion-background-color:#e3dfc8;
+}
+
+ion-card {
+    --background: #f5f1da;
+}
+
+ion-card-content {
+    padding-left: 0%;
+    color: black;
+}
+
+ion-list {
+    background: #f5f1da;
+}
+
+ion-item {
+    --background: #f5f1da;
+}
+
+.formTitle {
+    text-align: center;
+    --background: #00416d;
+    height: 5%;
+}
+
+.headerInput {
+    --background: #03558b;
+    color: whitesmoke;
+}
+
+.requiredMark {
+    margin-left: 1%;
+    color: red;
+}

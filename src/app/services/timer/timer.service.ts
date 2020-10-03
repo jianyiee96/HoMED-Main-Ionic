@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { SessionService } from '../session/session.service';
 
@@ -20,7 +20,9 @@ export class TimerService {
   constructor(
     private alertController: AlertController,
     private sessionService: SessionService,
-    private router: Router) { }
+    private modalController: ModalController,
+    private router: Router
+  ) { }
 
   startPrimaryTimer() {
     if (this.sessionService.getCurrentServiceman() != null) {
@@ -44,7 +46,7 @@ export class TimerService {
             }
           })
         }
-        
+
       })
 
     }
@@ -72,10 +74,7 @@ export class TimerService {
           text: 'No',
           cssClass: 'cancel-button',
           handler: () => {
-            this.stopAllTimer()
-            this.sessionService.setIsLogin(false)
-            this.sessionService.setCurrentServiceman(null)
-            this.router.navigate(["/login-screen"])
+            this.logoutUser()
           }
         },
         {
@@ -106,15 +105,22 @@ export class TimerService {
           text: "Ok",
           cssClass: 'activate-button',
           handler: () => {
-            this.stopAllTimer()
-            this.sessionService.setIsLogin(false)
-            this.sessionService.setCurrentServiceman(null)
-            this.router.navigate(["/login-screen"])
+            this.logoutUser()
           }
         }
       ]
     })
     await alert.present()
+  }
+
+  logoutUser() {
+    this.stopAllTimer()
+    this.sessionService.setIsLogin(false)
+    this.sessionService.setCurrentServiceman(null)
+    if (this.modalController.getTop() != null) {
+      this.modalController.dismiss()
+    }
+    this.router.navigate(["/login-screen"])
   }
 
 }

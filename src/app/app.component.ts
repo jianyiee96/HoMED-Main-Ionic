@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Forms',
-      url: '/userFunctions/forms',
+      url: '/form-screen',
       icon: 'pencil'
     },
     {

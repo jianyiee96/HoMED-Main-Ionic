@@ -1,0 +1,45 @@
+ion-content {
+    --ion-background-color:#e3dfc8;
+}
+
+ion-card {
+    --background: #f5f1da;
+}
+
+ion-card-title {
+    color: #00416d;
+    font-size: x-large;
+}
+
+ion-button {
+    padding-left: 15px;
+    padding-right: 15px;
+    --background: #f8bd7f;
+    font-size: x-large;
+}
+
+ion-fab-button {
+    --background: #00416d;
+}
+
+.override-ion-button {
+    padding-left: 0px;
+    padding-right: 0px;
+    color: #f5f1da;
+    --background: #00416d;
+    font-size: small;
+}
+
+.override-ion-button-flip {
+    padding-left: 0px;
+    padding-right: 0px;
+    font-size: small;
+}
+
+.zeroFormsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
+}

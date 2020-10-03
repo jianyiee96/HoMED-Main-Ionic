@@ -11,7 +11,7 @@ ionic generate page StartScreen
 ```bash
 ionic generate page EditProfileModal
 ```
-- When generating new service, just the object name would suffice (e.g. Serviceman, Session, Utility)
+- When generating new service, just the object name would suffice in Pascal Casing (e.g. Serviceman, Session, Utility, FormTemplate)
 ```bash
 ionic generate service Serviceman
 ```
@@ -23,7 +23,10 @@ ionic generate class Serviceman
 ```bash
 // create file with name: bloodtype-enum.ts
 ```
-
+- When creating new standalone TS file, seperate each subword by period, and all lower casing (e.g. HttpConfigInterceptor)
+```bash
+// create file with name: http.config.interceptor.ts
+```
 # Coding Conventions
 
 - Organize import statements according to their respective frameworks. (e.g. @ionic, @angular, local directories)
