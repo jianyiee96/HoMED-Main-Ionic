@@ -29,10 +29,10 @@ export class FormRepositoryScreenPage implements OnInit {
     this.formService.retrieveAllFormTemplates().subscribe(
       response => {
         this.formService.formTemplates = response.formTemplates
-        
+
         this.formTemplates = this.formService.formTemplates
         this.formTemplates.forEach(ft => {
-          ft.datePublished = this.parseDate(ft.datePublished).substring(0, 10)
+          ft.datePublished = this.convertUTCStringToSingaporeDate(ft.datePublished)
         })
       },
       error => {
@@ -55,8 +55,19 @@ export class FormRepositoryScreenPage implements OnInit {
     this.router.navigate(["/form-screen"])
   }
 
-  parseDate(date: any) {
-    return date.toString().replace('[UTC]', '');
+  convertUTCStringToSingaporeDate(dateCreated) {
+    if (dateCreated != null) {
+      let stringUtcTime = dateCreated.toLocaleString().substring(0, 19)
+      let d = new Date(Date.UTC(
+        parseInt(stringUtcTime.substring(0, 4)),
+        parseInt("" + (+(stringUtcTime.substring(5, 7)) - 1)),
+        parseInt(stringUtcTime.substring(8, 10)),
+        parseInt(stringUtcTime.substring(11, 13)),
+        parseInt(stringUtcTime.substring(14, 16)),
+        parseInt(stringUtcTime.substring(17, 19))
+      ));
+      return d;
+    }
   }
 
 }

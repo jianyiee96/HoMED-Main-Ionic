@@ -48,7 +48,7 @@
         <ion-card-title>{{fi.formTemplateMapping.formTemplateName}}</ion-card-title>
         <ion-card-subtitle>Date Added: {{fi.dateCreated | date:'dd/MM/yyyy HH:mm'}}</ion-card-subtitle>
         <ion-card-subtitle *ngIf="fi.formInstanceStatusEnum == 'SUBMITTED'">Date Submitted:
-          {{fi.dateSubmitted | date:'HH:mm, MMM d, y'}}</ion-card-subtitle>
+          {{fi.dateSubmitted | date:'dd/MM/yyyy HH:mm'}}</ion-card-subtitle>
         <ion-card-subtitle>Status:
           <ion-chip *ngIf="fi.formInstanceStatusEnum == 'DRAFT'" color="primary">
             <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
