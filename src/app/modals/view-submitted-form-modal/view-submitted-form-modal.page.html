@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>View Submitted Form Instance</ion-title>
+    <ion-title>View Submitted Form</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">Close</ion-button>
     </ion-buttons>
@@ -42,7 +42,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-textarea placeholder="Enter text input here." value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-textarea placeholder="Insert Text" value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]=true>
           </ion-textarea>
         </ion-card-content>
@@ -65,7 +65,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-input placeholder="Enter value here." value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-input placeholder="Insert Number" value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]="true" type="number">
           </ion-input>
         </ion-card-content>
@@ -88,7 +88,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-datetime placeholder="Select Date." value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-datetime placeholder="Insert Date (DD/MM/YYYY)" value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]="true">
           </ion-datetime>
         </ion-card-content>
@@ -111,7 +111,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-datetime placeholder="Select Time." value="{{fif.formInstanceFieldValues[0].inputValue}}"
+          <ion-datetime placeholder="Insert Time (HH:MM)" value="{{fif.formInstanceFieldValues[0].inputValue}}"
             [readonly]="true" display-format="HH:mm" picker-format="HH:mm">
           </ion-datetime>
         </ion-card-content>

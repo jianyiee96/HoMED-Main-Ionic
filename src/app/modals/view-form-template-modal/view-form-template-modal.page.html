@@ -40,16 +40,18 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Text</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" fill="clear">
-                  Open-Ended
-                </ion-button>
+                <ion-text class="marginTop">Insert Text</ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -68,16 +70,18 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Number</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" fill="clear">
-                  Numerical Values
-                </ion-button>
+                <ion-text class="marginTop">Insert Number</ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -96,16 +100,18 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Date</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" fill="clear">
-                  Date
-                </ion-button>
+                <ion-text class="marginTop">Insert Date (DD/MM/YYYY)</ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -124,16 +130,18 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Time</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" fill="clear">
-                  Time
-                </ion-button>
+                <ion-text class="marginTop">Insert Time (HH:MM)</ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -152,16 +160,20 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Radio Button</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
-                  <u>Radio Options</u>
-                </ion-button>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -180,16 +192,20 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Checkbox</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
-                  <u>Checkbox Options</u>
-                </ion-button>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -208,16 +224,20 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Single Dropdown</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
-                  <u>Single Select</u>
-                </ion-button>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>
@@ -236,16 +256,20 @@
         <ion-card-header>
 
           <ion-card-title>
-            {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            <ion-row>
+              {{ff.question}}<ion-text class="requiredMark" *ngIf="ff.isRequired">*</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-badge class="marginTop" color="primary">Multi Dropdown</ion-badge>
+            </ion-row>
           </ion-card-title>
 
           <ion-card-subtitle>
             <ion-grid>
               <ion-row>
-                Answer Type:
-                <ion-button class="optionsButton" (click)="openPicker(ff.formFieldOptions)" fill="outline">
-                  <u>Multi Select</u>
-                </ion-button>
+                <ion-text class="marginTop" (click)="openPicker(ff.formFieldOptions)">
+                  <u>Options</u>
+                </ion-text>
               </ion-row>
             </ion-grid>
           </ion-card-subtitle>

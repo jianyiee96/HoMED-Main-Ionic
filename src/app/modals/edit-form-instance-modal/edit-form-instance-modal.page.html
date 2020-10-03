@@ -44,7 +44,7 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-textarea placeholder="Enter text input here." [ngModelOptions]="{standalone: true}"
+            <ion-textarea placeholder="Insert Text" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
               value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
               [readonly]="!fif.formFieldMapping.isServicemanEditable">
@@ -74,7 +74,7 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-input placeholder="Enter value here." [ngModelOptions]="{standalone: true}"
+            <ion-input placeholder="Insert Number" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
               value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
               [readonly]="!fif.formFieldMapping.isServicemanEditable" type="number">
@@ -104,7 +104,7 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-datetime placeholder="Select Date." [ngModelOptions]="{standalone: true}"
+            <ion-datetime placeholder="Insert Date (DD/MM/YYYY)" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
               value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
               [readonly]="!fif.formFieldMapping.isServicemanEditable">
@@ -134,7 +134,7 @@
           </ion-card-title>
 
           <ion-card-content>
-            <ion-datetime placeholder="Select Time." [ngModelOptions]="{standalone: true}"
+            <ion-datetime placeholder="Insert Time (HH:MM)" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue"
               value="{{formInstanceInputNgModels[fif.formInstanceFieldId][0].inputValue}}"
               [readonly]="!fif.formFieldMapping.isServicemanEditable" display-format="HH:mm" picker-format="HH:mm">
@@ -337,18 +337,7 @@
               </ion-checkbox>
             </ion-item>
           </ion-list>
-
         </ion-card-content>
-
-        <!-- <ion-chip color="tertiary" *ngIf="!fif.formFieldMapping.isServicemanEditable">
-          <ion-icon name="hand-left-outline"></ion-icon>
-          <ion-label>Doctor To Fill</ion-label>
-        </ion-chip>
-
-        <ion-chip color="danger" *ngIf="formInstanceErrorChips[fif.formInstanceFieldId]">
-          <ion-icon name="alert-circle-outline"></ion-icon>
-          <ion-label>Required Field</ion-label>
-        </ion-chip> -->
 
       </ion-card-header>
     </ion-card>
