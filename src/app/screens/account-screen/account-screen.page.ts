@@ -259,16 +259,16 @@ export class AccountScreenPage implements OnInit {
   }
 
   convertUTCStringToSingaporeDate(dateCreated) {
-
     if (dateCreated != null) {
       let stringUtcTime = dateCreated.toLocaleString().substring(0, 19)
       return new Date(Date.UTC(
         parseInt(stringUtcTime.substring(0, 4)),
-        parseInt("" + (+stringUtcTime.substring(5, 7)-1)),
+        parseInt("" + (+stringUtcTime.substring(5, 7) - 1)),
         parseInt(stringUtcTime.substring(8, 10)),
         parseInt(stringUtcTime.substring(11, 13)),
         parseInt(stringUtcTime.substring(14, 16)),
-        parseInt(stringUtcTime.substring(17, 19))));
+        parseInt(stringUtcTime.substring(17, 19))
+      ));
     }
   }
 
