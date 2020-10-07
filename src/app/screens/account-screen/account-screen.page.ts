@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertController, Animation, AnimationController } from '@ionic/angular';
 
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
+import { ServicemanRoleEnum } from 'src/app/classes/servicemanrole-enum';
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { TimerService } from 'src/app/services/timer/timer.service';
@@ -26,6 +27,7 @@ export class AccountScreenPage implements OnInit {
   password: string
   phoneNumber: string
   rod: Date
+  role: ServicemanRoleEnum
   email: string
   streetName: string
   unitNumber: string
@@ -75,6 +77,7 @@ export class AccountScreenPage implements OnInit {
     this.name = this.serviceman.name
     this.phoneNumber = this.serviceman.phoneNumber
     this.rod = this.convertUTCStringToSingaporeDate(this.serviceman.rod)
+    this.role = this.serviceman.role
     this.email = this.serviceman.email
     this.streetName = this.serviceman.address.streetName
     this.unitNumber = this.serviceman.address.unitNumber
@@ -152,7 +155,7 @@ export class AccountScreenPage implements OnInit {
         this.passwordErrorMessage = error.substring(37)
         this.passwordError = true
       }
-    );
+    )
   }
 
   editForm() {

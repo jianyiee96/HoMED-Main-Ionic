@@ -99,6 +99,20 @@
       <ion-row>
         <ion-col size="4">
           <div class="formQns">
+            <ion-text>ROLE</ion-text>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-input name="role" [(ngModel)]="role" [disabled]="isEditing" [readonly]="true">
+            </ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <div class="formQns">
             <ion-text>Email</ion-text>
           </div>
         </ion-col>
