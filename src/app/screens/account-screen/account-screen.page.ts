@@ -80,8 +80,8 @@ export class AccountScreenPage implements OnInit {
     this.role = this.serviceman.role
     this.email = this.serviceman.email
     this.streetName = this.serviceman.address.streetName
-    this.unitNumber = this.serviceman.address.unitNumber
-    this.buildingName = this.serviceman.address.buildingName
+    this.unitNumber = ((this.serviceman.address.unitNumber != "") ? this.serviceman.address.unitNumber : 'N.A')
+    this.buildingName = ((this.serviceman.address.buildingName != "") ? this.serviceman.address.buildingName : 'N.A')
     this.postal = this.serviceman.address.postal
   }
 
@@ -167,8 +167,8 @@ export class AccountScreenPage implements OnInit {
     // when user taps 'Cancel' after tapping 'Edit Account Details'
     this.phoneNumber = this.serviceman.phoneNumber
     this.streetName = this.serviceman.address.streetName
-    this.unitNumber = this.serviceman.address.unitNumber
-    this.buildingName = this.serviceman.address.buildingName
+    this.unitNumber = ((this.serviceman.address.unitNumber != "") ? this.serviceman.address.unitNumber : 'N.A')
+    this.buildingName = ((this.serviceman.address.buildingName != "") ? this.serviceman.address.buildingName : 'N.A')
     this.postal = this.serviceman.address.postal
   }
 
@@ -194,7 +194,7 @@ export class AccountScreenPage implements OnInit {
           this.serviceman = response.serviceman
           this.sessionService.setCurrentServiceman(this.serviceman)
           this.editForm()
-          this.presentSuccessMessage("Account updated successfully.")
+          this.presentSuccessMessage("Account updated successfully. If changes are not reflected, do re-login.")
         },
         error => {
           this.serviceman = this.sessionService.getCurrentServiceman()
