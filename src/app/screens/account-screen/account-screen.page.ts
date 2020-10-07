@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertController, Animation, AnimationController } from '@ionic/angular';
 
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
+import { ServicemanRoleEnum } from 'src/app/classes/servicemanrole-enum';
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { TimerService } from 'src/app/services/timer/timer.service';
@@ -26,6 +27,7 @@ export class AccountScreenPage implements OnInit {
   password: string
   phoneNumber: string
   rod: Date
+  role: ServicemanRoleEnum
   email: string
   streetName: string
   unitNumber: string
@@ -75,10 +77,11 @@ export class AccountScreenPage implements OnInit {
     this.name = this.serviceman.name
     this.phoneNumber = this.serviceman.phoneNumber
     this.rod = this.convertUTCStringToSingaporeDate(this.serviceman.rod)
+    this.role = this.serviceman.role
     this.email = this.serviceman.email
     this.streetName = this.serviceman.address.streetName
-    this.unitNumber = this.serviceman.address.unitNumber
-    this.buildingName = this.serviceman.address.buildingName
+    this.unitNumber = ((this.serviceman.address.unitNumber != "") ? this.serviceman.address.unitNumber : 'N.A')
+    this.buildingName = ((this.serviceman.address.buildingName != "") ? this.serviceman.address.buildingName : 'N.A')
     this.postal = this.serviceman.address.postal
   }
 
@@ -152,7 +155,7 @@ export class AccountScreenPage implements OnInit {
         this.passwordErrorMessage = error.substring(37)
         this.passwordError = true
       }
-    );
+    )
   }
 
   editForm() {
@@ -164,8 +167,8 @@ export class AccountScreenPage implements OnInit {
     // when user taps 'Cancel' after tapping 'Edit Account Details'
     this.phoneNumber = this.serviceman.phoneNumber
     this.streetName = this.serviceman.address.streetName
-    this.unitNumber = this.serviceman.address.unitNumber
-    this.buildingName = this.serviceman.address.buildingName
+    this.unitNumber = ((this.serviceman.address.unitNumber != "") ? this.serviceman.address.unitNumber : 'N.A')
+    this.buildingName = ((this.serviceman.address.buildingName != "") ? this.serviceman.address.buildingName : 'N.A')
     this.postal = this.serviceman.address.postal
   }
 
@@ -191,7 +194,7 @@ export class AccountScreenPage implements OnInit {
           this.serviceman = response.serviceman
           this.sessionService.setCurrentServiceman(this.serviceman)
           this.editForm()
-          this.presentSuccessMessage("Account updated successfully.")
+          this.presentSuccessMessage("Account updated successfully. If changes are not reflected, do re-login.")
         },
         error => {
           this.serviceman = this.sessionService.getCurrentServiceman()
