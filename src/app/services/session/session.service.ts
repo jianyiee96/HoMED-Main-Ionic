@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -65,4 +66,19 @@ export class SessionService {
 		sessionStorage.password = password
 	}
 
+	getSecuredHttpOptions() {
+		return {
+			headers: new HttpHeaders(
+				{
+					'Content-Type': 'application/json',
+					'Id': this.getCurrentServiceman().servicemanId.toString(),
+					'Token': sessionStorage.token
+				}
+			)
+		}
+	}
+
+	setToken(token: string): void {
+		sessionStorage.token = token
+	}
 }
