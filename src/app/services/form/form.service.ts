@@ -32,19 +32,19 @@ export class FormService {
       "formTemplateId": formTemplateId
     }
 
-    return this.httpClient.post<any>(this.baseUrl + "/createFormInstance", createFormInstanceReq, httpOptions).pipe(
+    return this.httpClient.post<any>(this.baseUrl + "/createFormInstance", createFormInstanceReq, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     )
   }
 
   retrieveAllServicemanFormInstances() {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllServicemanFormInstances?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId).pipe(
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllServicemanFormInstances?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }
 
   retrieveAllFormTemplates(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllFormTemplates").pipe(
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllFormTemplates", this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }
@@ -53,14 +53,13 @@ export class FormService {
     let updateFormInstanceReq = {
       "formInstance": formInstance
     }
-
-    return this.httpClient.post<any>(this.baseUrl + "/updateFormInstanceFieldValues", updateFormInstanceReq, httpOptions).pipe(
+    return this.httpClient.post<any>(this.baseUrl + "/updateFormInstanceFieldValues", updateFormInstanceReq, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteFormInstance(formInstanceId: number): Observable<any> {
-    return this.httpClient.delete<any>(this.baseUrl + "/deleteFormInstance?formInstanceId=" + formInstanceId).pipe(
+    return this.httpClient.delete<any>(this.baseUrl + "/deleteFormInstance?formInstanceId=" + formInstanceId, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }
@@ -70,7 +69,7 @@ export class FormService {
       "formInstance": formInstance
     }
 
-    return this.httpClient.post<any>(this.baseUrl + "/submitFormInstance", updateFormInstanceReq, httpOptions).pipe(
+    return this.httpClient.post<any>(this.baseUrl + "/submitFormInstance", updateFormInstanceReq, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }
@@ -80,7 +79,7 @@ export class FormService {
       "formInstance": formInstance
     }
 
-    return this.httpClient.post<any>(this.baseUrl + "/archiveFormInstance", updateFormInstanceReq, httpOptions).pipe(
+    return this.httpClient.post<any>(this.baseUrl + "/archiveFormInstance", updateFormInstanceReq, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }

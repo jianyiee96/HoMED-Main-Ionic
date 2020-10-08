@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { FormInstance } from 'src/app/classes/form-instance/form-instance';
@@ -61,7 +61,7 @@ export class FormScreenPage implements OnInit {
         })
       },
       error => {
-        console.error(error);
+        console.error(error)
       }
     )
   }

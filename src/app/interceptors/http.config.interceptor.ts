@@ -2,12 +2,17 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, Htt
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { TimerService } from '../services/timer/timer.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
-    constructor(public loadingController: LoadingController) { }
+    constructor(
+        public loadingController: LoadingController,
+        private alertController: AlertController,
+        private timerService: TimerService
+    ) { }
 
     isLoading = false
 
@@ -28,6 +33,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 console.error('error returned to interceptor--->>>', error)
                 this.dismissLoading()
+
+                if (error.error.message.toLowerCase().includes("json")) {
+                    this.presentLogoutAlert()
+                }
 
                 return throwError(error)
             })
@@ -54,6 +63,26 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     async dismissLoading() {
         this.isLoading = false
         return await this.loadingController.dismiss().then(() => { })
+    }
+
+    async presentLogoutAlert() {
+        const alert = await this.alertController.create({
+            header: 'Invalid JSON Token',
+            subHeader: 'For security reasons, you will have to re-login.',
+            backdropDismiss: false,
+            cssClass: 'activateAccountAlert',
+            buttons: [
+                {
+                    text: 'Logout',
+                    cssClass: 'activate-button',
+                    handler: () => {
+                        this.timerService.logoutUser()
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
 }

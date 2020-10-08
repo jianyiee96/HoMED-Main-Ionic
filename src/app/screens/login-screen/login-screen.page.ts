@@ -57,7 +57,6 @@ export class LoginScreenPage implements OnInit {
 
       this.servicemanService.login(this.email, this.password).subscribe(
         response => {
-          let serviceman: Serviceman = response.serviceman
 
           this.serviceman = response.serviceman
 
@@ -67,6 +66,7 @@ export class LoginScreenPage implements OnInit {
               this.sessionService.setIsLogin(true)
               this.sessionService.setCurrentServiceman(this.serviceman)
               this.timerService.startPrimaryTimer()
+              this.sessionService.setToken(this.serviceman.token)
               this.router.navigate(['/home-screen'])
             } else {
               this.activateAccountPrompt()
@@ -107,7 +107,9 @@ export class LoginScreenPage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'cancel-button',
-          handler: () => { }
+          handler: () => {
+            this.serviceman = null
+          }
         },
         {
           text: 'Activate',
@@ -191,6 +193,7 @@ export class LoginScreenPage implements OnInit {
 
         this.sessionService.setIsLogin(true)
         this.sessionService.setCurrentServiceman(this.serviceman)
+        this.sessionService.setToken(this.serviceman.token)
         this.timerService.startPrimaryTimer()
         this.router.navigate(['/home-screen'])
       }, error => {

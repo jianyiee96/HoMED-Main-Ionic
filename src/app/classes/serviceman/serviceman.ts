@@ -15,6 +15,7 @@ export class Serviceman {
     address: Address
     isActivated: boolean
     role: ServicemanRoleEnum
+    token: string
 
     constructor(
         servicemanId?: number,
@@ -27,7 +28,8 @@ export class Serviceman {
         email?: string,
         address?: Address,
         isActivated?: boolean,
-        role?: ServicemanRoleEnum
+        role?: ServicemanRoleEnum,
+        token?: string
     ) {
 
         this.servicemanId = servicemanId
@@ -41,6 +43,7 @@ export class Serviceman {
         this.email = email
         this.isActivated = isActivated
         this.role = role
+        this.token = token
 
     }
 
