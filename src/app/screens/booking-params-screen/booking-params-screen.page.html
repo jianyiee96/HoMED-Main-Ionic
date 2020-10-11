@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Booking Options</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-title>Hi There {{serviceman.name}}!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Make sure to fill up all the fields below before generating the available slots.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-label>Consultation Purpose</ion-label>
+    <ion-select [(ngModel)]="selectedConsulationPurposeId" ok-text="Select" cancel-text="Cancel"
+      [interfaceOptions]="singleDropdownOptions" style="max-width: 100% !important;">
+      <ion-select-option *ngFor="let cp of consultationPurposes" value="{{cp.consultationPurposeId}}">
+        {{cp.consultationPurposeName}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Medical Centre</ion-label>
+    <ion-select [(ngModel)]="selectedMedicalCentreIndex" ok-text="Select" cancel-text="Cancel"
+      [interfaceOptions]="singleDropdownOptions">
+      <ion-select-option *ngFor="let mc of medicalCentres; let i = index" value="{{i}}">
+        {{mc.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-card mode="ios" *ngIf="selectedMedicalCentreIndex != null">
+    <ion-card-header>
+      <ion-card-title style="font-size: small;">{{medicalCentres[selectedMedicalCentreIndex].name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-subtitle>Phone: {{medicalCentres[selectedMedicalCentreIndex].phone}}
+      </ion-card-subtitle>
+      <ion-card-subtitle>Address: {{medicalCentres[selectedMedicalCentreIndex].address.streetName}}
+        S{{medicalCentres[selectedMedicalCentreIndex].address.postal}}
+      </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-label>
+      Date
+    </ion-label>
+    <ion-datetime [(ngModel)]="selectedDate" placeholder="Pick a date" value="selectedDate"
+      min="{{currentDate | date:'yyyy-MM-dd'}}" max="{{maxYear}}">
+    </ion-datetime>
+  </ion-item>
+
+  <div style="margin-top: 15%;">
+    <ion-row>
+      <ion-button (click)="queryBookingSlots()" class="retrieveSlotsButton" [disabled]="!checkParamsFilled()">Retrieve
+        Slots</ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-button (click)="redirectToBookingScreen()" class="backButton">Back</ion-button>
+    </ion-row>
+  </div>
+
+</ion-content>
