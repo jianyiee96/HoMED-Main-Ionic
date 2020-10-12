@@ -5,7 +5,7 @@ HoMED Ionic Client targeted for HomeTeam Servicemen.
 # File Generation
 - When generating new page, append 'Screen' to name of page and apply Pascal Casing (e.g. StartScreen, LoginScreen)
 ```bash
-ionic generate page StartScreen
+ionic g page screens/StartScreen
 ```
 - When generating new modal, append 'Modal' to name of page and apply Pascal Casing (e.g. EditProfileModal)
 ```bash
@@ -13,11 +13,11 @@ ionic generate page EditProfileModal
 ```
 - When generating new service, just the object name would suffice in Pascal Casing (e.g. Serviceman, Session, Utility, FormTemplate)
 ```bash
-ionic generate service Serviceman
+ionic g service services/medicalcentre/MedicalCentre
 ```
 - When generating new class, just the object name would suffice (e.g. Serviceman, Appointment)
 ```bash
-ionic generate class Serviceman
+ionic g class classes/serviceman/Serviceman
 ```
 - When creating new enum, just the object name would suffice on lowercase and append '-enum' (e.g. gender, bloodtype)
 ```bash

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Available Slots for</ion-title>
+    <ion-title>{{selectedDate | date: 'EEEE, dd MMMM yyyy'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-title style="font-size: small;">{{selectedMedicalCentre.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-subtitle>Phone: {{selectedMedicalCentre.phone}}
+      </ion-card-subtitle>
+      <ion-card-subtitle>Address: {{selectedMedicalCentre.address.streetName}}
+        S{{selectedMedicalCentre.address.postal}}
+      </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-radio-group allow-empty-selection [(ngModel)]="selectedSlotIndex">
+    <ion-item *ngFor="let bs of filteredBookingSlots; let i = index" style="margin: 5%;">
+
+      <ion-label>{{bs.startDateTime | date:'HH:mm'}} - {{bs.endDateTime | date:'HH:mm'}}</ion-label>
+      <ion-radio slot="end" color="warning" value="{{i}}" [disabled]="bs.booking != null"></ion-radio>
+
+    </ion-item>
+  </ion-radio-group>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button (click)="confirmBookingPrompt()" expand="block" class="bookButton"
+      [disabled]="selectedSlotIndex == null">Book</ion-button>
+    <ion-button (click)="redirectToBookingParamsScreen()" expand="block" class="backButton">Back</ion-button>
+  </ion-toolbar>
+</ion-footer>

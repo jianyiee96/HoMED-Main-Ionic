@@ -51,7 +51,22 @@ const routes: Routes = [
   },
   {
     path: 'view-submitted-form-modal',
-    loadChildren: () => import('./modals/view-submitted-form-modal/view-submitted-form-modal.module').then( m => m.ViewSubmittedFormModalPageModule),
+    loadChildren: () => import('./modals/view-submitted-form-modal/view-submitted-form-modal.module').then(m => m.ViewSubmittedFormModalPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'booking-screen',
+    loadChildren: () => import('./screens/booking-screen/booking-screen.module').then(m => m.BookingScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'booking-params-screen',
+    loadChildren: () => import('./screens/booking-params-screen/booking-params-screen.module').then(m => m.BookingParamsScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'booking-slots-screen',
+    loadChildren: () => import('./screens/booking-slots-screen/booking-slots-screen.module').then(m => m.BookingSlotsScreenPageModule),
     canActivate: [AuthGuard]
   },
 ];

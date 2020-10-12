@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Appointment',
-      url: '/userFunctions/appointment',
+      title: 'Booking',
+      url: '/booking-screen',
       icon: 'calendar'
     },
     {
