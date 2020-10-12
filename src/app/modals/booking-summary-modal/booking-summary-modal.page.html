@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>BOOKING SUMMARY</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <div>
+      <ion-row>BOOKING ID:&nbsp;<b>[{{booking.bookingId}}]</b></ion-row>
+      <ion-row>SLOT ID:&nbsp;<b>[{{booking.bookingSlot.slotId}}]</b></ion-row>
+      <ion-row>Consultation Purpose:&nbsp;<b><u>{{booking.consultationPurpose.consultationPurposeName}}</u></b>
+      </ion-row>
+    </div>
+
+    <hr class="hr">
+
+    <div>
+      <ion-row>Start Time:&nbsp;<b><u>{{booking.bookingSlot.startDateTime | date:' HH:mm'}}</u></b></ion-row>
+      <ion-row>End Time:&nbsp;<b><u>{{booking.bookingSlot.endDateTime | date:' HH:mm'}}</u></b></ion-row>
+      <ion-row>Date:&nbsp;<b><u>{{booking.bookingSlot.startDateTime | date:' dd/MM/yyyy'}}</u></b></ion-row>
+    </div>
+
+    <hr class="hr">
+
+    <div>
+      Venue: <b><u>{{booking.bookingSlot.medicalCentre.name}}</u></b>
+    </div>
+
+    <hr class="hr">
+
+    <div>
+      Required Forms:
+      <ion-item *ngFor="let fi of booking.formInstances" lines="none" (click)="redirectToFormInstance(fi)">
+        <ion-label><b>* <u>{{fi.formTemplateMapping.formTemplateName}}</u></b></ion-label>
+      </ion-item>
+    </div>
+
+    <hr class="hr">
+
+    <div style="padding-left: 0%;padding-right: 0%;">
+      <ion-button size="small" style="--background: #00416d;">Mark Attendance</ion-button>
+      <ion-button color="danger" size="small">Cancel Booking</ion-button>
+    </div>
+
+    <hr class="hr">
+
+    <div>
+      NOTE: The mischievous Minions is coming back to McDonald's from 4 September 2020. With a line-up of 35 different
+      designs Minion Happy Meal Toys! To make it even more exciting, each toy design also comes in an exclusive Golden
+      Minion twin – making it a rare surprise!
+    </div>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button (click)="dismiss()" expand="block" style="--background: #f8bd7f">Close</ion-button>
+  </ion-toolbar>
+</ion-footer>

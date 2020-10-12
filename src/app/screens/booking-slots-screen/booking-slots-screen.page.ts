@@ -80,17 +80,14 @@ export class BookingSlotsScreenPage implements OnInit {
 
   scheduleBooking() {
 
-    this.schedulerService.scheduleBooking(this.consultationService.selectedConsultationPurposeId, this.bookingSlots[this.selectedSlotIndex].slotId).subscribe(
+    this.schedulerService.scheduleBooking(this.consultationService.selectedConsultationPurposeId, this.filteredBookingSlots[this.selectedSlotIndex].slotId).subscribe(
       response => {
-        console.log(response);
-        this.router.navigate(['/booking-screen'])
+        this.router.navigate(['/booking-screen/' + this.filteredBookingSlots[this.selectedSlotIndex].slotId])
       },
       error => {
         console.log(error);
       }
     )
-
-    console.log(this.bookingSlots[this.selectedSlotIndex]);
 
   }
 

@@ -7,7 +7,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen scrollEvents (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
+
+  <ion-card *ngFor="let sb of servicemanBookings" mode="ios" (click)="presentBookingSummary(sb)">
+
+    <ion-card-header>
+
+      <ion-card-title>{{sb.consultationPurpose.consultationPurposeName}}</ion-card-title>
+      <br>
+      <ion-card-subtitle>Date: {{sb.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}</ion-card-subtitle>
+      <ion-card-subtitle>Time Slot: {{sb.bookingSlot.startDateTime | date:'HH:mm'}} -
+        {{sb.bookingSlot.endDateTime | date:'HH:mm'}}</ion-card-subtitle>
+      <ion-card-subtitle>Venue: {{sb.bookingSlot.medicalCentre.name}}</ion-card-subtitle>
+      <br>
+      <ion-card-subtitle>Status:
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'UPCOMING'" color="primary">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+      </ion-card-subtitle>
+      <ion-card-subtitle>
+        Forms:
+        <ion-chip>
+          <ion-label>{{sb.formInstances.length}}</ion-label>
+        </ion-chip>
+      </ion-card-subtitle>
+
+    </ion-card-header>
+
+  </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isShown">
     <ion-fab-button (click)="redirectToBookingParamsScreen()" mode="ios">

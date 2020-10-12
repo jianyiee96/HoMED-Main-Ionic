@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { FormInstance } from 'src/app/classes/form-instance/form-instance';
@@ -15,23 +15,26 @@ import { FormService } from 'src/app/services/form/form.service';
 export class FormScreenPage implements OnInit {
 
   allFormInstances: FormInstance[] = []
-
   formInstances: FormInstance[] = []
-
   archivedFormInstances: FormInstance[] = []
 
-  isShown: boolean
+  passedFormInstanceId: number
 
+  isShown: boolean
   viewArchived: boolean
 
   constructor(
     private modalController: ModalController,
     private formService: FormService,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+
+    this.passedFormInstanceId = parseInt(this.activatedRoute.snapshot.paramMap.get('formInstanceId'))
+
   }
 
   ionViewWillEnter() {
@@ -59,6 +62,14 @@ export class FormScreenPage implements OnInit {
         this.formInstances.sort(function (a, b) {
           return b.dateCreated.getTime() - a.dateCreated.getTime()
         })
+
+        for (var index = 0; index < this.allFormInstances.length; index++) {
+          if (this.passedFormInstanceId == this.allFormInstances[index].formInstanceId) {
+            this.redirectToModal(this.allFormInstances[index])
+            this.passedFormInstanceId = null
+            break
+          }
+        }
       },
       error => {
         console.error(error)

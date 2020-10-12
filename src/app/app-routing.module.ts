@@ -35,6 +35,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'form-screen/:formInstanceId',
+    loadChildren: () => import('./screens/form-screen/form-screen.module').then(m => m.FormScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'form-repository-screen',
     loadChildren: () => import('./screens/form-repository-screen/form-repository-screen.module').then(m => m.FormRepositoryScreenPageModule),
     canActivate: [AuthGuard]
@@ -60,6 +65,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'booking-screen/:slotId',
+    loadChildren: () => import('./screens/booking-screen/booking-screen.module').then(m => m.BookingScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'booking-params-screen',
     loadChildren: () => import('./screens/booking-params-screen/booking-params-screen.module').then(m => m.BookingParamsScreenPageModule),
     canActivate: [AuthGuard]
@@ -67,6 +77,11 @@ const routes: Routes = [
   {
     path: 'booking-slots-screen',
     loadChildren: () => import('./screens/booking-slots-screen/booking-slots-screen.module').then(m => m.BookingSlotsScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'booking-summary-modal',
+    loadChildren: () => import('./modals/booking-summary-modal/booking-summary-modal.module').then(m => m.BookingSummaryModalPageModule),
     canActivate: [AuthGuard]
   },
 ];
