@@ -44,7 +44,9 @@ export class BookingSlotsScreenPage implements OnInit {
       const recvDate = new Date(bs.startDateTime)
 
       if (recvDate > currDate) {
-        this.filteredBookingSlots.push(bs)
+        if (bs.booking == null || bs.booking.bookingStatusEnum.toString() != "CANCELLED") {
+          this.filteredBookingSlots.push(bs)
+        }
       }
 
     })
