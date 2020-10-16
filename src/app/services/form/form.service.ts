@@ -37,8 +37,13 @@ export class FormService {
     )
   }
 
-  retrieveAllServicemanFormInstances() {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllServicemanFormInstances?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId, this.sessionService.getSecuredHttpOptions()).pipe(
+  retrieveAllServicemanFormInstances(invokeSpinner: boolean = true) {
+    let header = this.sessionService.getSecuredHttpOptions()
+    if (!invokeSpinner) {
+      header = this.sessionService.getSecuredHttpOptionsWithInterceptorHeader()
+    }
+
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllServicemanFormInstances?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId, header).pipe(
       catchError(this.handleError)
     );
   }

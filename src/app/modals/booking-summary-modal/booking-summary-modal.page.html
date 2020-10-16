@@ -5,59 +5,142 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
 
-    <div>
-      <ion-row>BOOKING ID:&nbsp;<b>[{{booking.bookingId}}]</b></ion-row>
-      <ion-row>SLOT ID:&nbsp;<b>[{{booking.bookingSlot.slotId}}]</b></ion-row>
-      <ion-row>Consultation Purpose:&nbsp;<b><u>{{booking.consultationPurpose.consultationPurposeName}}</u></b>
+  <div class="sectionHeader">
+    <h2><u>BOOKING DETAILS</u></h2>
+  </div>
+  <div class="sectionContent">
+    <ion-grid>
+
+      <ion-row>
+        <ion-col size="6">
+          <ion-text><b>Booking ID</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.bookingId}}
+          </ion-label>
+        </ion-col>
       </ion-row>
-    </div>
 
-    <hr class="hr">
+      <ion-row>
+        <ion-col size="6">
+          <ion-text><b>Consultation Purpose</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.consultationPurpose.consultationPurposeName}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
 
-    <div>
-      <ion-row>Start Time:&nbsp;<b><u>{{booking.bookingSlot.startDateTime | date:' HH:mm'}}</u></b></ion-row>
-      <ion-row>End Time:&nbsp;<b><u>{{booking.bookingSlot.endDateTime | date:' HH:mm'}}</u></b></ion-row>
-      <ion-row>Date:&nbsp;<b><u>{{booking.bookingSlot.startDateTime | date:' dd/MM/yyyy'}}</u></b></ion-row>
-    </div>
+    </ion-grid>
+  </div>
 
-    <hr class="hr">
 
-    <div>
-      Venue: <b><u>{{booking.bookingSlot.medicalCentre.name}}</u></b>
-    </div>
+  <hr class="hr">
 
-    <hr class="hr">
+  <div class="sectionHeader">
+    <h2><u>TIME</u></h2>
+  </div>
+  <div class="sectionContent">
+    <ion-grid>
 
-    <div>
-      Required Forms:
-      <ion-item *ngFor="let fi of booking.formInstances" lines="none" (click)="redirectToFormInstance(fi)">
-        <ion-label><b>* <u>{{fi.formTemplateMapping.formTemplateName}}</u></b></ion-label>
-      </ion-item>
-    </div>
+      <ion-row>
+        <ion-col size="6">
+          <ion-text><b>Date</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
 
-    <hr class="hr">
+      <ion-row>
+        <ion-col size="6">
+          <ion-text><b>Start Time</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.bookingSlot.startDateTime | date:' HH:mm'}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
 
-    <div style="padding-left: 0%;padding-right: 0%;">
-      <ion-button size="small" style="--background: #00416d;">Mark Attendance</ion-button>
-      <ion-button color="danger" size="small">Cancel Booking</ion-button>
-    </div>
+      <ion-row>
+        <ion-col size="6">
+          <ion-text><b>End Time</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.bookingSlot.endDateTime | date:' HH:mm'}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
 
-    <hr class="hr">
+    </ion-grid>
+  </div>
 
-    <div>
-      NOTE: The mischievous Minions is coming back to McDonald's from 4 September 2020. With a line-up of 35 different
-      designs Minion Happy Meal Toys! To make it even more exciting, each toy design also comes in an exclusive Golden
-      Minion twin – making it a rare surprise!
-    </div>
+  <hr class="hr">
 
-  </ion-list>
+  <div class="sectionHeader">
+    <h2><u>VENUE</u></h2>
+  </div>
+  <div class="sectionContent">
+    <ion-grid>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-text><b>Medical Centre</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.bookingSlot.medicalCentre.name}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-text><b>Address</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            {{booking.bookingSlot.medicalCentre.address.unitNumber}}<br>{{booking.bookingSlot.medicalCentre.address.streetName}}
+            <br>{{booking.bookingSlot.medicalCentre.address.buildingName}} Singapore
+            {{booking.bookingSlot.medicalCentre.address.postal}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+
+  <hr class="hr">
+
+  <div class="sectionHeader">
+    <h2><u>REQUIRED FORMS</u></h2>
+  </div>
+  <div class="sectionContent">
+    <ion-grid>
+
+      <ion-row *ngFor="let fi of booking.formInstances">
+        <ion-label><b>* </b>
+          <u>{{fi.formTemplateMapping.formTemplateName}}</u>&nbsp;
+          <ion-chip *ngIf="fi.formInstanceStatusEnum == 'SUBMITTED'" color="success">Submitted</ion-chip>
+        </ion-label>
+      </ion-row>
+
+    </ion-grid>
+  </div>
 
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
-    <ion-button (click)="dismiss()" expand="block" style="--background: #f8bd7f">Close</ion-button>
+    <ion-button *ngIf="booking.bookingStatusEnum == 'UPCOMING'" (click)="presentCancelConfirm()" expand="block"
+      style="--background: #c93d06">Cancel Booking</ion-button>
+    <ion-button (click)="dismiss()" expand="block" style="--background: #00416d">Close</ion-button>
   </ion-toolbar>
 </ion-footer>

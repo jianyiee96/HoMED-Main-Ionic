@@ -11,16 +11,16 @@ ion-button {
     padding-right: 15px;
 }
 
-div {
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-    margin-top: 8%;
-    margin-bottom: 8%;
-    font-size: 100%;
-    padding: 5%;
+.sectionHeader {
+    margin-left: 5%;
+    color: #00416d;
+}
+
+.sectionContent {
+    margin-left: 3%;
 }
 
 .hr {
     border-bottom: solid #f5f1da;
-    width: 95%;
+    width: 100%;
 }

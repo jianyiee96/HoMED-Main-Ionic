@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, NavParams } from '@ionic/angular';
+
+import { AlertController, ModalController, NavController, NavParams } from '@ionic/angular';
+
 import { Booking } from 'src/app/classes/booking/booking';
 import { FormInstance } from 'src/app/classes/form-instance/form-instance';
+import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 
 @Component({
   selector: 'app-booking-summary-modal',
@@ -14,7 +17,9 @@ export class BookingSummaryModalPage implements OnInit {
   booking: Booking
 
   constructor(
+    private alertController: AlertController,
     private modalController: ModalController,
+    private schedulerService: SchedulerService,
     private navParam: NavParams,
     private router: Router
   ) {
@@ -24,9 +29,39 @@ export class BookingSummaryModalPage implements OnInit {
   ngOnInit() {
   }
 
-  redirectToFormInstance(fi: FormInstance) {
-    this.dismiss()
-    this.router.navigate(['/form-screen/' + fi.formInstanceId])
+  async presentCancelConfirm() {
+    const alert = await this.alertController.create({
+      header: `Confirm Cancellation of Booking ID ${this.booking.bookingId}?`,
+      message: 'Note that this action cannot be <strong>undone</strong>!',
+      cssClass: 'homedThemeAlert',
+      buttons: [
+        {
+          text: 'Back',
+          role: 'cancel',
+          cssClass: 'false-button',
+          handler: () => { }
+        }, {
+          text: 'Cancel',
+          cssClass: 'delete-button',
+          handler: () => {
+            this.cancelBooking()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  cancelBooking() {
+    this.schedulerService.cancelBooking(this.booking.bookingId).subscribe(
+      response => {
+        this.dismiss()
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   dismiss() {

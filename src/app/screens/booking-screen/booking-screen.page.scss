@@ -14,3 +14,11 @@ ion-card-title {
 ion-fab-button {
     --background: #00416d;
 }
+
+.zeroBookingsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
+}

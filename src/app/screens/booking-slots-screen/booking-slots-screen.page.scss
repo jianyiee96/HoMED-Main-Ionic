@@ -17,6 +17,14 @@ ion-card {
     --background: #f5f1da;
 }
 
+.zeroBookingSlotsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
+}
+
 .bookButton {
     --background: #00416d;
 }

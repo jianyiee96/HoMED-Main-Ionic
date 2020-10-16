@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { MedicalCentre } from 'src/app/classes/medical-centre/medical-centre';
 
+import { AlertController } from '@ionic/angular';
+
+import { MedicalCentre } from 'src/app/classes/medical-centre/medical-centre';
 import { BookingSlot } from 'src/app/classes/slot/slot';
 import { ConsultationService } from 'src/app/services/consultation/consultation.service';
 import { MedicalCentreService } from 'src/app/services/medicalcentre/medical-centre.service';
@@ -27,7 +29,8 @@ export class BookingSlotsScreenPage implements OnInit {
     private schedulerService: SchedulerService,
     private consultationService: ConsultationService,
     private medicalCentreService: MedicalCentreService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit() {
@@ -54,11 +57,15 @@ export class BookingSlotsScreenPage implements OnInit {
   }
 
   async confirmBookingPrompt() {
+    const startDateTime = this.datePipe.transform(this.filteredBookingSlots[this.selectedSlotIndex].startDateTime, 'HH:mm')
+    const endDateTime = this.datePipe.transform(this.filteredBookingSlots[this.selectedSlotIndex].endDateTime, 'HH:mm')
+    const date = this.datePipe.transform(this.filteredBookingSlots[this.selectedSlotIndex].startDateTime, 'EEE, MMMM d, y')
+
     const alert = await this.alertController.create({
       header: 'Confirm Booking',
-      subHeader: this.filteredBookingSlots[this.selectedSlotIndex].startDateTime.toLocaleTimeString() + ' to ' + this.filteredBookingSlots[this.selectedSlotIndex].endDateTime.toLocaleTimeString() + ' at ' + this.selectedMedicalCentre.name,
-      message: 'Upon confirmation, you will be redireced to a booking summary page.',
-      cssClass: 'activateAccountAlert',
+      subHeader: 'Upon confirmation, you will be redireced to a booking summary page.',
+      message: `<b>Medical Centre</b>:<br/>${this.selectedMedicalCentre.name}<br/><b>Purpose</b>: ${this.consultationService.selectedConsultationPurposeName}<br/><b>Date</b>: ${date}<br/><b>Start</b>: ${startDateTime}<br/><b>End</b>: ${endDateTime}`,
+      cssClass: 'confirmBookingAlert',
       buttons: [
         {
           text: 'Cancel',
@@ -68,7 +75,7 @@ export class BookingSlotsScreenPage implements OnInit {
         },
         {
           text: 'Confirm',
-          cssClass: 'activate-button',
+          cssClass: 'book-button',
           handler: () => {
             this.scheduleBooking()
           }

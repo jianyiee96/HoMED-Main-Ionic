@@ -9,7 +9,20 @@
 
 <ion-content fullscreen scrollEvents (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
 
-  <ion-card *ngFor="let sb of servicemanBookings" mode="ios" (click)="presentBookingSummary(sb)">
+  <ion-item>
+    <ion-label>Filter</ion-label>
+    <ion-select multiple [(ngModel)]="selectedFilters" style="max-width: 90% !important;" (ionChange)="applyFilter()">
+      <ion-select-option *ngFor="let f of filters" value="{{f}}">
+        {{f}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="zeroBookingsLabel" *ngIf="servicemanBookingsToShow.length === 0">
+    <ion-text>Add a filter/booking to get started!</ion-text>
+  </div>
+
+  <ion-card *ngFor="let sb of servicemanBookingsToShow" mode="ios" (click)="presentBookingSummary(sb)">
 
     <ion-card-header>
 
@@ -24,8 +37,17 @@
         <ion-chip *ngIf="sb.bookingStatusEnum == 'UPCOMING'" color="primary">
           <ion-label>{{sb.bookingStatusEnum}}</ion-label>
         </ion-chip>
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'PAST'" color="secondary">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'ABSENT'" color="success">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'CANCELLED'" color="danger">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
       </ion-card-subtitle>
-      <ion-card-subtitle>
+      <ion-card-subtitle *ngIf="sb.bookingStatusEnum != 'CANCELLED'">
         Forms:
         <ion-chip>
           <ion-label>{{sb.formInstances.length}}</ion-label>

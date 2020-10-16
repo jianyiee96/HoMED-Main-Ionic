@@ -34,6 +34,11 @@ ion-toolbar {
     --backdrop-opacity: 0.7;
 }
 
+.activateAccountAlert .alert-radio-label {
+    white-space: initial;
+    overflow: visible;
+}
+
 .activateAccountAlert .alert-message {
     color: #970505;
 }
@@ -44,6 +49,25 @@ ion-toolbar {
 }
 
 .activateAccountAlert .activate-button {
+    background-color: #00416d;
+    color: whitesmoke;
+}
+
+.confirmBookingAlert {
+    --background: #e3dfc8;
+    --backdrop-opacity: 0.7;
+}
+
+.confirmBookingAlert .alert-message {
+    color: black;
+}
+
+.confirmBookingAlert .cancel-button {
+    background-color: #f8bd7f;
+    color: whitesmoke;
+}
+
+.confirmBookingAlert .book-button {
     background-color: #00416d;
     color: whitesmoke;
 }

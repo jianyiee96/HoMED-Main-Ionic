@@ -15,9 +15,12 @@ import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 export class BookingScreenPage implements OnInit {
 
   isShown: boolean
-  servicemanBookings: Booking[]
 
-  passedSlotId: number
+  servicemanBookings: Booking[] = []
+  servicemanBookingsToShow: Booking[] = []
+
+  filters = ['PAST', 'UPCOMING', 'ABSENT', 'CANCELLED']
+  selectedFilters = []
 
   constructor(
     private modalController: ModalController,
@@ -28,13 +31,11 @@ export class BookingScreenPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'))
-
   }
 
   ionViewWillEnter() {
     this.isShown = true
+    this.servicemanBookingsToShow = []
 
     this.schedulerService.retrieveAllServicemanBookings().subscribe(
       response => {
@@ -47,18 +48,32 @@ export class BookingScreenPage implements OnInit {
 
         this.servicemanBookings.sort((x, y) => (x.bookingSlot.slotId - y.bookingSlot.slotId))
 
-        for (var index = 0; index < this.servicemanBookings.length; index++) {
-          if (this.servicemanBookings[index].bookingSlot.slotId == this.passedSlotId) {
-            this.presentBookingSummary(this.servicemanBookings[index])
+        for (var idx = 0; idx < this.servicemanBookings.length; idx++) {
+          if (this.servicemanBookings[idx].bookingStatusEnum.toString() == "UPCOMING") {
+            this.selectedFilters = ['UPCOMING']
+            this.applyFilter()
             break
           }
         }
-
+        if (this.servicemanBookingsToShow.length == 0) {
+          this.selectedFilters = ['PAST', 'ABSENT', 'CANCELLED']
+          this.applyFilter()
+        }
       },
       error => {
         console.log(error);
       }
     )
+  }
+
+  applyFilter() {
+    this.servicemanBookingsToShow = []
+    this.servicemanBookings.forEach(sb => {
+      if (this.selectedFilters.includes(sb.bookingStatusEnum.toString())) {
+        this.servicemanBookingsToShow.push(sb)
+      }
+    })
+    this.servicemanBookingsToShow.sort((x, y) => y.bookingSlot.startDateTime.getTime() - x.bookingSlot.startDateTime.getTime())
   }
 
   async presentBookingSummary(booking: Booking) {
@@ -68,6 +83,11 @@ export class BookingScreenPage implements OnInit {
         booking: booking
       }
     });
+
+    modal.onDidDismiss().then(() => {
+      this.ionViewWillEnter()
+    })
+    
     return await modal.present();
   }
 

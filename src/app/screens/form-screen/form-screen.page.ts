@@ -18,8 +18,6 @@ export class FormScreenPage implements OnInit {
   formInstances: FormInstance[] = []
   archivedFormInstances: FormInstance[] = []
 
-  passedFormInstanceId: number
-
   isShown: boolean
   viewArchived: boolean
 
@@ -28,13 +26,9 @@ export class FormScreenPage implements OnInit {
     private formService: FormService,
     private ngZone: NgZone,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-
-    this.passedFormInstanceId = parseInt(this.activatedRoute.snapshot.paramMap.get('formInstanceId'))
-
   }
 
   ionViewWillEnter() {
@@ -62,14 +56,6 @@ export class FormScreenPage implements OnInit {
         this.formInstances.sort(function (a, b) {
           return b.dateCreated.getTime() - a.dateCreated.getTime()
         })
-
-        for (var index = 0; index < this.allFormInstances.length; index++) {
-          if (this.passedFormInstanceId == this.allFormInstances[index].formInstanceId) {
-            this.redirectToModal(this.allFormInstances[index])
-            this.passedFormInstanceId = null
-            break
-          }
-        }
       },
       error => {
         console.error(error)
@@ -123,9 +109,6 @@ export class FormScreenPage implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then(() => {
-      this.ionViewWillEnter()
-    })
     return await modal.present();
   }
 

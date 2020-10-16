@@ -85,6 +85,12 @@ export class BookingParamsScreenPage implements OnInit {
         this.schedulerService.bookingSlots = this.bookingSlots
         this.schedulerService.selectedDate = formattedSelectedDate
         this.consultationService.selectedConsultationPurposeId = this.selectedConsulationPurposeId
+        for (var idx = 1; idx < this.consultationPurposes.length; idx++) {
+          if (this.consultationPurposes[idx].consultationPurposeId = this.consultationService.selectedConsultationPurposeId) {
+            this.consultationService.selectedConsultationPurposeName = this.consultationPurposes[idx].consultationPurposeName
+            break
+          }
+        }
         this.medicalCentreService.selectedMedicalCentre = this.medicalCentres[this.selectedMedicalCentreIndex]
 
         this.redirectToBookingSlotsScreen()

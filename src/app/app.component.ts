@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SessionService } from './services/session/session.service';
 import { Serviceman } from './classes/serviceman/serviceman';
 import { TimerService } from './services/timer/timer.service';
+import { FormService } from './services/form/form.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,8 @@ import { TimerService } from './services/timer/timer.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  private taskCount: number
 
   public selectedIndex
   public appPages = [
@@ -49,6 +52,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private sessionService: SessionService,
+    private formService: FormService,
     private timerService: TimerService
   ) {
     this.initializeApp();
@@ -69,6 +73,28 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+  }
+
+  loadTasks() {
+
+    this.formService.retrieveAllServicemanFormInstances(false).subscribe(
+      response => {
+        var allFormInstances = []
+        this.taskCount = 0
+
+        allFormInstances = response.formInstances
+
+        allFormInstances.forEach(form => {
+          if (form.formInstanceStatusEnum.toString() == "DRAFT") {
+            this.taskCount++
+          }
+        })
+      },
+      error => {
+        console.error(error)
+      }
+    )
+
   }
 
 }
