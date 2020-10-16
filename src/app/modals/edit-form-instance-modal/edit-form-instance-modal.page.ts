@@ -165,45 +165,53 @@ export class EditFormInstanceModalPage implements OnInit {
 
   async presentOptions(form: NgForm) {
 
-    var options = [{
-      text: 'Delete',
-      role: 'destructive',
-      icon: 'trash',
-      handler: () => {
-        this.presentDeleteConfirm()
-      }
-    }, {
+    var options = []
+
+    if (this.formInstance.booking == null) {
+      options.push({
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.presentDeleteConfirm()
+        }
+      })
+    }
+
+    options.push({
       text: 'Save',
       icon: 'save',
       handler: () => {
         this.update(form)
       }
-    }, {
-      text: 'Booking Summary',
-      icon: 'document-text',
-      handler: () => {
-        console.log('Booking summary clicked')
-      }
-    }, {
-      text: 'Consultations',
-      icon: 'git-network',
-      handler: () => {
-        console.log('Consultations clicked')
-      }
-    }, {
+    })
+
+    if (this.formInstance.booking != null) {
+      options.push(
+        {
+          text: 'Booking Summary',
+          icon: 'document-text',
+          handler: () => {
+            this.dismissAndRedirect(this.formInstance.booking.bookingSlot.slotId)
+          }
+        }
+      )
+    }
+
+    options.push({
       text: 'Submit',
       icon: 'send',
       handler: () => {
         this.submit(form)
       }
-    }, {
+    })
+
+    options.push({
       text: 'Cancel',
       icon: 'close',
       role: 'cancel',
       handler: () => { }
-    }]
-
-    this.formInstance.booking != null ? options.shift() : null
+    })
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
@@ -392,6 +400,13 @@ export class EditFormInstanceModalPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     })
+  }
+
+  dismissAndRedirect(slotId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'slotId': slotId
+    });
   }
 
 }

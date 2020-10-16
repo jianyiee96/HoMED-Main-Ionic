@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertController, ModalController, NavController, NavParams } from '@ionic/angular';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
 
 import { Booking } from 'src/app/classes/booking/booking';
-import { FormInstance } from 'src/app/classes/form-instance/form-instance';
 import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 
 @Component({
@@ -67,6 +66,13 @@ export class BookingSummaryModalPage implements OnInit {
   dismiss() {
     this.modalController.dismiss({
       'dismissed': true
+    });
+  }
+
+  dismissAndRedirect(formInstanceId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'formInstanceId': formInstanceId
     });
   }
 

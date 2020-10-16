@@ -121,14 +121,19 @@
 
   <div class="sectionHeader">
     <h2><u>REQUIRED FORMS</u></h2>
+    <h6 style="color: red;">
+      NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
+    </h6>
   </div>
   <div class="sectionContent">
     <ion-grid>
 
-      <ion-row *ngFor="let fi of booking.formInstances">
+      <ion-row *ngFor="let fi of booking.formInstances" class="formLink">
         <ion-label><b>* </b>
-          <u>{{fi.formTemplateMapping.formTemplateName}}</u>&nbsp;
+          <u (click)="dismissAndRedirect(fi.formInstanceId)">{{fi.formTemplateMapping.formTemplateName}}</u>&nbsp;
           <ion-chip *ngIf="fi.formInstanceStatusEnum == 'SUBMITTED'" color="success">Submitted</ion-chip>
+          <ion-chip *ngIf="fi.formInstanceStatusEnum == 'ARCHIVED'" color="primary">Archived</ion-chip>
+          <ion-chip *ngIf="fi.formInstanceStatusEnum == 'DRAFT'" color="tertiary">Draft</ion-chip>
         </ion-label>
       </ion-row>
 

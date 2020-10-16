@@ -16,6 +16,8 @@ export class BookingScreenPage implements OnInit {
 
   isShown: boolean
 
+  passedSlotId: number
+
   servicemanBookings: Booking[] = []
   servicemanBookingsToShow: Booking[] = []
 
@@ -35,6 +37,8 @@ export class BookingScreenPage implements OnInit {
 
   ionViewWillEnter() {
     this.isShown = true
+    this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'));
+
     this.servicemanBookingsToShow = []
 
     this.schedulerService.retrieveAllServicemanBookings().subscribe(
@@ -46,8 +50,6 @@ export class BookingScreenPage implements OnInit {
           sb.bookingSlot.endDateTime = this.convertUTCStringToSingaporeDate(sb.bookingSlot.endDateTime)
         })
 
-        this.servicemanBookings.sort((x, y) => (x.bookingSlot.slotId - y.bookingSlot.slotId))
-
         for (var idx = 0; idx < this.servicemanBookings.length; idx++) {
           if (this.servicemanBookings[idx].bookingStatusEnum.toString() == "UPCOMING") {
             this.selectedFilters = ['UPCOMING']
@@ -58,6 +60,12 @@ export class BookingScreenPage implements OnInit {
         if (this.servicemanBookingsToShow.length == 0) {
           this.selectedFilters = ['PAST', 'ABSENT', 'CANCELLED']
           this.applyFilter()
+        }
+
+        for (var idx = 0; idx < this.servicemanBookings.length; idx++) {
+          if (this.passedSlotId == this.servicemanBookings[idx].bookingSlot.slotId) {
+            this.presentBookingSummary(this.servicemanBookings[idx])
+          }
         }
       },
       error => {
@@ -73,7 +81,7 @@ export class BookingScreenPage implements OnInit {
         this.servicemanBookingsToShow.push(sb)
       }
     })
-    this.servicemanBookingsToShow.sort((x, y) => y.bookingSlot.startDateTime.getTime() - x.bookingSlot.startDateTime.getTime())
+    this.servicemanBookingsToShow.sort((x, y) => x.bookingSlot.startDateTime.getTime() - y.bookingSlot.startDateTime.getTime())
   }
 
   async presentBookingSummary(booking: Booking) {
@@ -84,10 +92,44 @@ export class BookingScreenPage implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then(() => {
-      this.ionViewWillEnter()
+    modal.onDidDismiss().then((value) => {
+
+      if (value.data["formInstanceId"] != null) {
+
+        this.router.navigate(['/form-screen/' + value.data["formInstanceId"]])
+
+      } else {
+        this.servicemanBookingsToShow = []
+
+        this.schedulerService.retrieveAllServicemanBookings().subscribe(
+          response => {
+            this.servicemanBookings = response.bookings
+
+            this.servicemanBookings.forEach(sb => {
+              sb.bookingSlot.startDateTime = this.convertUTCStringToSingaporeDate(sb.bookingSlot.startDateTime)
+              sb.bookingSlot.endDateTime = this.convertUTCStringToSingaporeDate(sb.bookingSlot.endDateTime)
+            })
+
+            for (var idx = 0; idx < this.servicemanBookings.length; idx++) {
+              if (this.servicemanBookings[idx].bookingStatusEnum.toString() == "UPCOMING") {
+                this.selectedFilters = ['UPCOMING']
+                this.applyFilter()
+                break
+              }
+            }
+            if (this.servicemanBookingsToShow.length == 0) {
+              this.selectedFilters = ['PAST', 'ABSENT', 'CANCELLED']
+              this.applyFilter()
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+
     })
-    
+
     return await modal.present();
   }
 
