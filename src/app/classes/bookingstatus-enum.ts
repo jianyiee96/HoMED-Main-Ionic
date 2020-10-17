@@ -1,7 +1,6 @@
 export enum BookingStatusEnum {
-    PAST,
-    UPCOMING,
-    PRESENT,
-    CANCELLED,
-    PAST_ABSENT
+    PAST, //secondary
+    UPCOMING, //primary
+    ABSENT, //success
+    CANCELLED, //danger
 }

@@ -42,8 +42,7 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-textarea placeholder="Insert Text" value="{{fif.formInstanceFieldValues[0].inputValue}}"
-            [readonly]=true>
+          <ion-textarea placeholder="Insert Text" value="{{fif.formInstanceFieldValues[0].inputValue}}" [readonly]=true>
           </ion-textarea>
         </ion-card-content>
 
@@ -65,8 +64,8 @@
         </ion-card-title>
 
         <ion-card-content>
-          <ion-input placeholder="Insert Number" value="{{fif.formInstanceFieldValues[0].inputValue}}"
-            [readonly]="true" type="number">
+          <ion-input placeholder="Insert Number" value="{{fif.formInstanceFieldValues[0].inputValue}}" [readonly]="true"
+            type="number">
           </ion-input>
         </ion-card-content>
 
@@ -271,8 +270,8 @@
 
 <ion-footer class="ion-no-border" *ngIf="formInstance.formInstanceStatusEnum == 'SUBMITTED'">
   <ion-toolbar transparent no-border>
-    <ion-button (click)="presentArchiveConfirm()" expand="block"
+    <ion-button (click)="presentOptions()" expand="block"
       style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">
-      Archive</ion-button>
+      Options</ion-button>
   </ion-toolbar>
 </ion-footer>

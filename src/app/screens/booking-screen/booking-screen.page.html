@@ -7,7 +7,56 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen scrollEvents (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
+
+  <ion-item>
+    <ion-label>Filter</ion-label>
+    <ion-select multiple [(ngModel)]="selectedFilters" style="max-width: 90% !important;" (ionChange)="applyFilter()">
+      <ion-select-option *ngFor="let f of filters" value="{{f}}">
+        {{f}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="zeroBookingsLabel" *ngIf="servicemanBookingsToShow.length === 0">
+    <ion-text>Add a filter/booking to get started!</ion-text>
+  </div>
+
+  <ion-card *ngFor="let sb of servicemanBookingsToShow" mode="ios" (click)="presentBookingSummary(sb)">
+
+    <ion-card-header>
+
+      <ion-card-title>{{sb.consultationPurpose.consultationPurposeName}}</ion-card-title>
+      <br>
+      <ion-card-subtitle>Date: {{sb.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}</ion-card-subtitle>
+      <ion-card-subtitle>Time Slot: {{sb.bookingSlot.startDateTime | date:'HH:mm'}} -
+        {{sb.bookingSlot.endDateTime | date:'HH:mm'}}</ion-card-subtitle>
+      <ion-card-subtitle>Venue: {{sb.bookingSlot.medicalCentre.name}}</ion-card-subtitle>
+      <br>
+      <ion-card-subtitle>Status:
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'UPCOMING'" color="primary">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'PAST'" color="secondary">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'ABSENT'" color="success">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="sb.bookingStatusEnum == 'CANCELLED'" color="danger">
+          <ion-label>{{sb.bookingStatusEnum}}</ion-label>
+        </ion-chip>
+      </ion-card-subtitle>
+      <ion-card-subtitle *ngIf="sb.bookingStatusEnum != 'CANCELLED'">
+        Forms:
+        <ion-chip>
+          <ion-label>{{sb.formInstances.length}}</ion-label>
+        </ion-chip>
+      </ion-card-subtitle>
+
+    </ion-card-header>
+
+  </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isShown">
     <ion-fab-button (click)="redirectToBookingParamsScreen()" mode="ios">

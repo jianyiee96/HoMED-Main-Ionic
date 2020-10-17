@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { FormInstance } from 'src/app/classes/form-instance/form-instance';
@@ -15,20 +15,20 @@ import { FormService } from 'src/app/services/form/form.service';
 export class FormScreenPage implements OnInit {
 
   allFormInstances: FormInstance[] = []
-
   formInstances: FormInstance[] = []
-
   archivedFormInstances: FormInstance[] = []
 
   isShown: boolean
-
   viewArchived: boolean
+
+  passedFormInstanceId: number
 
   constructor(
     private modalController: ModalController,
     private formService: FormService,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -36,6 +36,7 @@ export class FormScreenPage implements OnInit {
 
   ionViewWillEnter() {
     this.isShown = true
+    this.passedFormInstanceId = parseInt(this.activatedRoute.snapshot.paramMap.get('formInstanceId'));
 
     this.formService.retrieveAllServicemanFormInstances().subscribe(
       response => {
@@ -59,6 +60,13 @@ export class FormScreenPage implements OnInit {
         this.formInstances.sort(function (a, b) {
           return b.dateCreated.getTime() - a.dateCreated.getTime()
         })
+
+        for (var idx = 0; idx < this.formInstances.length; idx++) {
+          if (this.passedFormInstanceId == this.formInstances[idx].formInstanceId) {
+            this.redirectToModal(this.formInstances[idx])
+            break
+          }
+        }
       },
       error => {
         console.error(error)
@@ -98,9 +106,45 @@ export class FormScreenPage implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then(() => {
-      this.ionViewWillEnter()
+    modal.onDidDismiss().then((value) => {
+
+      if (value.data["slotId"] != null) {
+
+        this.router.navigate(['/booking-screen/' + value.data["slotId"]])
+
+      } else {
+        this.formService.retrieveAllServicemanFormInstances().subscribe(
+          response => {
+            this.allFormInstances = response.formInstances
+            this.archivedFormInstances = []
+            this.formInstances = []
+
+            this.allFormInstances.forEach(formInstance => {
+              formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
+              formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
+
+              if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
+                this.archivedFormInstances.push(formInstance)
+              } else {
+                this.formInstances.push(formInstance)
+              }
+            })
+            this.formInstances.sort(function (a, b) {
+              return b.dateCreated.getTime() - a.dateCreated.getTime()
+            })
+            this.formInstances.sort(function (a, b) {
+              return b.dateCreated.getTime() - a.dateCreated.getTime()
+            })
+
+          },
+          error => {
+            console.error(error)
+          }
+        )
+      }
+
     })
+
     return await modal.present();
   }
 
@@ -112,9 +156,43 @@ export class FormScreenPage implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then(() => {
-      this.ionViewWillEnter()
+    modal.onDidDismiss().then((value) => {
+      if (value.data["slotId"] != null) {
+
+        this.router.navigate(['/booking-screen/' + value.data["slotId"]])
+
+      } else {
+        this.formService.retrieveAllServicemanFormInstances().subscribe(
+          response => {
+            this.allFormInstances = response.formInstances
+            this.archivedFormInstances = []
+            this.formInstances = []
+
+            this.allFormInstances.forEach(formInstance => {
+              formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
+              formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
+
+              if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
+                this.archivedFormInstances.push(formInstance)
+              } else {
+                this.formInstances.push(formInstance)
+              }
+            })
+            this.formInstances.sort(function (a, b) {
+              return b.dateCreated.getTime() - a.dateCreated.getTime()
+            })
+            this.formInstances.sort(function (a, b) {
+              return b.dateCreated.getTime() - a.dateCreated.getTime()
+            })
+
+          },
+          error => {
+            console.error(error)
+          }
+        )
+      }
     })
+
     return await modal.present();
   }
 

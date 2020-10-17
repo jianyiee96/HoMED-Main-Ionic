@@ -78,6 +78,19 @@ export class SessionService {
 		}
 	}
 
+	getSecuredHttpOptionsWithInterceptorHeader() {
+		return {
+			headers: new HttpHeaders(
+				{
+					'Content-Type': 'application/json',
+					'Id': this.getCurrentServiceman().servicemanId.toString(),
+					'Token': sessionStorage.token,
+					'Interceptor' : 'false'
+				}
+			)
+		}
+	}
+
 	setToken(token: string): void {
 		sessionStorage.token = token
 	}

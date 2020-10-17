@@ -81,12 +81,17 @@ export class BookingParamsScreenPage implements OnInit {
           bs.endDateTime = this.convertUTCStringToSingaporeDate(bs.endDateTime)
 
         })
-        // console.log(this.bookingSlots);
+
         this.schedulerService.bookingSlots = this.bookingSlots
         this.schedulerService.selectedDate = formattedSelectedDate
         this.consultationService.selectedConsultationPurposeId = this.selectedConsulationPurposeId
+        for (var idx = 1; idx < this.consultationPurposes.length; idx++) {
+          if (this.consultationPurposes[idx].consultationPurposeId = this.consultationService.selectedConsultationPurposeId) {
+            this.consultationService.selectedConsultationPurposeName = this.consultationPurposes[idx].consultationPurposeName
+            break
+          }
+        }
         this.medicalCentreService.selectedMedicalCentre = this.medicalCentres[this.selectedMedicalCentreIndex]
-        console.log(this.medicalCentreService.selectedMedicalCentre);
 
         this.redirectToBookingSlotsScreen()
       },

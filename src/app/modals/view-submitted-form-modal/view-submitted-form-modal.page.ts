@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController, NavParams } from '@ionic/angular';
 
 import { FormInstance, FormInstanceFieldValue } from 'src/app/classes/form-instance/form-instance';
 import { FormService } from 'src/app/services/form/form.service';
@@ -20,6 +21,7 @@ export class ViewSubmittedFormModalPage implements OnInit {
 
   constructor(
     private navParam: NavParams,
+    private actionSheetController: ActionSheetController,
     private modalController: ModalController,
     private alertController: AlertController,
     private formService: FormService
@@ -72,6 +74,35 @@ export class ViewSubmittedFormModalPage implements OnInit {
     return checkedBefore
   }
 
+  async presentOptions(form: NgForm) {
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Options',
+      cssClass: 'activateAccountAlert',
+      buttons: [{
+        text: 'Archive',
+        icon: 'archive',
+        handler: () => {
+          this.presentArchiveConfirm()
+        }
+      }, {
+        text: 'Booking Summary',
+        icon: 'document-text',
+        handler: () => {
+          this.dismissAndRedirect(this.formInstance.booking.bookingSlot.slotId)
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => { }
+      }]
+    })
+
+    await actionSheet.present()
+
+  }
+
   async presentArchiveConfirm() {
     const alert = await this.alertController.create({
       header: `Confirm Archive of ${this.formInstance.formTemplateMapping.formTemplateName}?`,
@@ -111,6 +142,13 @@ export class ViewSubmittedFormModalPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     })
+  }
+
+  dismissAndRedirect(slotId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'slotId': slotId
+    });
   }
 
 }

@@ -14,6 +14,7 @@ export class ConsultationService {
   baseUrl: string
 
   selectedConsultationPurposeId: number
+  selectedConsultationPurposeName: string
 
   constructor(private httpClient: HttpClient, private sessionService: SessionService) {
     this.baseUrl = this.sessionService.getRootPath() + 'Consultation'

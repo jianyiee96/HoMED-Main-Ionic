@@ -2,6 +2,23 @@ ion-content {
     --ion-background-color:#e3dfc8;
 }
 
+ion-card {
+    --background: #f5f1da;
+}
+
+ion-card-title {
+    color: #00416d;
+    font-size: x-large;
+}
+
 ion-fab-button {
     --background: #00416d;
+}
+
+.zeroBookingsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
 }

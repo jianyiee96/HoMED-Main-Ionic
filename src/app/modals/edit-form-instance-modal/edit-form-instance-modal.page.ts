@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ActionSheetController, AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
 
@@ -29,11 +30,11 @@ export class EditFormInstanceModalPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private navParam: NavParams,
     private formService: FormService,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
     private alertController: AlertController,
+    private navParam: NavParams,
   ) {
     this.formInstance = navParam.get("formInstance")
     this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
@@ -164,40 +165,58 @@ export class EditFormInstanceModalPage implements OnInit {
 
   async presentOptions(form: NgForm) {
 
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Options',
-      cssClass: 'activateAccountAlert',
-      buttons: [{
+    var options = []
+
+    if (this.formInstance.booking == null) {
+      options.push({
         text: 'Delete',
         role: 'destructive',
         icon: 'trash',
         handler: () => {
           this.presentDeleteConfirm()
         }
-      }, {
-        text: 'Save',
-        icon: 'save',
-        handler: () => {
-          this.update(form)
+      })
+    }
+
+    options.push({
+      text: 'Save',
+      icon: 'save',
+      handler: () => {
+        this.update(form)
+      }
+    })
+
+    if (this.formInstance.booking != null) {
+      options.push(
+        {
+          text: 'Booking Summary',
+          icon: 'document-text',
+          handler: () => {
+            this.dismissAndRedirect(this.formInstance.booking.bookingSlot.slotId)
+          }
         }
-      }, {
-        text: 'Consultations',
-        icon: 'git-network',
-        handler: () => {
-          console.log('Consultations clicked')
-        }
-      }, {
-        text: 'Submit',
-        icon: 'send',
-        handler: () => {
-          this.submit(form)
-        }
-      }, {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => { }
-      }]
+      )
+    }
+
+    options.push({
+      text: 'Submit',
+      icon: 'send',
+      handler: () => {
+        this.submit(form)
+      }
+    })
+
+    options.push({
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => { }
+    })
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Options',
+      cssClass: 'activateAccountAlert',
+      buttons: options
     })
 
     await actionSheet.present()
@@ -381,6 +400,13 @@ export class EditFormInstanceModalPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     })
+  }
+
+  dismissAndRedirect(slotId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'slotId': slotId
+    });
   }
 
 }

@@ -18,30 +18,47 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        this.startLoading()
+        if (request.headers.get("Interceptor") == null || request.headers.get("Interceptor") != 'false') {
+            this.startLoading()
 
-        return next.handle(request).pipe(
+            return next.handle(request).pipe(
 
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    // console.log('event returned to interceptor--->>>', event)
+                map((event: HttpEvent<any>) => {
+                    if (event instanceof HttpResponse) {
+                        // console.log('event returned to interceptor--->>>', event)
+                        this.dismissLoading()
+                    }
+
+                    return event
+                }),
+                catchError((error: HttpErrorResponse) => {
+                    console.error('error returned to interceptor--->>>', error)
                     this.dismissLoading()
-                }
 
-                return event
-            }),
-            catchError((error: HttpErrorResponse) => {
-                console.error('error returned to interceptor--->>>', error)
-                this.dismissLoading()
+                    if (error.error.message.toLowerCase().includes("json")) {
+                        this.presentLogoutAlert()
+                    }
 
-                if (error.error.message.toLowerCase().includes("json")) {
-                    this.presentLogoutAlert()
-                }
+                    return throwError(error)
+                })
 
-                return throwError(error)
-            })
+            )
+        } else {
+            return next.handle(request).pipe(
 
-        )
+                map((event: HttpEvent<any>) => {
+                    return event
+                }),
+                catchError((error: HttpErrorResponse) => {
+                    console.error('error returned to interceptor--->>>', error)
+                    if (error.error.message.toLowerCase().includes("json")) {
+                        this.presentLogoutAlert()
+                    }
+                    return throwError(error)
+                })
+
+            )
+        }
 
     }
 

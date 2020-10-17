@@ -50,6 +50,16 @@ export class SchedulerService {
     );
   }
 
+  cancelBooking(bookingId: number) {
+    let cancelBookingReq = {
+      "bookingId": bookingId
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/cancelBooking", cancelBookingReq, this.sessionService.getSecuredHttpOptions()).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

@@ -7,6 +7,10 @@
 
 <ion-content fullscreen>
 
+  <div class="zeroBookingSlotsLabel" *ngIf="filteredBookingSlots.length === 0">
+    <ion-text>There are no available slots for the selected date.</ion-text>
+  </div>
+
   <ion-card mode="ios">
     <ion-card-header>
       <ion-card-title style="font-size: small;">{{selectedMedicalCentre.name}}</ion-card-title>
