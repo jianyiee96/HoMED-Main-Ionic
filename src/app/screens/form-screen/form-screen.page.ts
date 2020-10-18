@@ -38,40 +38,7 @@ export class FormScreenPage implements OnInit {
     this.isShown = true
     this.passedFormInstanceId = parseInt(this.activatedRoute.snapshot.paramMap.get('formInstanceId'));
 
-    this.formService.retrieveAllServicemanFormInstances().subscribe(
-      response => {
-        this.allFormInstances = response.formInstances
-        this.archivedFormInstances = []
-        this.formInstances = []
-
-        this.allFormInstances.forEach(formInstance => {
-          formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
-          formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
-
-          if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
-            this.archivedFormInstances.push(formInstance)
-          } else {
-            this.formInstances.push(formInstance)
-          }
-        })
-        this.formInstances.sort(function (a, b) {
-          return b.dateCreated.getTime() - a.dateCreated.getTime()
-        })
-        this.formInstances.sort(function (a, b) {
-          return b.dateCreated.getTime() - a.dateCreated.getTime()
-        })
-
-        for (var idx = 0; idx < this.formInstances.length; idx++) {
-          if (this.passedFormInstanceId == this.formInstances[idx].formInstanceId) {
-            this.redirectToModal(this.formInstances[idx])
-            break
-          }
-        }
-      },
-      error => {
-        console.error(error)
-      }
-    )
+    this.retrieveAllServicemanFormInstances(true)
   }
 
   scrollHandler(event) {
@@ -109,38 +76,9 @@ export class FormScreenPage implements OnInit {
     modal.onDidDismiss().then((value) => {
 
       if (value.data["slotId"] != null) {
-
         this.router.navigate(['/booking-screen/' + value.data["slotId"]])
-
       } else {
-        this.formService.retrieveAllServicemanFormInstances().subscribe(
-          response => {
-            this.allFormInstances = response.formInstances
-            this.archivedFormInstances = []
-            this.formInstances = []
-
-            this.allFormInstances.forEach(formInstance => {
-              formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
-              formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
-
-              if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
-                this.archivedFormInstances.push(formInstance)
-              } else {
-                this.formInstances.push(formInstance)
-              }
-            })
-            this.formInstances.sort(function (a, b) {
-              return b.dateCreated.getTime() - a.dateCreated.getTime()
-            })
-            this.formInstances.sort(function (a, b) {
-              return b.dateCreated.getTime() - a.dateCreated.getTime()
-            })
-
-          },
-          error => {
-            console.error(error)
-          }
-        )
+        this.retrieveAllServicemanFormInstances(false)
       }
 
     })
@@ -158,42 +96,53 @@ export class FormScreenPage implements OnInit {
 
     modal.onDidDismiss().then((value) => {
       if (value.data["slotId"] != null) {
-
         this.router.navigate(['/booking-screen/' + value.data["slotId"]])
-
       } else {
-        this.formService.retrieveAllServicemanFormInstances().subscribe(
-          response => {
-            this.allFormInstances = response.formInstances
-            this.archivedFormInstances = []
-            this.formInstances = []
-
-            this.allFormInstances.forEach(formInstance => {
-              formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
-              formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
-
-              if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
-                this.archivedFormInstances.push(formInstance)
-              } else {
-                this.formInstances.push(formInstance)
-              }
-            })
-            this.formInstances.sort(function (a, b) {
-              return b.dateCreated.getTime() - a.dateCreated.getTime()
-            })
-            this.formInstances.sort(function (a, b) {
-              return b.dateCreated.getTime() - a.dateCreated.getTime()
-            })
-
-          },
-          error => {
-            console.error(error)
-          }
-        )
+        this.retrieveAllServicemanFormInstances(false)
       }
     })
 
     return await modal.present();
+  }
+
+  retrieveAllServicemanFormInstances(displayModal: boolean) {
+    this.formService.retrieveAllServicemanFormInstances().subscribe(
+      response => {
+        this.allFormInstances = response.formInstances
+        this.archivedFormInstances = []
+        this.formInstances = []
+
+        this.allFormInstances.forEach(formInstance => {
+          formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
+          formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
+
+          if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
+            this.archivedFormInstances.push(formInstance)
+          } else {
+            this.formInstances.push(formInstance)
+          }
+        })
+        this.formInstances.sort(function (a, b) {
+          return b.dateCreated.getTime() - a.dateCreated.getTime()
+        })
+        this.formInstances.sort(function (a, b) {
+          return b.dateCreated.getTime() - a.dateCreated.getTime()
+        })
+
+        if (displayModal) {
+          for (var idx = 0; idx < this.allFormInstances.length; idx++) {
+            if (this.passedFormInstanceId == this.allFormInstances[idx].formInstanceId) {
+              this.redirectToModal(this.allFormInstances[idx])
+              break
+            }
+          }
+        }
+
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
 
   redirectToFormRepo() {

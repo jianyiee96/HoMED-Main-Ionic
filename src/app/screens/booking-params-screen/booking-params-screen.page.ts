@@ -24,9 +24,9 @@ export class BookingParamsScreenPage implements OnInit {
   medicalCentres: MedicalCentre[]
   bookingSlots: BookingSlot[]
 
-  selectedConsulationPurposeId: number
-  selectedMedicalCentreIndex: number
-  selectedDate: Date
+  selectedConsulationPurposeId: number = null
+  selectedMedicalCentreIndex: number = null
+  selectedDate: Date = null
 
   currentDate = new Date()
   maxYear = new Date().getFullYear() + 1
@@ -44,10 +44,6 @@ export class BookingParamsScreenPage implements OnInit {
   }
 
   ionViewWillEnter() {
-
-    this.selectedConsulationPurposeId = null
-    this.selectedMedicalCentreIndex = null
-    this.selectedDate = null
 
     this.consultationService.retrieveAllConsultationPurposes().subscribe(
       response => {
@@ -103,7 +99,7 @@ export class BookingParamsScreenPage implements OnInit {
   }
 
   singleDropdownOptions: any = {
-    cssClass: 'activateAccountAlert'
+    cssClass: 'selectBookingParamsAlert'
   }
 
   checkParamsFilled() {

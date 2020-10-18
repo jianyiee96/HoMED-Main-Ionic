@@ -31,10 +31,7 @@
 
       <ion-card-header>
         <ion-card-title>{{fi.formTemplateMapping.formTemplateName}}</ion-card-title>
-        <ion-card-subtitle>Status:
-          <ion-chip color="secondary">
-            <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
-          </ion-chip>
+        <ion-card-subtitle>Date Submitted: {{fi.dateSubmitted | date:'dd/MM/yyyy HH:mm'}}
         </ion-card-subtitle>
       </ion-card-header>
 
@@ -49,6 +46,9 @@
         <ion-card-subtitle>Date Added: {{fi.dateCreated | date:'dd/MM/yyyy HH:mm'}}</ion-card-subtitle>
         <ion-card-subtitle *ngIf="fi.formInstanceStatusEnum == 'SUBMITTED'">Date Submitted:
           {{fi.dateSubmitted | date:'dd/MM/yyyy HH:mm'}}</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="fi.booking !== undefined">
+          Booking Slot: {{fi.booking.bookingSlot.slotId}}
+        </ion-card-subtitle>
         <ion-card-subtitle>Status:
           <ion-chip *ngIf="fi.formInstanceStatusEnum == 'DRAFT'" color="primary">
             <ion-label>{{fi.formInstanceStatusEnum}}</ion-label>
