@@ -64,7 +64,15 @@ export class BookingSlotsScreenPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Confirm Booking',
       subHeader: 'Upon confirmation, you will be redireced to a booking summary page.',
-      message: `<b>Medical Centre</b>:<br/>${this.selectedMedicalCentre.name}<br/><b>Purpose</b>: ${this.consultationService.selectedConsultationPurposeName}<br/><b>Date</b>: ${date}<br/><span class="pxApply"><b>Start</b>: ${startDateTime}</span><br/><b>End</b>: ${endDateTime}`,
+      message: `<b>Medical Centre</b>:<br/>${this.selectedMedicalCentre.name}
+                <br/>
+                <b>Purpose</b>: ${this.consultationService.selectedConsultationPurposeName}
+                <br/>
+                <b>Date</b>: ${date}
+                <br/>
+                <b>Start</b>: ${startDateTime}
+                <br/>
+                <b>End</b>: ${endDateTime}`,
       cssClass: 'confirmBookingAlert',
       buttons: [
         {
