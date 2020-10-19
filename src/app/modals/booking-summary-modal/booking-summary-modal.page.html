@@ -13,24 +13,14 @@
     <ion-grid>
 
       <ion-row>
-        <ion-col size="6">
-          <ion-text><b>Booking ID</b>:</ion-text>
-        </ion-col>
         <ion-col>
-          <ion-label>
-            {{booking.bookingId}}
-          </ion-label>
+          <ion-text><b>Booking ID</b>: {{booking.bookingId}}</ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col size="6">
-          <ion-text><b>Consultation Purpose</b>:</ion-text>
-        </ion-col>
         <ion-col>
-          <ion-label>
-            {{booking.consultationPurpose.consultationPurposeName}}
-          </ion-label>
+          <ion-text><b>Consultation Purpose</b>: {{booking.consultationPurpose.consultationPurposeName}}</ion-text>
         </ion-col>
       </ion-row>
 
@@ -48,34 +38,19 @@
 
       <ion-row>
         <ion-col size="6">
-          <ion-text><b>Date</b>:</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            {{booking.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}
-          </ion-label>
+          <ion-text><b>Date</b>: {{booking.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}</ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col size="6">
-          <ion-text><b>Start Time</b>:</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            {{booking.bookingSlot.startDateTime | date:' HH:mm'}}
-          </ion-label>
+          <ion-text><b>Start Time</b>: {{booking.bookingSlot.startDateTime | date:' HH:mm'}}</ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col size="6">
-          <ion-text><b>End Time</b>:</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            {{booking.bookingSlot.endDateTime | date:' HH:mm'}}
-          </ion-label>
+          <ion-text><b>End Time</b>: {{booking.bookingSlot.endDateTime | date:' HH:mm'}}</ion-text>
         </ion-col>
       </ion-row>
 
@@ -119,13 +94,18 @@
 
   <hr class="hr">
 
-  <div class="sectionHeader" *ngIf="booking.formInstances.length > 0">
-    <h2><u>REQUIRED FORMS</u></h2>
-    <h6 style="color: red;">
-      NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
-    </h6>
+  <div class="sectionHeader" *ngIf="booking.formInstances.length > 0 ">
+    <div *ngIf="booking.bookingStatusEnum == 'UPCOMING'">
+      <h2><u>REQUIRED FORMS</u></h2>
+      <h6 style="color: red;">
+        NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
+      </h6>
+    </div>
+    <div *ngIf="booking.bookingStatusEnum != 'UPCOMING'">
+      <h2><u>ATTACHED FORMS</u></h2>
+    </div>
   </div>
-  <div class="sectionContent" *ngIf="booking.formInstances.length > 0">
+  <div class="sectionContent" *ngIf="booking.formInstances.length > 0 ">
     <ion-grid>
 
       <ion-row *ngFor="let fi of booking.formInstances" class="formLink">

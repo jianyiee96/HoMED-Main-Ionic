@@ -16,8 +16,6 @@ import { FormService } from './services/form/form.service';
 })
 export class AppComponent implements OnInit {
 
-  private taskCount: number
-
   public selectedIndex
   public appPages = [
     {
@@ -78,28 +76,6 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-  }
-
-  loadTasks() {
-
-    this.formService.retrieveAllServicemanFormInstances(false).subscribe(
-      response => {
-        var allFormInstances = []
-        this.taskCount = 0
-
-        allFormInstances = response.formInstances
-
-        allFormInstances.forEach(form => {
-          if (form.formInstanceStatusEnum.toString() == "DRAFT") {
-            this.taskCount++
-          }
-        })
-      },
-      error => {
-        console.error(error)
-      }
-    )
-
   }
 
 }

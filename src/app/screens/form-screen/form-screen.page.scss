@@ -11,6 +11,10 @@ ion-card-title {
     font-size: x-large;
 }
 
+ion-card-subtitle {
+    color: black;
+}
+
 ion-button {
     padding-left: 15px;
     padding-right: 15px;
@@ -42,4 +46,8 @@ ion-fab-button {
     justify-content: center;
     height: 100%;
     font-style: oblique;
+}
+
+.dateTimeInfo {
+    color: #2e648b;
 }

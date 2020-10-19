@@ -22,7 +22,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             this.startLoading()
 
             return next.handle(request).pipe(
-                timeout(8000),
+                timeout(5000),
 
                 map((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
@@ -40,7 +40,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                         this.presentTimeoutAlert()
                     }
 
-                    if (error.message.toLowerCase().includes("json")) {
+                    if (error.error.message.toLowerCase().includes("json")) {
                         this.presentLogoutAlert()
                     }
 

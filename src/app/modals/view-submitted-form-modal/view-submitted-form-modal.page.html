@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>View Submitted Form</ion-title>
+    <ion-title style="font-size: medium;"><u>Date Submitted</u>: {{formInstance.dateSubmitted | date:"dd/MM/yyyy | HH:mm"}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">Close</ion-button>
     </ion-buttons>

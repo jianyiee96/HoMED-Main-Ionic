@@ -126,11 +126,11 @@ export class FormScreenPage implements OnInit {
             this.formInstances.push(formInstance)
           }
         })
+
         this.formInstances.sort(function (a, b) {
-          return b.dateCreated.getTime() - a.dateCreated.getTime()
-        })
-        this.formInstances.sort(function (a, b) {
-          return b.dateCreated.getTime() - a.dateCreated.getTime()
+          if (a.booking && b.booking) {
+            return a.booking.bookingSlot.startDateTime.getTime() - b.booking.bookingSlot.startDateTime.getTime()
+          }
         })
 
         if (displayModal) {

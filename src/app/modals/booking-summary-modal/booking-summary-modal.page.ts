@@ -55,7 +55,7 @@ export class BookingSummaryModalPage implements OnInit {
   cancelBooking() {
     this.schedulerService.cancelBooking(this.booking.bookingId).subscribe(
       response => {
-        this.dismiss()
+        this.dismissAfterCancelBooking()
       },
       error => {
         console.log(error);
@@ -67,6 +67,13 @@ export class BookingSummaryModalPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     });
+  }
+
+  dismissAfterCancelBooking() {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'cancelled': true
+    })
   }
 
   dismissAndRedirect(formInstanceId: number) {

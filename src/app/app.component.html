@@ -2,12 +2,11 @@
 
   <ion-split-pane contentId="main-content">
 
-    <ion-menu contentId="main-content" type="overlay" *ngIf="sessionService.getIsLogin()" (ionDidOpen)="loadTasks()">
+    <ion-menu contentId="main-content" type="overlay" *ngIf="sessionService.getIsLogin()">
       <ion-content>
         <ion-list id="inbox-list">
 
           <ion-list-header>Main Menu</ion-list-header>
-          <ion-note>{{taskCount}} Pending Forms</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"

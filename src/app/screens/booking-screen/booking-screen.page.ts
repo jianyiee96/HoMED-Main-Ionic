@@ -32,13 +32,15 @@ export class BookingScreenPage implements OnInit {
     private ngZone: NgZone
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.retrieveAllServicemanBookings(false)
   }
 
   retrieveAllServicemanBookings(displayModal: boolean) {
 
     this.schedulerService.retrieveAllServicemanBookings().subscribe(
       response => {
+        this.servicemanBookingsToShow = []
         this.servicemanBookings = response.bookings
 
         this.servicemanBookings.forEach(sb => {
@@ -70,13 +72,16 @@ export class BookingScreenPage implements OnInit {
         console.log(error);
       }
     )
+
   }
 
   ionViewWillEnter() {
     this.isShown = true
     this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'));
 
-    this.retrieveAllServicemanBookings(true)
+    if (!isNaN(this.passedSlotId)) {
+      this.retrieveAllServicemanBookings(true)
+    }
   }
 
   applyFilter() {
@@ -101,7 +106,7 @@ export class BookingScreenPage implements OnInit {
 
       if (value.data["formInstanceId"] != null) {
         this.router.navigate(['/form-screen/' + value.data["formInstanceId"]])
-      } else {
+      } else if (value.data["cancelled"] == true) {
         this.retrieveAllServicemanBookings(false)
       }
 
