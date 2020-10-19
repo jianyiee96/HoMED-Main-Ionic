@@ -11,7 +11,8 @@
 
   <ion-item>
     <ion-label>Filter</ion-label>
-    <ion-select multiple [(ngModel)]="selectedFilters" style="max-width: 90% !important;" (ionChange)="applyFilter()">
+    <ion-select multiple [interfaceOptions]="filterCSS" [(ngModel)]="selectedFilters" style="max-width: 90% !important;"
+      (ionChange)="applyFilter()">
       <ion-select-option *ngFor="let f of filters" value="{{f}}">
         {{f}}
       </ion-select-option>

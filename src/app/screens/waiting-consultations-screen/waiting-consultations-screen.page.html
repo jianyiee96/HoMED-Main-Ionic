@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center">
+    <ion-title>Waiting Consultations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="zeroConsultationsLabel" *ngIf="waitingConsultations?.length === 0">
+    <ion-text>Proceed to the counter to mark your attendance!</ion-text>
+  </div>
+
+  <ion-card *ngFor="let wc of waitingConsultations">
+
+    <ion-title style="margin-top: 10px;">
+      Consultation ID: {{wc.consultationId}}
+    </ion-title>
+
+    <ion-item>
+      <ion-icon name="copy-outline" slot="start"></ion-icon>
+      <ion-label>Booking Details</ion-label>
+      <ion-button slot="end" (click)="presentBookingSummary(wc.booking)">View</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="hourglass-outline" slot="start"></ion-icon>
+      <ion-label>
+        Position In Queue: {{queueInformation[wc.consultationId]}}
+        <br />
+        Joined Queue At: {{wc.joinQueueDateTime | date:'HH:mm dd/MM/yyyy'}}
+      </ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      The queue might not be called in order. Please contact the clerk should you need any assistance.
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button class="backButton" (click)="redirectToConsultationsScreen()" expand="block">Close</ion-button>
+  </ion-toolbar>
+</ion-footer>

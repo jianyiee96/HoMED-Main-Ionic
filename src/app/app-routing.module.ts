@@ -84,6 +84,21 @@ const routes: Routes = [
     loadChildren: () => import('./modals/booking-summary-modal/booking-summary-modal.module').then(m => m.BookingSummaryModalPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'consultation-screen',
+    loadChildren: () => import('./screens/consultation-screen/consultation-screen.module').then(m => m.ConsultationScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'waiting-consultations-screen',
+    loadChildren: () => import('./screens/waiting-consultations-screen/waiting-consultations-screen.module').then(m => m.WaitingConsultationsScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'completed-consultations-screen',
+    loadChildren: () => import('./screens/completed-consultations-screen/completed-consultations-screen.module').then(m => m.CompletedConsultationsScreenPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

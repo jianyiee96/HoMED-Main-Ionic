@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { Consultation } from 'src/app/classes/consultation/consultation';
 import { SessionService } from '../session/session.service';
 
 @Injectable({
@@ -16,12 +17,28 @@ export class ConsultationService {
   selectedConsultationPurposeId: number
   selectedConsultationPurposeName: string
 
+  waitingConsultation: Consultation[]
+  ongoingConsultation: Consultation[]
+  completedConsultation: Consultation[]
+
   constructor(private httpClient: HttpClient, private sessionService: SessionService) {
     this.baseUrl = this.sessionService.getRootPath() + 'Consultation'
   }
 
   retrieveAllConsultationPurposes() {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveAllConsultationPurposes", this.sessionService.getSecuredHttpOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  retrieveConsultationQueuePosition(consulationId: number) {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveConsultationQueuePosition?consultationId=" + consulationId, this.sessionService.getSecuredHttpOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  retrieveServicemanConsultations() {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveServicemanConsultations?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }

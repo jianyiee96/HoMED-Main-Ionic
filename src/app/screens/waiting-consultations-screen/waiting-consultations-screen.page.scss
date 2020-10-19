@@ -1,0 +1,28 @@
+ion-content {
+    --ion-background-color:#e3dfc8;
+}
+
+ion-card {
+    --background: #f5f1da;
+}
+
+ion-item {
+    --background: #f5f1da;
+}
+
+ion-button {
+    --background: #00416d
+}
+
+.backButton {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.zeroConsultationsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
+}

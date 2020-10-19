@@ -8,14 +8,84 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+
+  <ion-card mode="ios" class="welcomeCard">
     <ion-card-header>
       <ion-card-subtitle>WELCOME</ion-card-subtitle>
       <ion-card-title>{{serviceman.name}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, magnam omnis odit labore beatae nesciunt
-      officia, quia modi laboriosam provident ipsam aspernatur saepe facilis nulla, ex possimus officiis illo.
+      <B><u>Beware of Scam Calls or Text Messages!</u></B>
+      <br>
+      We are aware of calls or text messages falsely informing recipients that they have been in close proximity to
+      someone who has been tested positive for COVID-19. These messages request for personal or financial information in
+      return for a test kit and results.
     </ion-card-content>
   </ion-card>
+
+  <ion-card mode="ios" class="pendingFormsCard" (click)="redirectToFormsScreen()">
+    <ion-card-header>
+      <ion-card-subtitle style="color: whitesmoke;">Important</ion-card-subtitle>
+      <ion-row>
+
+        <ion-col size="3">
+          <ion-card-title style=" font-size: 80px; color: whitesmoke;">{{taskCount}}</ion-card-title>
+        </ion-col>
+        <ion-col>
+          <ion-card-title style=" font-size: 38px; color: whitesmoke;" *ngIf="taskCount > 1">Unsubmitted Forms
+          </ion-card-title>
+          <ion-card-title style=" font-size: 38px; color: whitesmoke;" *ngIf="taskCount == 1">Unsubmitted Form
+          </ion-card-title>
+          <ion-card-title style=" font-size: 38px; color: whitesmoke;" *ngIf="taskCount < 1">Forms for Submission
+          </ion-card-title>
+        </ion-col>
+
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content style="color: black;">
+      You are <u><b>required</b></u> to fill up all required forms before indicating your attendance at the medical
+      centre.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios" class="upcomingAppointmentCard" (click)="redirectToBookingsScreen()"
+    *ngIf="upcomingBooking != null">
+
+    <ion-row>
+
+      <ion-col size="3" style="background-color: #14274e;">
+
+        <ion-row>
+          <ion-card-title style="color: whitesmoke; font-size: 25px; margin-top: 20px; margin-left: 5px;">
+            {{upcomingBooking?.bookingSlot.startDateTime | date:'MMM d'}}</ion-card-title>
+        </ion-row>
+        <ion-row>
+          <ion-card-title style="color: whitesmoke; margin-top: 30px; margin-left: 5px;">
+            {{upcomingBooking?.bookingSlot.startDateTime | date:'HH:mm'}}</ion-card-title>
+        </ion-row>
+
+      </ion-col>
+
+      <ion-col style="background-color: #f1f6f9;">
+
+        <ion-row>
+          <ion-card-subtitle style="margin-top: 10px; margin-left: 5px;">Upcoming Booking at</ion-card-subtitle>
+          <ion-card-title style="font-size: large; margin-top: 10px; margin-left: 5px;">
+            {{upcomingBooking?.bookingSlot.medicalCentre.name}}
+          </ion-card-title>
+        </ion-row>
+        <ion-row>
+          <ion-card-title style="font-size: large; margin-top: 10px; margin-left: 5px; margin-bottom: 10px;">
+            Purpose:<br>
+            {{upcomingBooking?.consultationPurpose.consultationPurposeName}}
+          </ion-card-title>
+        </ion-row>
+
+      </ion-col>
+
+    </ion-row>
+    
+  </ion-card>
+
 </ion-content>
