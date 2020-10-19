@@ -34,11 +34,6 @@ ion-toolbar {
     --backdrop-opacity: 0.7;
 }
 
-.activateAccountAlert .alert-radio-label {
-    white-space: initial;
-    overflow: visible;
-}
-
 .activateAccountAlert .alert-message {
     color: #970505;
 }
@@ -51,6 +46,17 @@ ion-toolbar {
 .activateAccountAlert .activate-button {
     background-color: #00416d;
     color: whitesmoke;
+}
+
+.selectBookingParamsAlert {
+    --background: #e3dfc8;
+    --backdrop-opacity: 0.7;
+}
+
+.selectBookingParamsAlert .alert-radio-label {
+    white-space: initial;
+    overflow: visible;
+    font-size: small;
 }
 
 .confirmBookingAlert {

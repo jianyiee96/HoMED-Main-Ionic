@@ -119,13 +119,13 @@
 
   <hr class="hr">
 
-  <div class="sectionHeader">
+  <div class="sectionHeader" *ngIf="booking.formInstances.length > 0">
     <h2><u>REQUIRED FORMS</u></h2>
     <h6 style="color: red;">
       NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
     </h6>
   </div>
-  <div class="sectionContent">
+  <div class="sectionContent" *ngIf="booking.formInstances.length > 0">
     <ion-grid>
 
       <ion-row *ngFor="let fi of booking.formInstances" class="formLink">

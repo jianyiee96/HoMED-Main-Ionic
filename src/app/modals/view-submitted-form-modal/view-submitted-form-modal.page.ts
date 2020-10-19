@@ -28,12 +28,21 @@ export class ViewSubmittedFormModalPage implements OnInit {
   ) {
     this.formInstance = navParam.get("formInstance")
     this.formInstance.formInstanceFields.sort((x, y) => (x.formFieldMapping.position - y.formFieldMapping.position))
-
+    this.process()
     this.processCheckboxValues()
     this.processMultiSelectValues()
   }
 
   ngOnInit() {
+  }
+
+  // when backend returns [] for formInstanceFieldValues
+  process() {
+    this.formInstance.formInstanceFields.forEach(fif => {
+      if (fif.formInstanceFieldValues.length == 0) {
+        fif.formInstanceFieldValues.push(new FormInstanceFieldValue(undefined, ""))
+      }
+    })
   }
 
   processMultiSelectValues() {
@@ -74,29 +83,33 @@ export class ViewSubmittedFormModalPage implements OnInit {
     return checkedBefore
   }
 
-  async presentOptions(form: NgForm) {
+  async presentOptions() {
+
+    var buttons = [{
+      text: 'Booking Summary',
+      icon: 'document-text',
+      handler: () => {
+        this.dismissAndRedirect(this.formInstance.booking.bookingSlot.slotId)
+      }
+    }, {
+      text: 'Archive',
+      icon: 'archive',
+      handler: () => {
+        this.presentArchiveConfirm()
+      }
+    }, {
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => { }
+    }]
+
+    this.formInstance.booking === undefined ? buttons.splice(0, 1) : null
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
       cssClass: 'activateAccountAlert',
-      buttons: [{
-        text: 'Archive',
-        icon: 'archive',
-        handler: () => {
-          this.presentArchiveConfirm()
-        }
-      }, {
-        text: 'Booking Summary',
-        icon: 'document-text',
-        handler: () => {
-          this.dismissAndRedirect(this.formInstance.booking.bookingSlot.slotId)
-        }
-      }, {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => { }
-      }]
+      buttons: buttons
     })
 
     await actionSheet.present()
