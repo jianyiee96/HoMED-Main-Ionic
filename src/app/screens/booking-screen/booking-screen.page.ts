@@ -36,7 +36,6 @@ export class BookingScreenPage implements OnInit {
   }
 
   retrieveAllServicemanBookings(displayModal: boolean) {
-    this.servicemanBookingsToShow = []
 
     this.schedulerService.retrieveAllServicemanBookings().subscribe(
       response => {
@@ -109,6 +108,10 @@ export class BookingScreenPage implements OnInit {
     })
 
     return await modal.present();
+  }
+
+  filterCSS: any = {
+    cssClass: 'activateAccountAlert'
   }
 
   scrollHandler(event) {

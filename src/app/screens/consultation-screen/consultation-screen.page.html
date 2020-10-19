@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Consultations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card mode="ios" style="background-color: antiquewhite;" (click)="redirectToWaitingConsultations()">
+    <ion-card-title>
+      WAITING
+    </ion-card-title>
+  </ion-card>
+
+  <ion-card mode="ios" style="background-color: aliceblue;">
+    <ion-card-title>
+      ONGOING
+    </ion-card-title>
+  </ion-card>
+
+  <ion-card mode="ios" style="background-color: cadetblue;" (click)="redirectToCompletedConsultations()">
+    <ion-card-title>
+      COMPLETED
+    </ion-card-title>
+  </ion-card>
+
+</ion-content>

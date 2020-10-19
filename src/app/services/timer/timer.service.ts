@@ -35,6 +35,7 @@ export class TimerService {
         if (isTimedOut) {
           this.primaryTimer.stopTimer()
           this.primaryTimer = new BnNgIdleService()
+          this.alertController.dismiss()
           this.presentWarning()
           this.secondaryTimer = new BnNgIdleService()
 
@@ -117,9 +118,7 @@ export class TimerService {
     this.stopAllTimer()
     this.sessionService.setIsLogin(false)
     this.sessionService.setCurrentServiceman(null)
-    if (this.modalController.getTop() != null) {
-      this.modalController.dismiss()
-    }
+    this.modalController.dismiss()
     this.router.navigate(["/login-screen"])
   }
 

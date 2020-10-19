@@ -1,6 +1,6 @@
 import { BookingStatusEnum } from '../bookingstatus-enum'
-import { Consulation } from '../consulation/consulation'
 import { ConsultationPurpose } from '../consultation-purpose/consultation-purpose'
+import { Consultation } from '../consultation/consultation'
 import { FormInstance } from '../form-instance/form-instance'
 import { Serviceman } from '../serviceman/serviceman'
 import { BookingSlot } from '../slot/slot'
@@ -10,7 +10,7 @@ export class Booking {
     bookingId: number
     serviceman: Serviceman
     consultationPurpose: ConsultationPurpose
-    consulation: Consulation
+    consultation: Consultation
     bookingSlot: BookingSlot
     formInstances: FormInstance[]
     bookingStatusEnum: BookingStatusEnum
@@ -18,8 +18,8 @@ export class Booking {
     constructor(
         bookingId?: number,
         serviceman?: Serviceman,
-        consulationPurpose?: ConsultationPurpose,
-        consultation?: Consulation,
+        consultationPurpose?: ConsultationPurpose,
+        consultation?: Consultation,
         bookingSlot?: BookingSlot,
         formInstances?: FormInstance[],
         bookingStatusEnum?: BookingStatusEnum
@@ -27,8 +27,8 @@ export class Booking {
 
         this.bookingId = bookingId
         this.serviceman = serviceman
-        this.consultationPurpose = consulationPurpose
-        this.consulation = consultation
+        this.consultationPurpose = consultationPurpose
+        this.consultation = consultation
         this.bookingSlot = bookingSlot
         this.formInstances = formInstances
         this.bookingStatusEnum = bookingStatusEnum

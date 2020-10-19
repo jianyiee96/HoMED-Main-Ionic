@@ -140,13 +140,31 @@ export class ViewSubmittedFormModalPage implements OnInit {
     await alert.present();
   }
 
+  async presentFailedArchiveAlert(error: string) {
+    const alert = await this.alertController.create({
+      header: `Failed to archive ${this.formInstance.formTemplateMapping.formTemplateName}?`,
+      message: error,
+      cssClass: 'activateAccountAlert',
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel',
+          cssClass: 'cancel-button',
+          handler: () => { }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   archiveForm() {
     this.formService.archiveFormInstance(this.formInstance).subscribe(
       response => {
         this.dismiss()
       },
       error => {
-        console.log('error');
+        this.presentFailedArchiveAlert(error.substring(37))
       }
     )
   }

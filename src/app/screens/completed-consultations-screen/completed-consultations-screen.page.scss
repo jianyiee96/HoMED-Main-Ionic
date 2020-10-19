@@ -1,0 +1,20 @@
+ion-content {
+    --ion-background-color:#e3dfc8;
+}
+
+ion-item {
+    --background: #f5f1da;
+}
+
+.zeroConsultationsLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-style: oblique;
+}
+
+.backButton {
+    margin-left: 15px;
+    margin-right: 15px;
+}

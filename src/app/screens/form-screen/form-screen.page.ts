@@ -115,6 +115,10 @@ export class FormScreenPage implements OnInit {
         this.allFormInstances.forEach(formInstance => {
           formInstance.dateCreated = this.convertUTCStringToSingaporeDate(formInstance.dateCreated)
           formInstance.dateSubmitted = this.convertUTCStringToSingaporeDate(formInstance.dateSubmitted)
+          if (formInstance.booking !== undefined) {
+            formInstance.booking.bookingSlot.startDateTime = this.convertUTCStringToSingaporeDate(formInstance.booking.bookingSlot.startDateTime)
+            formInstance.booking.bookingSlot.endDateTime = this.convertUTCStringToSingaporeDate(formInstance.booking.bookingSlot.endDateTime)
+          }
 
           if (formInstance.formInstanceStatusEnum.toString() == "ARCHIVED") {
             this.archivedFormInstances.push(formInstance)

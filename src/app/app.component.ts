@@ -31,14 +31,19 @@ export class AppComponent implements OnInit {
       icon: 'calendar'
     },
     {
-      title: 'Inbox',
-      url: '/userFunctions/inbox',
-      icon: 'mail'
-    },
-    {
       title: 'Forms',
       url: '/form-screen',
       icon: 'pencil'
+    },
+    {
+      title: 'Consultation',
+      url: '/consultation-screen',
+      icon: 'git-network'
+    },
+    {
+      title: 'Inbox',
+      url: '/userFunctions/inbox',
+      icon: 'mail'
     },
     {
       title: 'Account',

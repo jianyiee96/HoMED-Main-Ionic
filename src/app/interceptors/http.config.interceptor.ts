@@ -1,6 +1,6 @@
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, timeout } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { TimerService } from '../services/timer/timer.service';
@@ -22,6 +22,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             this.startLoading()
 
             return next.handle(request).pipe(
+                timeout(8000),
 
                 map((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
@@ -35,7 +36,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     console.error('error returned to interceptor--->>>', error)
                     this.dismissLoading()
 
-                    if (error.error.message.toLowerCase().includes("json")) {
+                    if (error.message.toLowerCase().includes("timeout")) {
+                        this.presentTimeoutAlert()
+                    }
+
+                    if (error.message.toLowerCase().includes("json")) {
                         this.presentLogoutAlert()
                     }
 
@@ -95,6 +100,23 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     handler: () => {
                         this.timerService.logoutUser()
                     }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    async presentTimeoutAlert() {
+        const alert = await this.alertController.create({
+            header: 'Connection Timed Out',
+            backdropDismiss: false,
+            cssClass: 'activateAccountAlert',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    cssClass: 'activate-button',
+                    handler: () => { }
                 }
             ]
         });
