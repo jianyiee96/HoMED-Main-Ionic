@@ -57,7 +57,7 @@
       <ion-col size="3" style="background-color: #14274e;">
 
         <ion-row>
-          <ion-card-title style="color: whitesmoke; font-size: 25px; margin-top: 20px; margin-left: 5px;">
+          <ion-card-title style="color: whitesmoke; font-size: 23px; margin-top: 20px; margin-left: 5px;">
             {{upcomingBooking?.bookingSlot.startDateTime | date:'MMM d'}}</ion-card-title>
         </ion-row>
         <ion-row>
@@ -77,7 +77,7 @@
         </ion-row>
         <ion-row>
           <ion-card-title style="font-size: large; margin-top: 10px; margin-left: 5px; margin-bottom: 10px;">
-            Purpose:<br>
+            <ion-card-subtitle>Purpose:</ion-card-subtitle>
             {{upcomingBooking?.consultationPurpose.consultationPurposeName}}
           </ion-card-title>
         </ion-row>
@@ -85,7 +85,7 @@
       </ion-col>
 
     </ion-row>
-    
+
   </ion-card>
 
 </ion-content>

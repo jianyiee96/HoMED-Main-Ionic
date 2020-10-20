@@ -11,7 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpConfigInterceptor } from './interceptors/http.config.interceptor';
+// import { HttpConfigInterceptor } from './interceptors/http.config.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +28,7 @@ import { HttpConfigInterceptor } from './interceptors/http.config.interceptor';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

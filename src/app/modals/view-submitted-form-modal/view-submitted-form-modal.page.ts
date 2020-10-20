@@ -41,17 +41,6 @@ export class ViewSubmittedFormModalPage implements OnInit {
     this.formInstance.formInstanceFields.forEach(fif => {
       if (fif.formInstanceFieldValues.length == 0) {
         fif.formInstanceFieldValues.push(new FormInstanceFieldValue(undefined, ""))
-      } else if (fif.formFieldMapping.inputType == "DATE" && fif.formInstanceFieldValues[0]["inputValue"].length == 10) {
-        // 19 / 11 / 2020
-        var date = fif.formInstanceFieldValues[0]["inputValue"]
-        var day = date.substring(0, 2)
-        var month = date.substring(3, 5)
-        var year = date.substring(6)
-
-        var formattedDate = year + "-" + month + "-" + day
-
-        fif.formInstanceFieldValues[0]["inputValue"] = formattedDate
-
       }
     })
   }
