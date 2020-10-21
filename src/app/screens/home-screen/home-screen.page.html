@@ -18,10 +18,30 @@
       <B><u>Beware of Scam Calls or Text Messages!</u></B>
       <br>
       We are aware of calls or text messages falsely informing recipients that they have been in close proximity to
-      someone who has been tested positive for COVID-19. These messages request for personal or financial information in
-      return for a test kit and results.
+      someone who has been tested positive for COVID-19.
     </ion-card-content>
   </ion-card>
+
+  <ion-card mode="ios" class="queueCard" *ngIf="positionInQueueToShow != null">
+
+    <ion-card-header style="text-align: center;">
+      <ion-card-title style="color: whitesmoke; font-size: 50px;">
+        {{calculateQueueNumber(waitingConsultationToShow?.booking.bookingId)}}
+      </ion-card-title>
+      <ion-card-subtitle>
+        Queue Number
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-title style="text-align: center; color: #423b2e;">
+        Position in Queue:
+        {{positionInQueueToShow}}
+      </ion-card-title>
+    </ion-card-content>
+
+  </ion-card>
+
   <ion-card mode="ios" [ngClass]="taskCount > 0 ? 'pendingFormsCard' : 'zeroPendingFormsCard'"
     (click)="redirectToFormsScreen()">
     <ion-card-header>
@@ -51,7 +71,6 @@
 
   <ion-card mode="ios" class="upcomingAppointmentCard" (click)="redirectToBookingsScreen()"
     *ngIf="upcomingBooking != null">
-
     <ion-row>
 
       <ion-col size="3" style="background-color: #14274e;">
@@ -85,7 +104,6 @@
       </ion-col>
 
     </ion-row>
-
   </ion-card>
 
 </ion-content>
