@@ -178,13 +178,13 @@ export class EditFormInstanceModalPage implements OnInit {
       })
     }
 
-    options.push({
-      text: 'Save',
-      icon: 'save',
-      handler: () => {
-        this.update(form)
-      }
-    })
+    // options.push({
+    //   text: 'Save',
+    //   icon: 'save',
+    //   handler: () => {
+    //     this.update(form)
+    //   }
+    // })
 
     if (this.formInstance.booking != null) {
       options.push(
@@ -364,6 +364,7 @@ export class EditFormInstanceModalPage implements OnInit {
         this.presentSubmitConfirm()
       }
       else {
+        this.presentInvalidFieldsAlert()
         this.formInstance.formInstanceFields.forEach((fif) => {
           // have to 'clean' the fifvs for checkbox, or the checkbox might have duplicate fields cause extra fifv was injected with isChecked
           if (fif.formFieldMapping.inputType == "CHECK_BOX") {
@@ -380,6 +381,24 @@ export class EditFormInstanceModalPage implements OnInit {
       console.log('Form failed ngForm validity check');
     }
 
+  }
+
+  async presentInvalidFieldsAlert() {
+    const alert = await this.alertController.create({
+      header: 'Failed to submit form.',
+      message: 'Please ensure all required fields are filled.',
+      backdropDismiss: false,
+      cssClass: 'activateAccountAlert',
+      buttons: [
+        {
+          text: 'Ok',
+          cssClass: 'activate-button',
+          handler: () => { }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async presentFailedToast(messageToDisplay: string) {

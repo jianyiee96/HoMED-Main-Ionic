@@ -83,6 +83,11 @@ export class WaitingConsultationsScreenPage implements OnInit {
     )
   }
 
+  calculateQueueNumber(consultation: Consultation) {
+    var mod = consultation.booking.bookingId % 1000
+    return ("000" + mod).slice(-3)
+  }
+
   redirectToConsultationsScreen() {
     this.router.navigate(['/consultation-screen'])
   }

@@ -9,6 +9,8 @@ ion-content {
 ion-button {
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .sectionHeader {
@@ -26,5 +28,11 @@ ion-button {
 }
 
 .formLink {
-    margin-bottom: 10%;
+    margin-bottom: 5%;
+}
+
+.formAns {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }

@@ -57,6 +57,13 @@
     </ion-datetime>
   </ion-item>
 
+  <ion-item>
+    <ion-label>
+      Comment (Optional)
+    </ion-label>
+    <ion-textarea [(ngModel)]="reasonForBooking" placeholder="Enter Comment here"></ion-textarea>
+  </ion-item>
+
   <div style="margin-top: 15%;">
     <ion-row>
       <ion-button (click)="queryBookingSlots()" class="retrieveSlotsButton" [disabled]="!checkParamsFilled()">

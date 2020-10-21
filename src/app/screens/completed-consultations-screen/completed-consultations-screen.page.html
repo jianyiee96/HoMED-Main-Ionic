@@ -14,22 +14,49 @@
 
     <ion-item>
       <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-      <ion-label>Medical Officer: {{cc.medicalOfficer.name}}</ion-label>
+      <ion-label>DR {{cc.medicalOfficer.name}}</ion-label>
     </ion-item>
 
     <ion-item>
       <ion-icon name="calendar-outline" slot="start"></ion-icon>
-      <ion-label>Date: {{cc.startDateTime | date:'dd/MM/yyyy'}}</ion-label>
+      <ion-label><span style="font-weight: bold;">Date:</span> {{cc.startDateTime | date:'dd/MM/yyyy'}}</ion-label>
     </ion-item>
 
     <ion-item>
       <ion-icon name="time-outline" slot="start"></ion-icon>
-      <ion-label>Time: {{cc.startDateTime | date:'HH:mm'}} - {{cc.endDateTime | date:'HH:mm'}}</ion-label>
+      <ion-label><span style="font-weight: bold;">Time:</span> {{cc.startDateTime | date:'HH:mm'}} -
+        {{cc.endDateTime | date:'HH:mm'}}</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="home-outline" slot="start"></ion-icon>
+      <ion-text>
+        <span style="font-weight: bold;">Venue:</span>
+        <br>
+        {{cc.booking.bookingSlot.medicalCentre.name}}
+      </ion-text>
     </ion-item>
 
     <ion-item *ngIf="cc.remarksForServiceman != null">
       <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
-      <ion-text style="margin-top: 10px; margin-bottom: 10px;">{{cc.remarksForServiceman}}</ion-text>
+      <ion-text style="margin-top: 10px; margin-bottom: 10px;"><span style="font-weight: bold;">Comments:</span>
+        <br>
+        {{cc.remarksForServiceman}}</ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="document-attach-outline" slot="start"></ion-icon>
+      <ion-grid>
+        <ion-row>
+          <ion-label><span style="font-weight: bold;">Attached Forms:</span></ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label *ngFor="let fi of cc.booking.formInstances" style="margin-top: 10px; margin-bottom: 5px;"
+            (click)="redirectToDisplayFormModal(fi.formInstanceId)">
+            <u>{{fi.formTemplateMapping.formTemplateName}}</u>
+          </ion-label>
+        </ion-row>
+      </ion-grid>
     </ion-item>
 
   </ion-card>

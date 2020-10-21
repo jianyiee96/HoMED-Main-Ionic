@@ -347,7 +347,13 @@
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
+    <ion-button (click)="update(form)" expand="block"
+      style="--background: #0563a3; padding-left: 15px; padding-right: 15px; margin-top: 15px; margin-bottom: 15px;">
+      Save
+    </ion-button>
     <ion-button (click)="presentOptions(form)" expand="block"
-      style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px;">Options</ion-button>
+      style="--background: #f8bd7f; padding-left: 15px; padding-right: 15px; margin-top: 15px; margin-bottom: 15px;">
+      Options
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

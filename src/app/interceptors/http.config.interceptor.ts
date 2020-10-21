@@ -1,8 +1,11 @@
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { AlertController, LoadingController } from '@ionic/angular';
+
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+
 import { TimerService } from '../services/timer/timer.service';
 
 @Injectable()
@@ -19,33 +22,33 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         if (request.headers.get("Interceptor") == null || request.headers.get("Interceptor") != 'false') {
-            this.startLoading()
+            // this.startLoading()
 
             return next.handle(request).pipe(
-                timeout(8000),
+                timeout(5000),
 
                 map((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
                         // console.log('event returned to interceptor--->>>', event)
-                        this.dismissLoading()
+                        // this.dismissLoading()
                     }
 
                     return event
                 }),
                 catchError((error: HttpErrorResponse) => {
                     console.error('error returned to interceptor--->>>', error)
-                    this.dismissLoading()
+                    // this.dismissLoading()
 
                     if (error.message.toLowerCase().includes("timeout")) {
                         this.presentTimeoutAlert()
                     }
 
-                    if (error.message.toLowerCase().includes("json")) {
+                    if (error.error.message.toLowerCase().includes("json")) {
                         this.presentLogoutAlert()
                     }
 
                     return throwError(error)
-                })
+                }),
 
             )
         } else {
@@ -89,8 +92,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     async presentLogoutAlert() {
         const alert = await this.alertController.create({
-            header: 'Invalid JSON Token',
-            subHeader: 'For security reasons, you will have to re-login.',
+            header: 'Duplicate login detected.',
+            subHeader: 'You have been logged out for security reasons.',
             backdropDismiss: false,
             cssClass: 'activateAccountAlert',
             buttons: [

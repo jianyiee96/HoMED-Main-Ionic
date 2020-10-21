@@ -28,7 +28,7 @@ import { HttpConfigInterceptor } from './interceptors/http.config.interceptor';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

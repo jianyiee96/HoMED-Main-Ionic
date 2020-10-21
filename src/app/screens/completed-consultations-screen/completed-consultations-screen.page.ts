@@ -32,6 +32,10 @@ export class CompletedConsultationsScreenPage implements OnInit {
     this.router.navigate(['/consultation-screen'])
   }
 
+  redirectToDisplayFormModal(fId: number) {
+    this.router.navigate(['/form-screen/' + fId])
+  }
+
   convertUTCStringToSingaporeDate(dateCreated) {
     if (dateCreated != null) {
       let stringUtcTime = dateCreated.toLocaleString().substring(0, 19)

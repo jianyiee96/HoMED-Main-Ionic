@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { NavController } from '@ionic/angular';
+
 import { ConsultationPurpose } from 'src/app/classes/consultation-purpose/consultation-purpose';
 import { MedicalCentre } from 'src/app/classes/medical-centre/medical-centre';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
@@ -27,11 +29,13 @@ export class BookingParamsScreenPage implements OnInit {
   selectedConsulationPurposeId: number = null
   selectedMedicalCentreIndex: number = null
   selectedDate: Date = null
+  reasonForBooking: string = null
 
   currentDate = new Date()
   maxYear = new Date().getFullYear() + 1
 
   constructor(
+    private navController: NavController,
     private consultationService: ConsultationService,
     private medicalCentreService: MedicalCentreService,
     private schedulerService: SchedulerService,
@@ -80,6 +84,7 @@ export class BookingParamsScreenPage implements OnInit {
 
         this.schedulerService.bookingSlots = this.bookingSlots
         this.schedulerService.selectedDate = formattedSelectedDate
+        this.schedulerService.reasonForBooking = this.reasonForBooking
         this.consultationService.selectedConsultationPurposeId = this.selectedConsulationPurposeId
         for (var idx = 1; idx < this.consultationPurposes.length; idx++) {
           if (this.consultationPurposes[idx].consultationPurposeId = this.consultationService.selectedConsultationPurposeId) {
@@ -111,7 +116,8 @@ export class BookingParamsScreenPage implements OnInit {
   }
 
   redirectToBookingScreen() {
-    this.router.navigate(["/booking-screen"])
+    this.navController.pop()
+    // this.router.navigate(["/booking-screen"])
   }
 
   convertUTCStringToSingaporeDate(dateCreated) {

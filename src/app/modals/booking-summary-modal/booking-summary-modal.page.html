@@ -13,24 +13,42 @@
     <ion-grid>
 
       <ion-row>
-        <ion-col size="6">
-          <ion-text><b>Booking ID</b>:</ion-text>
-        </ion-col>
         <ion-col>
-          <ion-label>
-            {{booking.bookingId}}
-          </ion-label>
+          <ion-text><b>Booking ID</b>: {{booking.bookingId}}</ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="5">
           <ion-text><b>Consultation Purpose</b>:</ion-text>
         </ion-col>
         <ion-col>
-          <ion-label>
-            {{booking.consultationPurpose.consultationPurposeName}}
-          </ion-label>
+          <div class="formAns">
+            <ion-text>{{booking.consultationPurpose.consultationPurposeName}}</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size=5>
+          <ion-text *ngIf="booking.bookingComment"><b>Booking Comment</b>:</ion-text>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-text>{{booking.bookingComment}}</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size=5>
+          <ion-text *ngIf="booking.cancellationComment"><b>Cancellation Comment</b>:
+          </ion-text>
+        </ion-col>
+        <ion-col>
+          <div class="formAns">
+            <ion-text>{{booking.cancellationComment}}</ion-text>
+          </div>
         </ion-col>
       </ion-row>
 
@@ -48,34 +66,19 @@
 
       <ion-row>
         <ion-col size="6">
-          <ion-text><b>Date</b>:</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            {{booking.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}
-          </ion-label>
+          <ion-text><b>Date</b>: {{booking.bookingSlot.startDateTime | date:'dd/MM/yyyy'}}</ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col size="6">
-          <ion-text><b>Start Time</b>:</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            {{booking.bookingSlot.startDateTime | date:' HH:mm'}}
-          </ion-label>
+          <ion-text><b>Start Time</b>: {{booking.bookingSlot.startDateTime | date:' HH:mm'}}</ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col size="6">
-          <ion-text><b>End Time</b>:</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            {{booking.bookingSlot.endDateTime | date:' HH:mm'}}
-          </ion-label>
+          <ion-text><b>End Time</b>: {{booking.bookingSlot.endDateTime | date:' HH:mm'}}</ion-text>
         </ion-col>
       </ion-row>
 
@@ -107,9 +110,17 @@
         </ion-col>
         <ion-col>
           <ion-label>
-            {{booking.bookingSlot.medicalCentre.address.unitNumber}}<br>{{booking.bookingSlot.medicalCentre.address.streetName}}
-            <br>{{booking.bookingSlot.medicalCentre.address.buildingName}} Singapore
-            {{booking.bookingSlot.medicalCentre.address.postal}}
+            <span *ngIf="booking.bookingSlot.medicalCentre.address.unitNumber">
+              {{booking.bookingSlot.medicalCentre.address.unitNumber}}
+              <br>
+            </span>
+            {{booking.bookingSlot.medicalCentre.address.streetName}}
+            <br>
+            <span *ngIf="booking.bookingSlot.medicalCentre.address.buildingName">
+              {{booking.bookingSlot.medicalCentre.address.buildingName}}
+              <br>
+            </span>
+            Singapore {{booking.bookingSlot.medicalCentre.address.postal}}
           </ion-label>
         </ion-col>
       </ion-row>
@@ -119,13 +130,18 @@
 
   <hr class="hr">
 
-  <div class="sectionHeader" *ngIf="booking.formInstances.length > 0">
-    <h2><u>REQUIRED FORMS</u></h2>
-    <h6 style="color: red;">
-      NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
-    </h6>
+  <div class="sectionHeader" *ngIf="booking.formInstances.length > 0 ">
+    <div *ngIf="booking.bookingStatusEnum == 'UPCOMING'">
+      <h2><u>REQUIRED FORMS</u></h2>
+      <h6 style="color: red;">
+        NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
+      </h6>
+    </div>
+    <div *ngIf="booking.bookingStatusEnum != 'UPCOMING'">
+      <h2><u>ATTACHED FORMS</u></h2>
+    </div>
   </div>
-  <div class="sectionContent" *ngIf="booking.formInstances.length > 0">
+  <div class="sectionContent" *ngIf="booking.formInstances.length > 0 ">
     <ion-grid>
 
       <ion-row *ngFor="let fi of booking.formInstances" class="formLink">
