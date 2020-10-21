@@ -16,6 +16,7 @@ export class SchedulerService {
 
   selectedDate: Date
   bookingSlots: BookingSlot[]
+  reasonForBooking: string
 
   constructor(private httpClient: HttpClient, private sessionService: SessionService) {
     this.baseUrl = this.sessionService.getRootPath() + 'Scheduler'
@@ -36,7 +37,8 @@ export class SchedulerService {
     let scheduleBookingReq = {
       "servicemanId": this.sessionService.getCurrentServiceman().servicemanId,
       "consultationPurposeId": consultationPurposeId,
-      "bookingSlotId": bookingSlotId
+      "bookingSlotId": bookingSlotId,
+      "bookingComment": this.reasonForBooking,
     }
 
     return this.httpClient.post<any>(this.baseUrl + "/scheduleBooking", scheduleBookingReq, this.sessionService.getSecuredHttpOptions()).pipe(
@@ -50,9 +52,10 @@ export class SchedulerService {
     );
   }
 
-  cancelBooking(bookingId: number) {
+  cancelBooking(bookingId: number, cancellationComment: string) {
     let cancelBookingReq = {
-      "bookingId": bookingId
+      "bookingId": bookingId,
+      "cancellationComment": cancellationComment
     }
 
     return this.httpClient.post<any>(this.baseUrl + "/cancelBooking", cancelBookingReq, this.sessionService.getSecuredHttpOptions()).pipe(

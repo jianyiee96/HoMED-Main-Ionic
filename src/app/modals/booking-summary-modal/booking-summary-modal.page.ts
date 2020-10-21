@@ -33,6 +33,13 @@ export class BookingSummaryModalPage implements OnInit {
       header: `Confirm Cancellation of Booking ID ${this.booking.bookingId}?`,
       message: 'Note that this action cannot be <strong>undone</strong>!',
       cssClass: 'homedThemeAlert',
+      inputs: [
+        {
+          name: 'cancelReason',
+          type: 'textarea',
+          placeholder: 'Reason for cancelling (Optional)'
+        }
+      ],
       buttons: [
         {
           text: 'Back',
@@ -42,8 +49,8 @@ export class BookingSummaryModalPage implements OnInit {
         }, {
           text: 'Cancel',
           cssClass: 'delete-button',
-          handler: () => {
-            this.cancelBooking()
+          handler: data => {
+            this.cancelBooking(data.cancelReason)
           }
         }
       ]
@@ -52,15 +59,33 @@ export class BookingSummaryModalPage implements OnInit {
     await alert.present();
   }
 
-  cancelBooking() {
-    this.schedulerService.cancelBooking(this.booking.bookingId).subscribe(
+  cancelBooking(cancelReason: string) {
+    this.schedulerService.cancelBooking(this.booking.bookingId, cancelReason).subscribe(
       response => {
         this.dismissAfterCancelBooking()
       },
       error => {
-        console.log(error);
+        this.presentErrorAlert(error.substring(37))
       }
     )
+  }
+
+  async presentErrorAlert(errorMessage: string) {
+    const alert = await this.alertController.create({
+      header: `Unable to Cancel Booking ID ${this.booking.bookingId}.`,
+      message: `Reason: ${errorMessage}.`,
+      cssClass: 'homedThemeAlert',
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel',
+          cssClass: 'true-button',
+          handler: () => { }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   dismiss() {

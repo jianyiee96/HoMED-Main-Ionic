@@ -21,12 +21,22 @@
       <ion-label>Booking Details</ion-label>
       <ion-button slot="end" (click)="presentBookingSummary(wc.booking)">View</ion-button>
     </ion-item>
+
+    <ion-item>
+      <ion-icon name="ellipsis-horizontal-outline" slot="start"></ion-icon>
+      <ion-label>
+        <span style="font-weight: bold;">Queue Number</span>: {{calculateQueueNumber(wc)}}
+      </ion-label>
+    </ion-item>
+
     <ion-item>
       <ion-icon name="hourglass-outline" slot="start"></ion-icon>
       <ion-label>
-        Position In Queue: {{queueInformation[wc.consultationId]}}
-        <br />
-        Joined Queue At: {{wc.joinQueueDateTime | date:'HH:mm dd/MM/yyyy'}}
+        <span style="font-weight: bold;">Joined Queue At</span>: {{wc.joinQueueDateTime | date:'HH:mm dd/MM/yyyy'}}
+        <br>
+        <span style="font-weight: bold;">Position In Queue</span>: {{queueInformation[wc.consultationId]}}
+        <br>
+        <span style="font-weight: bold;">Est. Waiting Time</span>: {{queueInformation[wc.consultationId] * 15}} minutes
       </ion-label>
     </ion-item>
 

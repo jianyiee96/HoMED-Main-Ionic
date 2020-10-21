@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 
 import { MedicalCentre } from 'src/app/classes/medical-centre/medical-centre';
 import { BookingSlot } from 'src/app/classes/slot/slot';
@@ -25,6 +25,7 @@ export class BookingSlotsScreenPage implements OnInit {
   selectedMedicalCentre: MedicalCentre
 
   constructor(
+    private navController: NavController,
     private alertController: AlertController,
     private schedulerService: SchedulerService,
     private consultationService: ConsultationService,
@@ -57,6 +58,10 @@ export class BookingSlotsScreenPage implements OnInit {
   }
 
   async confirmBookingPrompt() {
+    if (this.schedulerService.reasonForBooking == null || this.schedulerService.reasonForBooking.length < 1) {
+      this.schedulerService.reasonForBooking = "N.A"
+    }
+
     const startDateTime = this.datePipe.transform(this.filteredBookingSlots[this.selectedSlotIndex].startDateTime, 'HH:mm')
     const endDateTime = this.datePipe.transform(this.filteredBookingSlots[this.selectedSlotIndex].endDateTime, 'HH:mm')
     const date = this.datePipe.transform(this.filteredBookingSlots[this.selectedSlotIndex].startDateTime, 'EEE, MMMM d, y')
@@ -72,7 +77,9 @@ export class BookingSlotsScreenPage implements OnInit {
                 <br/>
                 <b>Start</b>: ${startDateTime}
                 <br/>
-                <b>End</b>: ${endDateTime}`,
+                <b>End</b>: ${endDateTime}
+                <br/>
+                <b>Booking Reason</b>: ${this.schedulerService.reasonForBooking}`,
       cssClass: 'confirmBookingAlert',
       buttons: [
         {
@@ -85,6 +92,10 @@ export class BookingSlotsScreenPage implements OnInit {
           text: 'Confirm',
           cssClass: 'book-button',
           handler: () => {
+            if (this.schedulerService.reasonForBooking == "N.A") {
+              // display to client reason is N.A when confirming booking, but will send to backend null 
+              this.schedulerService.reasonForBooking = null
+            }
             this.scheduleBooking()
           }
         }
@@ -99,6 +110,7 @@ export class BookingSlotsScreenPage implements OnInit {
 
     this.schedulerService.scheduleBooking(this.consultationService.selectedConsultationPurposeId, this.filteredBookingSlots[this.selectedSlotIndex].slotId).subscribe(
       response => {
+        this.navController.pop()
         this.router.navigate(['/booking-screen/' + this.filteredBookingSlots[this.selectedSlotIndex].slotId])
       },
       error => {

@@ -22,10 +22,10 @@
       return for a test kit and results.
     </ion-card-content>
   </ion-card>
-
-  <ion-card mode="ios" class="pendingFormsCard" (click)="redirectToFormsScreen()">
+  <ion-card mode="ios" [ngClass]="taskCount > 0 ? 'pendingFormsCard' : 'zeroPendingFormsCard'"
+    (click)="redirectToFormsScreen()">
     <ion-card-header>
-      <ion-card-subtitle style="color: whitesmoke;">Important</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="taskCount > 0" style="color: whitesmoke;">Important</ion-card-subtitle>
       <ion-row>
 
         <ion-col size="3">

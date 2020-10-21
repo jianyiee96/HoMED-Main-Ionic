@@ -24,6 +24,8 @@ export class BookingScreenPage implements OnInit {
   filters = ['PAST', 'UPCOMING', 'ABSENT', 'CANCELLED']
   selectedFilters = []
 
+  displayModalAllowed: boolean = true
+
   constructor(
     private modalController: ModalController,
     private schedulerService: SchedulerService,
@@ -32,8 +34,22 @@ export class BookingScreenPage implements OnInit {
     private ngZone: NgZone
   ) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.retrieveAllServicemanBookings(false)
+  }
+
+  ionViewWillEnter() {
+    this.isShown = true
+    this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'));
+
+    if (this.displayModalAllowed) {
+      console.log(`displayModalAllowed was allowed`);
+
+      if (!isNaN(this.passedSlotId)) {
+        this.displayModalAllowed = false
+        this.retrieveAllServicemanBookings(true)
+      }
+    }
   }
 
   retrieveAllServicemanBookings(displayModal: boolean) {
@@ -75,15 +91,6 @@ export class BookingScreenPage implements OnInit {
 
   }
 
-  ionViewWillEnter() {
-    this.isShown = true
-    this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'));
-
-    if (!isNaN(this.passedSlotId)) {
-      this.retrieveAllServicemanBookings(true)
-    }
-  }
-
   applyFilter() {
     this.servicemanBookingsToShow = []
     this.servicemanBookings.forEach(sb => {
@@ -103,8 +110,8 @@ export class BookingScreenPage implements OnInit {
     });
 
     modal.onDidDismiss().then((value) => {
-
       if (value.data["formInstanceId"] != null) {
+        this.displayModalAllowed = true
         this.router.navigate(['/form-screen/' + value.data["formInstanceId"]])
       } else if (value.data["cancelled"] == true) {
         this.retrieveAllServicemanBookings(false)

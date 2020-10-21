@@ -14,6 +14,8 @@ export class Booking {
     bookingSlot: BookingSlot
     formInstances: FormInstance[]
     bookingStatusEnum: BookingStatusEnum
+    bookingComment: string
+    cancellationComment: string
 
     constructor(
         bookingId?: number,
@@ -22,7 +24,9 @@ export class Booking {
         consultation?: Consultation,
         bookingSlot?: BookingSlot,
         formInstances?: FormInstance[],
-        bookingStatusEnum?: BookingStatusEnum
+        bookingStatusEnum?: BookingStatusEnum,
+        bookingComment?: string,
+        cancellationComment?: string,
     ) {
 
         this.bookingId = bookingId
@@ -32,6 +36,8 @@ export class Booking {
         this.bookingSlot = bookingSlot
         this.formInstances = formInstances
         this.bookingStatusEnum = bookingStatusEnum
+        this.bookingComment = bookingComment
+        this.cancellationComment = cancellationComment
 
     }
 
