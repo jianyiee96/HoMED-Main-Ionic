@@ -92,8 +92,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     async presentLogoutAlert() {
         const alert = await this.alertController.create({
-            header: 'Multiple login detected.',
-            subHeader: 'For security reasons, you will have to re-login.',
+            header: 'Duplicate login detected.',
+            subHeader: 'You have been logged out for security reasons.',
             backdropDismiss: false,
             cssClass: 'activateAccountAlert',
             buttons: [
