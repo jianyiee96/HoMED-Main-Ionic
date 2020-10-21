@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Booking } from 'src/app/classes/booking/booking';
+import { Consultation } from 'src/app/classes/consultation/consultation';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
+import { ConsultationService } from 'src/app/services/consultation/consultation.service';
 import { FormService } from 'src/app/services/form/form.service';
 import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 import { SessionService } from 'src/app/services/session/session.service';
@@ -16,13 +18,16 @@ export class HomeScreenPage implements OnInit {
 
   serviceman: Serviceman
   servicemanBookings: Booking[]
-  upcomingBooking: Booking
 
+  waitingConsultationToShow: Consultation
+  positionInQueueToShow: number
   taskCount: number
+  upcomingBooking: Booking
 
   constructor(
     private sessionService: SessionService,
     private schedulerService: SchedulerService,
+    private consultationService: ConsultationService,
     private formService: FormService,
     private router: Router
   ) {
@@ -38,6 +43,32 @@ export class HomeScreenPage implements OnInit {
   }
 
   loadHomeContent() {
+
+    this.consultationService.retrieveServicemanConsultations().subscribe(
+      response => {
+        var consultations: Consultation[] = response.consultations
+
+        for (var idx = 0; idx < consultations.length; idx++) {
+          if (consultations[idx].consultationStatusEnum.toString() == "WAITING") {
+            this.waitingConsultationToShow = consultations[idx]
+
+            this.consultationService.retrieveConsultationQueuePosition(this.waitingConsultationToShow.consultationId).subscribe(
+              response => {
+                this.positionInQueueToShow = response.position
+              },
+              error => {
+                console.log(error);
+              }
+            )
+            
+            break
+          }
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
 
     this.schedulerService.retrieveAllServicemanBookings().subscribe(
       response => {
@@ -80,6 +111,11 @@ export class HomeScreenPage implements OnInit {
       }
     )
 
+  }
+
+  calculateQueueNumber(id: number) {
+    var mod = id % 1000
+    return ("000" + mod).slice(-3)
   }
 
   redirectToFormsScreen() {

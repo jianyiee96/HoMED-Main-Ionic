@@ -29,9 +29,9 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="booking.bookingComment">
         <ion-col size=5>
-          <ion-text *ngIf="booking.bookingComment"><b>Booking Comment</b>:</ion-text>
+          <ion-text><b>Booking Comment</b>:</ion-text>
         </ion-col>
         <ion-col>
           <div class="formAns">
@@ -40,9 +40,9 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="booking.cancellationComment">
         <ion-col size=5>
-          <ion-text *ngIf="booking.cancellationComment"><b>Cancellation Comment</b>:
+          <ion-text><b>Cancellation Comment</b>:
           </ion-text>
         </ion-col>
         <ion-col>
