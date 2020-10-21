@@ -79,7 +79,7 @@ export class BookingSlotsScreenPage implements OnInit {
                 <br/>
                 <b>End</b>: ${endDateTime}
                 <br/>
-                <b>Booking Reason</b>: ${this.schedulerService.reasonForBooking}`,
+                <b>Comment</b>: ${this.schedulerService.reasonForBooking}`,
       cssClass: 'confirmBookingAlert',
       buttons: [
         {
