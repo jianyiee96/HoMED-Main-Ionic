@@ -32,7 +32,7 @@
     <ion-item>
       <ion-icon name="hourglass-outline" slot="start"></ion-icon>
       <ion-label>
-        <span style="font-weight: bold;">Joined Queue At</span>: {{wc.joinQueueDateTime | date:'HH:mm dd/MM/yyyy'}}
+        <span style="font-weight: bold;">Joined Queue At</span>: {{wc.joinQueueDateTime | date:'DD/MM/YYYY HH:mm'}}
         <br>
         <span style="font-weight: bold;">Position In Queue</span>: {{queueInformation[wc.consultationId]}}
         <br>
