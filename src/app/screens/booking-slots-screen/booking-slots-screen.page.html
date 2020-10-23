@@ -18,8 +18,9 @@
     <ion-card-content>
       <ion-card-subtitle>Phone: {{selectedMedicalCentre.phone}}
       </ion-card-subtitle>
-      <ion-card-subtitle>Address: {{selectedMedicalCentre.address.streetName}}
-        S{{selectedMedicalCentre.address.postal}}
+      <ion-card-subtitle>Address:
+        <br>
+        {{formatAddress(selectedMedicalCentre.address.streetName, selectedMedicalCentre.address.unitNumber, selectedMedicalCentre.address.buildingName, selectedMedicalCentre.address.country, selectedMedicalCentre.address.postal)}}
       </ion-card-subtitle>
     </ion-card-content>
   </ion-card>
