@@ -122,10 +122,12 @@ export class HomeScreenPage implements OnInit {
       response => {
         var consultations: Consultation[] = response.consultations
 
+        let hasWaiting = false;
+
         for (var idx = 0; idx < consultations.length; idx++) {
           if (consultations[idx].consultationStatusEnum.toString() == "WAITING") {
             this.waitingConsultationToShow = consultations[idx]
-
+            hasWaiting = true
             this.consultationService.retrieveConsultationQueuePosition(this.waitingConsultationToShow.consultationId).subscribe(
               response => {
                 this.positionInQueueToShow = response.position
@@ -133,12 +135,17 @@ export class HomeScreenPage implements OnInit {
               },
               error => {
                 console.log(error);
+                this.showLoading = false
               }
             )
             break
           }
         }
 
+        if (!hasWaiting) {
+          this.positionInQueueToShow = null
+          this.showLoading = false
+        }
       },
       error => {
         console.log(error);
