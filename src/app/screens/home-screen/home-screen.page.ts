@@ -24,6 +24,8 @@ export class HomeScreenPage implements OnInit {
   taskCount: number
   upcomingBooking: Booking
 
+  showLoading: boolean = false
+
   constructor(
     private sessionService: SessionService,
     private schedulerService: SchedulerService,
@@ -60,7 +62,7 @@ export class HomeScreenPage implements OnInit {
                 console.log(error);
               }
             )
-            
+
             break
           }
         }
@@ -111,6 +113,38 @@ export class HomeScreenPage implements OnInit {
       }
     )
 
+  }
+
+  refreshQueueCard() {
+    this.showLoading = true
+
+    this.consultationService.retrieveServicemanConsultations().subscribe(
+      response => {
+        var consultations: Consultation[] = response.consultations
+
+        for (var idx = 0; idx < consultations.length; idx++) {
+          if (consultations[idx].consultationStatusEnum.toString() == "WAITING") {
+            this.waitingConsultationToShow = consultations[idx]
+
+            this.consultationService.retrieveConsultationQueuePosition(this.waitingConsultationToShow.consultationId).subscribe(
+              response => {
+                this.positionInQueueToShow = response.position
+                this.showLoading = false
+              },
+              error => {
+                console.log(error);
+              }
+            )
+            break
+          }
+        }
+
+      },
+      error => {
+        console.log(error);
+        this.showLoading = false
+      }
+    )
   }
 
   calculateQueueNumber(id: number) {
