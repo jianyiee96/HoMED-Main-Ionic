@@ -110,12 +110,12 @@
         </ion-col>
         <ion-col>
           <ion-label>
+            {{booking.bookingSlot.medicalCentre.address.streetName}}
+            <br>
             <span *ngIf="booking.bookingSlot.medicalCentre.address.unitNumber">
               {{booking.bookingSlot.medicalCentre.address.unitNumber}}
               <br>
             </span>
-            {{booking.bookingSlot.medicalCentre.address.streetName}}
-            <br>
             <span *ngIf="booking.bookingSlot.medicalCentre.address.buildingName">
               {{booking.bookingSlot.medicalCentre.address.buildingName}}
               <br>

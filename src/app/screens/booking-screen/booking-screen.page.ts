@@ -43,7 +43,7 @@ export class BookingScreenPage implements OnInit {
     this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'));
 
     if (this.displayModalAllowed) {
-      console.log(`displayModalAllowed was allowed`);
+      // console.log(`displayModalAllowed was allowed`);
 
       if (!isNaN(this.passedSlotId)) {
         this.displayModalAllowed = false

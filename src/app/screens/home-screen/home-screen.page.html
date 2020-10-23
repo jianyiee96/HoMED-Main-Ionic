@@ -22,23 +22,43 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card mode="ios" class="queueCard" *ngIf="positionInQueueToShow != null">
+  <ion-card mode="ios" class="queueCard" *ngIf="positionInQueueToShow != null" (click)="refreshQueueCard()">
 
-    <ion-card-header style="text-align: center;">
-      <ion-card-title style="color: whitesmoke; font-size: 50px;">
-        {{calculateQueueNumber(waitingConsultationToShow?.booking.bookingId)}}
-      </ion-card-title>
-      <ion-card-subtitle>
-        Queue Number
-      </ion-card-subtitle>
-    </ion-card-header>
+    <div *ngIf="!showLoading">
+      <ion-card-header style="text-align: center;">
+        <ion-card-title style="color: whitesmoke; font-size: 50px;">
+          {{calculateQueueNumber(waitingConsultationToShow?.booking.bookingId)}}
+        </ion-card-title>
+        <ion-card-subtitle>
+          Queue Number
+        </ion-card-subtitle>
+      </ion-card-header>
 
-    <ion-card-content>
-      <ion-card-title style="text-align: center; color: #423b2e;">
-        Position in Queue:
-        {{positionInQueueToShow}}
-      </ion-card-title>
-    </ion-card-content>
+      <ion-card-content>
+        <ion-card-title style="text-align: center; color: #423b2e;">
+          Queue Position:
+          {{positionInQueueToShow}}
+        </ion-card-title>
+      </ion-card-content>
+    </div>
+
+    <div *ngIf="showLoading">
+      <ion-card-header style="text-align: center;">
+        <ion-card-title style="color: whitesmoke; font-size: 50px;">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-card-title>
+        <ion-card-subtitle>
+          Queue Number
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-card-title style="text-align: center; color: #423b2e;">
+          Queue Position:
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-card-title>
+      </ion-card-content>
+    </div>
 
   </ion-card>
 
