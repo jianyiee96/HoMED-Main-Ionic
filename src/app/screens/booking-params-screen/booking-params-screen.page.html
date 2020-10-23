@@ -42,8 +42,9 @@
     <ion-card-content>
       <ion-card-subtitle>Phone: {{medicalCentres[selectedMedicalCentreIndex].phone}}
       </ion-card-subtitle>
-      <ion-card-subtitle>Address: {{medicalCentres[selectedMedicalCentreIndex].address.streetName}}
-        S{{medicalCentres[selectedMedicalCentreIndex].address.postal}}
+      <ion-card-subtitle>Address:
+        <br>
+        {{formatAddress(medicalCentres[selectedMedicalCentreIndex].address.streetName, medicalCentres[selectedMedicalCentreIndex].address.unitNumber, medicalCentres[selectedMedicalCentreIndex].address.buildingName, medicalCentres[selectedMedicalCentreIndex].address.country, medicalCentres[selectedMedicalCentreIndex].address.postal)}}
       </ion-card-subtitle>
     </ion-card-content>
   </ion-card>

@@ -107,6 +107,27 @@ export class BookingParamsScreenPage implements OnInit {
     cssClass: 'selectBookingParamsAlert'
   }
 
+  formatAddress(streetName?: string, unitNumber?: string, buildingName?: string, country?: string, postal?: string) {
+    let str = streetName
+    if (unitNumber !== undefined && unitNumber.trim() !== "") {
+      str += ", " + unitNumber;
+    }
+
+    if (buildingName !== undefined && buildingName.trim() !== "") {
+      str += ", " + buildingName;
+    }
+
+    if (country !== undefined && country.trim() !== "") {
+      str += ", " + country;
+    }
+
+    if (postal !== undefined && postal.trim() !== "") {
+      str += " " + postal;
+    }
+
+    return str;
+  }
+
   checkParamsFilled() {
     return this.selectedConsulationPurposeId != null && this.selectedMedicalCentreIndex != null && this.selectedDate != null
   }
