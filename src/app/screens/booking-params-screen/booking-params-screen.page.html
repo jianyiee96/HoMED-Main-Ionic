@@ -40,9 +40,10 @@
       <ion-card-title style="font-size: small;">{{medicalCentres[selectedMedicalCentreIndex].name}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-card-subtitle>Phone: {{medicalCentres[selectedMedicalCentreIndex].phone}}
+      <ion-card-subtitle><span class="medicalCentreLabel">Phone:</span>
+        {{medicalCentres[selectedMedicalCentreIndex].phone}}
       </ion-card-subtitle>
-      <ion-card-subtitle>Address:
+      <ion-card-subtitle><span class="medicalCentreLabel">Address:</span>
         <br>
         {{formatAddress(medicalCentres[selectedMedicalCentreIndex].address.streetName, medicalCentres[selectedMedicalCentreIndex].address.unitNumber, medicalCentres[selectedMedicalCentreIndex].address.buildingName, medicalCentres[selectedMedicalCentreIndex].address.country, medicalCentres[selectedMedicalCentreIndex].address.postal)}}
       </ion-card-subtitle>
