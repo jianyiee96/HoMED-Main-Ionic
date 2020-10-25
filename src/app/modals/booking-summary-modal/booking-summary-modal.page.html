@@ -160,7 +160,7 @@
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
-    <ion-button *ngIf="booking.bookingStatusEnum == 'UPCOMING'" (click)="presentCancelConfirm()" expand="block"
+    <ion-button *ngIf="booking.bookingStatusEnum == 'UPCOMING'" (click)="invokeCancelBooking()" expand="block"
       style="--background: #c93d06">Cancel Booking</ion-button>
     <ion-button (click)="dismiss()" expand="block" style="--background: #00416d">Close</ion-button>
   </ion-toolbar>
