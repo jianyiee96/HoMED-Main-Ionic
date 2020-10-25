@@ -31,7 +31,6 @@ export class BookingSummaryModalPage implements OnInit {
   invokeCancelBooking() {
 
     if (this.sameDay(this.booking.bookingSlot.startDateTime, new Date())) {
-      console.log("Same Day");
       this.presentErrorAlert("Unable to cancel booking scheduled for today");
     } else {
       this.presentCancelConfirm();
