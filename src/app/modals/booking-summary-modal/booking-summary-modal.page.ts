@@ -28,6 +28,16 @@ export class BookingSummaryModalPage implements OnInit {
   ngOnInit() {
   }
 
+  invokeCancelBooking() {
+
+    if (this.sameDay(this.booking.bookingSlot.startDateTime, new Date())) {
+      this.presentErrorAlert("Unable to cancel booking scheduled for today");
+    } else {
+      this.presentCancelConfirm();
+    }
+
+  }
+
   async presentCancelConfirm() {
     const alert = await this.alertController.create({
       header: `Confirm Cancellation of Booking ID ${this.booking.bookingId}?`,
@@ -68,6 +78,12 @@ export class BookingSummaryModalPage implements OnInit {
         this.presentErrorAlert(error.substring(37))
       }
     )
+  }
+
+  sameDay(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
   }
 
   async presentErrorAlert(errorMessage: string) {
