@@ -58,10 +58,6 @@ export class SessionService {
 		sessionStorage.email = email
 	}
 
-	getPassword(): string {
-		return sessionStorage.password
-	}
-
 	setPassword(password: string): void {
 		sessionStorage.password = password
 	}
