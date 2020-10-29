@@ -8,10 +8,6 @@
 
   <div class="sectionHeader">
     <h2><u>BOOKING DETAILS</u></h2>
-    <h6 *ngIf="booking.isForReview">
-      <ion-icon name="alert-circle-outline" style="vertical-align: bottom;"></ion-icon>
-      This consultation has been indicated to be considered for a medical review.
-    </h6>
   </div>
   <div class="sectionContent">
     <ion-grid>
@@ -32,6 +28,17 @@
           </div>
         </ion-col>
       </ion-row>
+
+      <h6 *ngIf="booking.isForReview">
+        <ion-row>
+          <ion-col size="0.8">
+            <ion-icon name="alert-circle-outline" style="vertical-align: bottom;"></ion-icon>
+          </ion-col>
+          <ion-col style="color: #00416d;">
+            This consultation has been indicated to be considered for a medical review.
+          </ion-col>
+        </ion-row>
+      </h6>
 
       <ion-row *ngIf="booking.bookingComment">
         <ion-col size=5>
