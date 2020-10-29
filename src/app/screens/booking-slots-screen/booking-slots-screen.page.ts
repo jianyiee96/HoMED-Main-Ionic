@@ -81,6 +81,14 @@ export class BookingSlotsScreenPage implements OnInit {
                 <br/>
                 <b>Comment</b>: ${this.schedulerService.reasonForBooking}`,
       cssClass: 'confirmBookingAlert',
+      inputs: [
+        {
+          type: 'checkbox',
+          label: 'Medical Review',
+          value: true,
+          cssClass: 'alertCheckboxInput',
+        }
+      ],
       buttons: [
         {
           text: 'Cancel',
@@ -91,12 +99,18 @@ export class BookingSlotsScreenPage implements OnInit {
         {
           text: 'Confirm',
           cssClass: 'book-button',
-          handler: () => {
+          handler: data => {
             if (this.schedulerService.reasonForBooking == "N.A") {
               // display to client reason is N.A when confirming booking, but will send to backend null 
               this.schedulerService.reasonForBooking = null
             }
-            this.scheduleBooking()
+
+            // checkbox unchecked, length is zero
+            if (data.length > 0) {
+              this.scheduleBooking(true)
+            } else if (data.length === 0) {
+              this.scheduleBooking(false)
+            }
           }
         }
       ],
@@ -106,9 +120,9 @@ export class BookingSlotsScreenPage implements OnInit {
     await alert.present();
   }
 
-  scheduleBooking() {
+  scheduleBooking(isForReview: boolean) {
 
-    this.schedulerService.scheduleBooking(this.consultationService.selectedConsultationPurposeId, this.filteredBookingSlots[this.selectedSlotIndex].slotId).subscribe(
+    this.schedulerService.scheduleBooking(this.consultationService.selectedConsultationPurposeId, this.filteredBookingSlots[this.selectedSlotIndex].slotId, isForReview).subscribe(
       response => {
         this.navController.pop()
         this.router.navigate(['/booking-screen/' + this.filteredBookingSlots[this.selectedSlotIndex].slotId])

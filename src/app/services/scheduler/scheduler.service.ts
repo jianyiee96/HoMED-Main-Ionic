@@ -33,12 +33,13 @@ export class SchedulerService {
     )
   }
 
-  scheduleBooking(consultationPurposeId: number, bookingSlotId: number) {
+  scheduleBooking(consultationPurposeId: number, bookingSlotId: number, isForReview: boolean) {
     let scheduleBookingReq = {
       "servicemanId": this.sessionService.getCurrentServiceman().servicemanId,
       "consultationPurposeId": consultationPurposeId,
       "bookingSlotId": bookingSlotId,
       "bookingComment": this.reasonForBooking,
+      "isForReview": isForReview,
     }
 
     return this.httpClient.post<any>(this.baseUrl + "/scheduleBooking", scheduleBookingReq, this.sessionService.getSecuredHttpOptions()).pipe(

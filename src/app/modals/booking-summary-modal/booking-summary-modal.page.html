@@ -29,6 +29,17 @@
         </ion-col>
       </ion-row>
 
+      <h6 *ngIf="booking.isForReview">
+        <ion-row>
+          <ion-col size="0.8">
+            <ion-icon name="alert-circle-outline" style="vertical-align: bottom;"></ion-icon>
+          </ion-col>
+          <ion-col style="color: #00416d;">
+            This consultation has been indicated to be considered for a medical review.
+          </ion-col>
+        </ion-row>
+      </h6>
+
       <ion-row *ngIf="booking.bookingComment">
         <ion-col size=5>
           <ion-text><b>Booking Comment</b>:</ion-text>
