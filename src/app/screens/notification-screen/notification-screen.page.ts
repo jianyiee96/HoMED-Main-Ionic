@@ -54,7 +54,7 @@ export class NotificationScreenPage implements OnInit {
           var day = nd.getDay(), diff = nd.getDate() - 15
           var n1date = new Date(nd.setDate(diff))
           n3 = new Notification(3, n1date, `Important News`, `Baby Kids Cartoon School Drinking Water Straw Bottle Sippy Suction Cup.
-          `, true, true, n.serviceman)
+          `, false, true, n.serviceman)
         })
 
         // this.allNotifications.push(n2) // for testing thisWeek notifs
@@ -126,10 +126,8 @@ export class NotificationScreenPage implements OnInit {
       if (this.isDateToday(n.notificationDate)) {
         this.todayNotifications.push(n)
       } else if (this.isDateInThisWeek(n.notificationDate)) {
-        console.log(`in`);
         this.thisWeekNotifications.push(n)
       } else {
-        console.log(`oof`);
         this.earlierNotifications.push(n)
       }
 

@@ -25,11 +25,14 @@
         <ion-label>
           <h2 *ngIf="!n.isRead"><b>{{n.title}}</b></h2>
           <h2 *ngIf="n.isRead">{{n.title}}</h2>
-          <p>{{n.notificationDate | date:'dd/MM/yyyy'}}</p>
+          <p>{{n.notificationDate | date:'dd/MM/yyyy | HH:mm'}}</p>
           <h3>{{n.message}}</h3>
         </ion-label>
-        <ion-note slot="end">
-          {{n.notificationDate | date:'HH:mm'}}
+        <ion-note slot="end" *ngIf="n.isRead">
+          <ion-icon name="mail-open-outline" style="font-size: 250%;"></ion-icon>
+        </ion-note>
+        <ion-note slot="end" *ngIf="!n.isRead">
+          <ion-icon name="mail-outline" style="font-size: 250%;"></ion-icon>
         </ion-note>
       </ion-item>
 
@@ -50,11 +53,14 @@
         <ion-label>
           <h2 *ngIf="!n.isRead"><b>{{n.title}}</b></h2>
           <h2 *ngIf="n.isRead">{{n.title}}</h2>
-          <p>{{n.notificationDate | date:'dd/MM/yyyy'}}</p>
+          <p>{{n.notificationDate | date:'dd/MM/yyyy | HH:mm'}}</p>
           <h3>{{n.message}}</h3>
         </ion-label>
-        <ion-note slot="end">
-          {{n.notificationDate | date:'HH:mm'}}
+        <ion-note slot="end" *ngIf="n.isRead">
+          <ion-icon name="mail-open-outline" style="font-size: 250%;"></ion-icon>
+        </ion-note>
+        <ion-note slot="end" *ngIf="!n.isRead">
+          <ion-icon name="mail-outline" style="font-size: 250%;"></ion-icon>
         </ion-note>
       </ion-item>
 
@@ -75,11 +81,14 @@
         <ion-label>
           <h2 *ngIf="!n.isRead"><b>{{n.title}}</b></h2>
           <h2 *ngIf="n.isRead">{{n.title}}</h2>
-          <p>{{n.notificationDate | date:'dd/MM/yyyy'}}</p>
+          <p>{{n.notificationDate | date:'dd/MM/yyyy | HH:mm'}}</p>
           <h3>{{n.message}}</h3>
         </ion-label>
-        <ion-note slot="end">
-          {{n.notificationDate | date:'HH:mm'}}
+        <ion-note slot="end" *ngIf="n.isRead">
+          <ion-icon name="mail-open-outline" style="font-size: 250%;"></ion-icon>
+        </ion-note>
+        <ion-note slot="end" *ngIf="!n.isRead">
+          <ion-icon name="mail-outline" style="font-size: 250%;"></ion-icon>
         </ion-note>
       </ion-item>
 
