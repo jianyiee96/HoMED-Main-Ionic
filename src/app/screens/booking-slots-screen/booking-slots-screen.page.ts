@@ -84,7 +84,7 @@ export class BookingSlotsScreenPage implements OnInit {
       inputs: [
         {
           type: 'checkbox',
-          label: 'Medical Review',
+          label: 'Pre-Medical Board Review',
           value: true,
           cssClass: 'alertCheckboxInput',
         }

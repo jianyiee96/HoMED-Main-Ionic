@@ -42,7 +42,6 @@ export class NotificationScreenPage implements OnInit {
       response => {
         this.allNotifications = response.notifications
 
-
         this.allNotifications.forEach(n => {
           n.notificationDate = this.convertUTCStringToSingaporeDate(n.notificationDate)
 
@@ -60,6 +59,8 @@ export class NotificationScreenPage implements OnInit {
 
         // this.allNotifications.push(n2) // for testing thisWeek notifs
         // this.allNotifications.push(n3) // for testing earlier notifs
+
+        this.allNotifications.sort((x, y) => (y.notificationDate.getTime() - x.notificationDate.getTime()))
 
         this.assignToNotificationArrays()
       },
