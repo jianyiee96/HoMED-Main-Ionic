@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { interval } from 'rxjs';
+
 import { Booking } from 'src/app/classes/booking/booking';
 import { Consultation } from 'src/app/classes/consultation/consultation';
+import { Notification } from 'src/app/classes/notification/notification';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 import { ConsultationService } from 'src/app/services/consultation/consultation.service';
 import { FormService } from 'src/app/services/form/form.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 import { SessionService } from 'src/app/services/session/session.service';
 
@@ -21,22 +25,41 @@ export class HomeScreenPage implements OnInit {
 
   waitingConsultationToShow: Consultation
   positionInQueueToShow: number
-  taskCount: number
   upcomingBooking: Booking
+  taskCount: number
+  unreadNotificationsCount: number
 
+  pollInterval: number
   showLoading: boolean = false
 
   constructor(
     private sessionService: SessionService,
     private schedulerService: SchedulerService,
     private consultationService: ConsultationService,
+    private notificationService: NotificationService,
     private formService: FormService,
     private router: Router
   ) {
   }
 
   ngOnInit() {
+    this.pollInterval = 3000
+
+    interval(this.pollInterval).subscribe(_ => {
+      this.checkForUnfetchedNotifications()
+    })
     this.serviceman = this.sessionService.getCurrentServiceman()
+  }
+
+  checkForUnfetchedNotifications() {
+    this.notificationService.hasUnfetchedNotifications().subscribe(
+      response => {
+        response.hasUnfetchedNotifications === true ? this.loadHomeContent() : null
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   ionViewWillEnter() {
@@ -113,6 +136,21 @@ export class HomeScreenPage implements OnInit {
       }
     )
 
+    this.notificationService.retrieveAllServicemanNotifications().subscribe(
+      response => {
+        this.unreadNotificationsCount = 0
+        let retrievedNotifications: Notification[] = response.notifications
+        retrievedNotifications.forEach(n => {
+          if (!n.isRead) {
+            this.unreadNotificationsCount++
+          }
+        })
+      },
+      error => {
+        console.log(error);
+      }
+    )
+
   }
 
   refreshQueueCard() {
@@ -165,6 +203,10 @@ export class HomeScreenPage implements OnInit {
 
   redirectToBookingsScreen() {
     this.router.navigate(['/booking-screen/' + this.upcomingBooking.bookingSlot.slotId])
+  }
+
+  redirectToNotificationsScreen() {
+    this.router.navigate(['/notification-screen'])
   }
 
   convertUTCStringToSingaporeDate(dateCreated) {

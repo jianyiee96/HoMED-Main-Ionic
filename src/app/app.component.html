@@ -2,7 +2,8 @@
 
   <ion-split-pane contentId="main-content">
 
-    <ion-menu contentId="main-content" type="overlay" *ngIf="sessionService.getIsLogin()">
+    <ion-menu contentId="main-content" type="overlay" *ngIf="sessionService.getIsLogin()"
+      (ionDidOpen)="loadNotifications()">
       <ion-content>
         <ion-list id="inbox-list">
 

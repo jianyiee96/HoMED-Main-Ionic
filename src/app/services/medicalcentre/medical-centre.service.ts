@@ -1,7 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { MedicalCentre } from 'src/app/classes/medical-centre/medical-centre';
 import { SessionService } from '../session/session.service';
 
