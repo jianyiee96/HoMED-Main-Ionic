@@ -16,6 +16,7 @@ export class Booking {
     bookingStatusEnum: BookingStatusEnum
     bookingComment: string
     cancellationComment: string
+    isForReview: boolean
 
     constructor(
         bookingId?: number,
@@ -27,6 +28,7 @@ export class Booking {
         bookingStatusEnum?: BookingStatusEnum,
         bookingComment?: string,
         cancellationComment?: string,
+        isForReview?: boolean
     ) {
 
         this.bookingId = bookingId
@@ -38,6 +40,7 @@ export class Booking {
         this.bookingStatusEnum = bookingStatusEnum
         this.bookingComment = bookingComment
         this.cancellationComment = cancellationComment
+        this.isForReview = isForReview
 
     }
 

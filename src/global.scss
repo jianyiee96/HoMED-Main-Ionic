@@ -54,9 +54,7 @@ ion-toolbar {
 }
 
 .selectBookingParamsAlert .alert-radio-label {
-    white-space: initial;
-    overflow: visible;
-    font-size: small;
+    white-space: normal !important;
 }
 
 .confirmBookingAlert {
@@ -76,6 +74,10 @@ ion-toolbar {
 .confirmBookingAlert .book-button {
     background-color: #00416d;
     color: whitesmoke;
+}
+
+.alertCheckboxInput .alert-checkbox-label {
+    white-space: normal !important;
 }
 
 .formInstanceAddedAlert {
