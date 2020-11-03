@@ -4,11 +4,8 @@ HoMED Ionic Client targeted for HomeTeam Servicemen.
 
 # Commands
 npm install
-ionic cordova plugin add cordova-plugin-fcm-with-dependecy-updated
-
-ionic cordova plugin add cordova-plugin-androidx-adapter
-
 ionic cordova prepare android
+
 ionic cordova run android -l
 
 # File Generation
