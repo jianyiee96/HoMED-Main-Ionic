@@ -11,6 +11,8 @@ import { FormService } from './services/form/form.service';
 import { NotificationService } from './services/notification/notification.service';
 import { Notification } from './classes/notification/notification';
 
+import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx/FCM';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -62,6 +64,7 @@ export class AppComponent implements OnInit {
     private formService: FormService,
     private timerService: TimerService,
     private notificationService: NotificationService,
+    private fcm: FCM,
   ) {
     this.initializeApp();
   }
@@ -70,6 +73,24 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.fcm.getToken().then(token => {
+        console.log(token);
+      });
+
+      this.fcm.onNotification().subscribe(data => {
+        console.log(data);
+        if (data.wasTapped) {
+          console.log('Received in background');
+        } else {
+          console.log('Received in foreground');
+        }
+      });
+
+      this.fcm.onTokenRefresh().subscribe(token => {
+        console.log(`TOKEN REFRESHED, NEW TOKEN: `);
+        console.log(token);
+      });
     });
   }
 
