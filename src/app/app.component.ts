@@ -8,6 +8,10 @@ import { SessionService } from './services/session/session.service';
 import { Serviceman } from './classes/serviceman/serviceman';
 import { TimerService } from './services/timer/timer.service';
 import { FormService } from './services/form/form.service';
+import { NotificationService } from './services/notification/notification.service';
+import { Notification } from './classes/notification/notification';
+
+import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx/FCM';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +19,8 @@ import { FormService } from './services/form/form.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  public notificationCount
 
   public selectedIndex
   public appPages = [
@@ -39,8 +45,8 @@ export class AppComponent implements OnInit {
       icon: 'git-network'
     },
     {
-      title: 'Inbox',
-      url: '/userFunctions/inbox',
+      title: `Notification`,
+      url: '/notification-screen',
       icon: 'mail'
     },
     {
@@ -56,7 +62,9 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private sessionService: SessionService,
     private formService: FormService,
-    private timerService: TimerService
+    private timerService: TimerService,
+    private notificationService: NotificationService,
+    private fcm: FCM,
   ) {
     this.initializeApp();
   }
@@ -75,6 +83,45 @@ export class AppComponent implements OnInit {
 
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+    }
+  }
+
+  loadNotifications() {
+    if (this.sessionService.getCurrentServiceman() != null) {
+      this.notificationService.retrieveAllServicemanNotifications().subscribe(
+        response => {
+          this.notificationCount = 0
+          let retrievedNotifications: Notification[] = response.notifications
+          retrievedNotifications.forEach(n => {
+            if (!n.isRead) {
+              this.notificationCount++
+            }
+          })
+          this.updateNotificationCount(this.notificationCount)
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  }
+
+  updateNotificationCount(notificationCount: number) {
+    if (notificationCount > 1) {
+
+      this.appPages[4].title = `${this.notificationCount} Notifications`
+      this.appPages[4].icon = `mail-unread`
+
+    } else if (notificationCount === 1) {
+
+      this.appPages[4].title = `${this.notificationCount} Notification`
+      this.appPages[4].icon = `mail-unread`
+
+    } else if (notificationCount === 0) {
+
+      this.appPages[4].title = `Notification`
+      this.appPages[4].icon = `mail`
+
     }
   }
 

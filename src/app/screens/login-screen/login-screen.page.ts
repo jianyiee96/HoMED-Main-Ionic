@@ -9,6 +9,8 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 import { TimerService } from 'src/app/services/timer/timer.service'
 
+import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx/FCM';
+
 @Component({
   selector: 'app-login-screen',
   templateUrl: './login-screen.page.html',
@@ -35,7 +37,9 @@ export class LoginScreenPage implements OnInit {
     private sessionService: SessionService,
     private timerService: TimerService,
     private animationController: AnimationController,
-    public alertController: AlertController,) {
+    public alertController: AlertController,
+    private fcm: FCM
+  ) {
   }
 
   ngOnInit() {
@@ -69,6 +73,33 @@ export class LoginScreenPage implements OnInit {
               this.sessionService.setCurrentServiceman(this.serviceman)
               this.timerService.startPrimaryTimer()
               this.sessionService.setToken(this.serviceman.token)
+
+              this.fcm.getToken().then(token => {
+                console.log(token);
+                this.servicemanService.assignFcmToken(token).subscribe(
+                  response => {
+                    console.log(response);
+                  },
+                  error => {
+                    console.log(error);
+                  }
+                )
+              });
+
+              this.fcm.onNotification().subscribe(data => {
+                console.log(data);
+                if (data.wasTapped) {
+                  console.log('Received in background');
+                } else {
+                  console.log('Received in foreground');
+                }
+              });
+
+              this.fcm.onTokenRefresh().subscribe(token => {
+                console.log(`TOKEN REFRESHED, NEW TOKEN: `);
+                console.log(token);
+              });
+
               this.router.navigate(['/home-screen'])
             } else {
               this.activateAccountPrompt()

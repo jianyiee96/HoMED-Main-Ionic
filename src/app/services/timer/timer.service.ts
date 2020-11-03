@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { BnNgIdleService } from 'bn-ng-idle';
+import { ServicemanService } from '../serviceman/serviceman.service';
 import { SessionService } from '../session/session.service';
 
 const PRIMARY_TIMER_SEC = 60 * 4
@@ -20,6 +21,7 @@ export class TimerService {
   constructor(
     private alertController: AlertController,
     private sessionService: SessionService,
+    private servicemanService: ServicemanService,
     private modalController: ModalController,
     private router: Router
   ) { }
@@ -115,6 +117,14 @@ export class TimerService {
   }
 
   logoutUser() {
+    this.servicemanService.unassignFcmToken().subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    )
     this.stopAllTimer()
     this.sessionService.setIsLogin(false)
     this.sessionService.setCurrentServiceman(null)

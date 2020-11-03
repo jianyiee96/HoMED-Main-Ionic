@@ -99,6 +99,16 @@ const routes: Routes = [
     loadChildren: () => import('./screens/completed-consultations-screen/completed-consultations-screen.module').then(m => m.CompletedConsultationsScreenPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'notification-screen',
+    loadChildren: () => import('./screens/notification-screen/notification-screen.module').then(m => m.NotificationScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'view-notification-modal',
+    loadChildren: () => import('./modals/view-notification-modal/view-notification-modal.module').then(m => m.ViewNotificationModalPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

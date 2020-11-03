@@ -255,6 +255,14 @@ export class AccountScreenPage implements OnInit {
   }
 
   logout() {
+    this.servicemanService.unassignFcmToken().subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    )
     this.timerService.stopAllTimer()
     this.sessionService.setIsLogin(false);
     this.sessionService.setCurrentServiceman(null);

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div>
+    <h1>{{notification.title}}</h1>
+  </div>
+
+  <div>
+    <ion-note>
+      {{notification.notificationDate | date:'dd/MM/yyyy HH:mm'}}
+    </ion-note>
+  </div>
+
+  <div>
+    <p style="white-space: pre-line;">{{notification.message}}</p>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar transparent no-border>
+    <ion-button (click)="deleteNotification()" expand="block" style="--background: #c93d06">Delete</ion-button>
+    <ion-button (click)="dismiss()" expand="block" style="--background: #00416d">Close</ion-button>
+  </ion-toolbar>
+</ion-footer>

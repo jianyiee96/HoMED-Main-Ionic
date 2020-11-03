@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "875797992735",
+    "firebase_url": "https://homed-ba2f8.firebaseio.com",
+    "project_id": "homed-ba2f8",
+    "storage_bucket": "homed-ba2f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875797992735:android:1940697d44a147b1450c2a",
+        "android_client_info": {
+          "package_name": "capstone.ionic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875797992735-8d7vk2d3rfi84lqog3upf3ugu63jgu0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFoFCQibz1MNFlHThudX2x9Wz3ZTHgulo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875797992735-8d7vk2d3rfi84lqog3upf3ugu63jgu0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
