@@ -73,24 +73,6 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      this.fcm.getToken().then(token => {
-        console.log(token);
-      });
-
-      this.fcm.onNotification().subscribe(data => {
-        console.log(data);
-        if (data.wasTapped) {
-          console.log('Received in background');
-        } else {
-          console.log('Received in foreground');
-        }
-      });
-
-      this.fcm.onTokenRefresh().subscribe(token => {
-        console.log(`TOKEN REFRESHED, NEW TOKEN: `);
-        console.log(token);
-      });
     });
   }
 

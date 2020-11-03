@@ -72,8 +72,29 @@ export class ServicemanService {
     let updateAccountReq = {
       "serviceman": accountToUpdate
     }
-    
+
     return this.httpClient.post<any>(this.baseUrl + "/updateServiceman", updateAccountReq, this.sessionService.getSecuredHttpOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  assignFcmToken(fcmToken: string) {
+    let assignFcmTokenReq = {
+      "servicemanId": this.sessionService.getCurrentServiceman().servicemanId,
+      "fcmToken": fcmToken
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/assignFcmToken", assignFcmTokenReq, this.sessionService.getSecuredHttpOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  unassignFcmToken() {
+    let unassignFcmTokenReq = {
+      "servicemanId": this.sessionService.getCurrentServiceman().servicemanId,
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/assignFcmToken", unassignFcmTokenReq, this.sessionService.getSecuredHttpOptions()).pipe(
       catchError(this.handleError)
     );
   }
