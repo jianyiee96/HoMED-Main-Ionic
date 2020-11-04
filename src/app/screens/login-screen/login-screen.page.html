@@ -3,7 +3,7 @@
   <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
 
     <img id="logo" src="../../assets/images/HoMED-logo.svg" alt="MHA-logo" height="100" width="230">
-    
+
     <h1 id="welcomeText">Welcome!</h1>
     <p id="welcomeSubText">Log in with your email to get started.</p>
 
@@ -49,24 +49,27 @@
 
       <ion-row>
         <ion-col>
-          <ion-button style="width: 150px;" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+          <ion-button style="width: 150px; --background: #00416d" type="submit" [disabled]="loginForm.invalid">Login
+          </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button style="width: 150px;" (click)="clear()">Clear</ion-button>
+          <ion-button style="width: 150px; --background: #00416d" (click)="clear()">Clear</ion-button>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-button style="width: 355px; --background: #00416d" (click)=forgetPasswordPrompt()>Forget Password
+          <ion-button style="width: 355px;" (click)=forgetPasswordPrompt()>
+            Forget Password
           </ion-button>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-button style="width: 355px; --background: #00416d; margin-top: 10px;" (click)=redirectToStartScreen()>
-            Back</ion-button>
+          <ion-button style="width: 355px; margin-top: 10px;" (click)=redirectToStartScreen()>
+            Back
+          </ion-button>
         </ion-col>
       </ion-row>
 
