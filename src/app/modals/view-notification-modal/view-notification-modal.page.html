@@ -24,7 +24,18 @@
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
-    <ion-button (click)="deleteNotification()" expand="block" style="--background: #c93d06">Delete</ion-button>
+    <ion-row>
+      <ion-col class="optionButtonCol">
+        <ion-button (click)="redirect()" [disabled]="true" style="--background: #f8bd7f; width: 190px;">
+          View
+        </ion-button>
+      </ion-col>
+      <ion-col class="optionButtonCol">
+        <ion-button (click)="deleteNotification()" style="--background: #c93d06; width: 190px;">
+          Delete
+        </ion-button>
+      </ion-col>
+    </ion-row>
     <ion-button (click)="dismiss()" expand="block" style="--background: #00416d">Close</ion-button>
   </ion-toolbar>
 </ion-footer>

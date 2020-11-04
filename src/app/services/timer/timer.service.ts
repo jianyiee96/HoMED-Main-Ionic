@@ -119,7 +119,7 @@ export class TimerService {
   logoutUser() {
     this.servicemanService.unassignFcmToken().subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
       },
       error => {
         console.log(error);

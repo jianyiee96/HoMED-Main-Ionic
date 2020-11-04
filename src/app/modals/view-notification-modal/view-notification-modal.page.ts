@@ -20,6 +20,10 @@ export class ViewNotificationModalPage implements OnInit {
   ngOnInit() {
   }
 
+  redirect() {
+    
+  }
+
   deleteNotification() {
     this.notificationService.deleteNotification(this.notification.notificationId).subscribe(
       response => {

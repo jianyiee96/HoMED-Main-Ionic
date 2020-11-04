@@ -74,31 +74,7 @@ export class LoginScreenPage implements OnInit {
               this.timerService.startPrimaryTimer()
               this.sessionService.setToken(this.serviceman.token)
 
-              this.fcm.getToken().then(token => {
-                console.log(token);
-                this.servicemanService.assignFcmToken(token).subscribe(
-                  response => {
-                    console.log(response);
-                  },
-                  error => {
-                    console.log(error);
-                  }
-                )
-              });
-
-              this.fcm.onNotification().subscribe(data => {
-                console.log(data);
-                if (data.wasTapped) {
-                  console.log('Received in background');
-                } else {
-                  console.log('Received in foreground');
-                }
-              });
-
-              this.fcm.onTokenRefresh().subscribe(token => {
-                console.log(`TOKEN REFRESHED, NEW TOKEN: `);
-                console.log(token);
-              });
+              this.fcmRegistration()
 
               this.router.navigate(['/home-screen'])
             } else {
@@ -116,6 +92,34 @@ export class LoginScreenPage implements OnInit {
 
     }
 
+  }
+
+  fcmRegistration() {
+    this.fcm.getToken().then(token => {
+      console.log(token);
+      this.servicemanService.assignFcmToken(token).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    });
+
+    this.fcm.onNotification().subscribe(data => {
+      console.log(data);
+      if (data.wasTapped) {
+        console.log('Received in background');
+      } else {
+        console.log('Received in foreground');
+      }
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token => {
+      console.log(`TOKEN REFRESHED, NEW TOKEN: `);
+      console.log(token);
+    });
   }
 
   async activateAccountPrompt() {

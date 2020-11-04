@@ -106,7 +106,7 @@
       <ion-row>
 
         <ion-col size="3">
-          <ion-card-title style=" font-size: 65px; color: whitesmoke; text-align: center;">{{taskCount}}
+          <ion-card-title style=" font-size: 59px; color: whitesmoke; text-align: center;">{{taskCount}}
           </ion-card-title>
         </ion-col>
         <ion-col>
@@ -133,17 +133,17 @@
       <ion-col size="4">
 
         <ion-icon *ngIf="unreadNotificationsCount > 0" name="mail-unread-sharp"
-          style="font-size: 700%; margin-left: 10%; color: aliceblue;"></ion-icon>
+          style="font-size: 700%; margin-left: 10%; color: whitesmoke;"></ion-icon>
         <ion-icon *ngIf="unreadNotificationsCount === 0" name="mail-open-sharp"
-          style="font-size: 700%; margin-left: 10%; color: aliceblue;"></ion-icon>
+          style="font-size: 700%; margin-left: 10%; color: whitesmoke;"></ion-icon>
 
       </ion-col>
 
       <ion-col>
 
-        <ion-row>
+        <ion-row style="align-items: center;">
           <ion-col size="3">
-            <ion-card-title style="font-size: 500%; color: whitesmoke;">
+            <ion-card-title style="font-size: 280%; color: whitesmoke;">
               {{unreadNotificationsCount}}
             </ion-card-title>
           </ion-col>

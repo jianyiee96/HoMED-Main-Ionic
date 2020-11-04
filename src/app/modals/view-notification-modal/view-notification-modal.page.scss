@@ -7,7 +7,7 @@ ion-content {
 }
 
 div {
-    margin-left: 5%;
+    margin-left: 3%;
 }
 
 ion-button {
@@ -15,4 +15,9 @@ ion-button {
     padding-right: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.optionButtonCol {
+    display: flex;
+    justify-content: center;
 }

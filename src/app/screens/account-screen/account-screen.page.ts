@@ -257,7 +257,7 @@ export class AccountScreenPage implements OnInit {
   logout() {
     this.servicemanService.unassignFcmToken().subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
       },
       error => {
         console.log(error);
