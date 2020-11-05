@@ -89,7 +89,7 @@ export class ViewSubmittedFormModalPage implements OnInit {
       text: 'Booking Summary',
       icon: 'document-text',
       handler: () => {
-        this.dismissAndRedirect(this.formInstance.booking.bookingSlot.slotId)
+        this.dismissAndRedirect(this.formInstance.booking.bookingId)
       }
     }, {
       text: 'Archive',
@@ -175,10 +175,10 @@ export class ViewSubmittedFormModalPage implements OnInit {
     })
   }
 
-  dismissAndRedirect(slotId: number) {
+  dismissAndRedirect(bookingId: number) {
     this.modalController.dismiss({
       'dismissed': true,
-      'slotId': slotId
+      'bookingId': bookingId
     });
   }
 

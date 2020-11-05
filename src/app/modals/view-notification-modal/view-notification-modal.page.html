@@ -26,7 +26,8 @@
   <ion-toolbar transparent no-border>
     <ion-row>
       <ion-col class="optionButtonCol">
-        <ion-button (click)="redirect()" [disabled]="true" style="--background: #495464; width: 190px;">
+        <ion-button (click)="redirect()" [disabled]="notification.dynamicId === undefined"
+          style="--background: #00416d; width: 190px;">
           View
         </ion-button>
       </ion-col>
@@ -36,6 +37,6 @@
         </ion-button>
       </ion-col>
     </ion-row>
-    <ion-button (click)="dismiss()" expand="block" style="--background: #00416d">Close</ion-button>
+    <ion-button (click)="dismiss()" expand="block" style="--background: #495464">Close</ion-button>
   </ion-toolbar>
 </ion-footer>

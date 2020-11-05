@@ -1,6 +1,6 @@
 export enum NotificationTypeEnum {
-    GENERAL,
-    BOOKING,
-    CONSULTATION,
-    FORM
+    GENERAL = "GENERAL",
+    BOOKING = "BOOKING",
+    CONSULTATION = "CONSULTATION",
+    FORM = "FORM",
 }

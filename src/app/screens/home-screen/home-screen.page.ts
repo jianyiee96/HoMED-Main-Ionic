@@ -208,7 +208,7 @@ export class HomeScreenPage implements OnInit {
   }
 
   redirectToBookingsScreen() {
-    this.router.navigate(['/booking-screen/' + this.upcomingBooking.bookingSlot.slotId])
+    this.router.navigate(['/booking-screen/' + this.upcomingBooking.bookingId])
   }
 
   redirectToNotificationsScreen() {

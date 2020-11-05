@@ -125,7 +125,7 @@ export class BookingSlotsScreenPage implements OnInit {
     this.schedulerService.scheduleBooking(this.consultationService.selectedConsultationPurposeId, this.filteredBookingSlots[this.selectedSlotIndex].slotId, isForReview).subscribe(
       response => {
         this.navController.pop()
-        this.router.navigate(['/booking-screen/' + this.filteredBookingSlots[this.selectedSlotIndex].slotId])
+        this.router.navigate(['/booking-screen/' + response.bookingId])
       },
       error => {
         console.log(error);
