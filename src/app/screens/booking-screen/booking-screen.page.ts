@@ -16,7 +16,7 @@ export class BookingScreenPage implements OnInit {
 
   isShown: boolean
 
-  passedSlotId: number
+  passedBookingId: number
 
   servicemanBookings: Booking[] = []
   servicemanBookingsToShow: Booking[] = []
@@ -40,12 +40,12 @@ export class BookingScreenPage implements OnInit {
 
   ionViewWillEnter() {
     this.isShown = true
-    this.passedSlotId = parseInt(this.activatedRoute.snapshot.paramMap.get('slotId'));
+    this.passedBookingId = parseInt(this.activatedRoute.snapshot.paramMap.get('bookingId'));
 
     if (this.displayModalAllowed) {
       // console.log(`displayModalAllowed was allowed`);
 
-      if (!isNaN(this.passedSlotId)) {
+      if (!isNaN(this.passedBookingId)) {
         this.displayModalAllowed = false
         this.retrieveAllServicemanBookings(true)
       }
@@ -78,7 +78,7 @@ export class BookingScreenPage implements OnInit {
 
         if (displayModal) {
           for (var idx = 0; idx < this.servicemanBookings.length; idx++) {
-            if (this.passedSlotId == this.servicemanBookings[idx].bookingSlot.slotId) {
+            if (this.passedBookingId == this.servicemanBookings[idx].bookingId) {
               this.presentBookingSummary(this.servicemanBookings[idx])
             }
           }

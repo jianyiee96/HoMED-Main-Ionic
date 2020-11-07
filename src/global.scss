@@ -26,11 +26,17 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 ion-toolbar {
-    --ion-background-color: #f5f1da;
+    --ion-background-color: #bbbfca;
+}
+
+.inAppToastStyle {
+    --background:#495464;
+    --color: whitesmoke;
+    --button-color: whitesmoke;
 }
 
 .activateAccountAlert {
-    --background: #e3dfc8;
+    --background: #D4D4D4;
     --backdrop-opacity: 0.7;
 }
 
@@ -39,7 +45,7 @@ ion-toolbar {
 }
 
 .activateAccountAlert .cancel-button {
-    background-color: #f8bd7f;
+    background-color: #495464;
     color: whitesmoke;
 }
 
@@ -49,16 +55,17 @@ ion-toolbar {
 }
 
 .selectBookingParamsAlert {
-    --background: #e3dfc8;
+    --background: #D4D4D4;
     --backdrop-opacity: 0.7;
 }
 
 .selectBookingParamsAlert .alert-radio-label {
     white-space: normal !important;
+    font-size: small;
 }
 
 .confirmBookingAlert {
-    --background: #e3dfc8;
+    --background: #D4D4D4;
     --backdrop-opacity: 0.7;
 }
 
@@ -67,7 +74,7 @@ ion-toolbar {
 }
 
 .confirmBookingAlert .cancel-button {
-    background-color: #f8bd7f;
+    background-color: #495464;
     color: whitesmoke;
 }
 
@@ -81,7 +88,7 @@ ion-toolbar {
 }
 
 .formInstanceAddedAlert {
-    --background: #e3dfc8;
+    --background: #D4D4D4;
     --backdrop-opacity: 0.7;
 }
 
@@ -95,7 +102,7 @@ ion-toolbar {
 }
 
 .homedThemeAlert {
-    --background: #e3dfc8;
+    --background: #D4D4D4;
     --backdrop-opacity: 0.7;
 }
 
@@ -104,7 +111,7 @@ ion-toolbar {
 }
 
 .homedThemeAlert .false-button {
-    background-color: #f8bd7f;
+    background-color: #495464;
     color: whitesmoke;
 }
 

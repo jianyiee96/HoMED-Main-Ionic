@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { ModalController } from '@ionic/angular';
-import { last } from 'rxjs/operators';
 
 import { Notification } from 'src/app/classes/notification/notification';
 import { ViewNotificationModalPage } from 'src/app/modals/view-notification-modal/view-notification-modal.page';
@@ -23,7 +24,8 @@ export class NotificationScreenPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private notificationService: NotificationService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -169,8 +171,19 @@ export class NotificationScreenPage implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then(_ => {
-      this.retrieveAllServicemanNotifications()
+    modal.onDidDismiss().then((value) => {
+      if (value.data["formInstanceId"] != null) {
+        this.router.navigate(["/form-screen/" + value.data["formInstanceId"]])
+      }
+      else if (value.data["bookingId"] != null) {
+        this.router.navigate(["/booking-screen/" + value.data["bookingId"]])
+      }
+      else if (value.data["consultationId"] != null) {
+        this.router.navigate(["/consultation-screen"])
+      }
+      else {
+        this.retrieveAllServicemanNotifications()
+      }
     })
 
     return await modal.present();

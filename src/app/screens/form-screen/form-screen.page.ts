@@ -75,8 +75,8 @@ export class FormScreenPage implements OnInit {
 
     modal.onDidDismiss().then((value) => {
 
-      if (value.data["slotId"] != null) {
-        this.router.navigate(['/booking-screen/' + value.data["slotId"]])
+      if (value.data["bookingId"] != null) {
+        this.router.navigate(['/booking-screen/' + value.data["bookingId"]])
       } else {
         this.retrieveAllServicemanFormInstances(false)
       }
@@ -95,8 +95,8 @@ export class FormScreenPage implements OnInit {
     });
 
     modal.onDidDismiss().then((value) => {
-      if (value.data["slotId"] != null) {
-        this.router.navigate(['/booking-screen/' + value.data["slotId"]])
+      if (value.data["bookingId"] != null) {
+        this.router.navigate(['/booking-screen/' + value.data["bookingId"]])
       } else {
         this.retrieveAllServicemanFormInstances(false)
       }

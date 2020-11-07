@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ModalController } from '@ionic/angular';
+
 import { Notification } from 'src/app/classes/notification/notification';
+import { NotificationTypeEnum } from 'src/app/classes/notificationtype-enum';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
@@ -14,10 +17,26 @@ export class ViewNotificationModalPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit() {
+  }
+
+  redirect() {
+    switch (this.notification.notificationTypeEnum) {
+      case NotificationTypeEnum.FORM:
+        this.dismissAndRedirectToForm(this.notification.dynamicId)
+        break;
+      case NotificationTypeEnum.BOOKING:
+        this.dismissAndRedirectToBooking(this.notification.dynamicId)
+        break;
+      case NotificationTypeEnum.CONSULTATION:
+        this.dismissAndRedirectToConsultation(this.notification.dynamicId)
+        break;
+      default:
+        break;
+    }
   }
 
   deleteNotification() {
@@ -34,6 +53,27 @@ export class ViewNotificationModalPage implements OnInit {
   dismiss() {
     this.modalController.dismiss({
       'dismissed': true
+    });
+  }
+
+  dismissAndRedirectToForm(formInstanceId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'formInstanceId': formInstanceId
+    });
+  }
+
+  dismissAndRedirectToBooking(bookingId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'bookingId': bookingId
+    });
+  }
+
+  dismissAndRedirectToConsultation(consultationId: number) {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'consultationId': consultationId
     });
   }
 

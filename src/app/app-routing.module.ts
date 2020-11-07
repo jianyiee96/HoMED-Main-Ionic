@@ -65,7 +65,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'booking-screen/:slotId',
+    path: 'booking-screen/:bookingId',
     loadChildren: () => import('./screens/booking-screen/booking-screen.module').then(m => m.BookingScreenPageModule),
     canActivate: [AuthGuard]
   },

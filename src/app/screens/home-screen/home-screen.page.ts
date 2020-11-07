@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { interval } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 
 import { Booking } from 'src/app/classes/booking/booking';
 import { Consultation } from 'src/app/classes/consultation/consultation';
@@ -32,6 +32,8 @@ export class HomeScreenPage implements OnInit {
   pollInterval: number
   showLoading: boolean = false
 
+  intervalSubscription: Subscription
+
   constructor(
     private sessionService: SessionService,
     private schedulerService: SchedulerService,
@@ -45,7 +47,7 @@ export class HomeScreenPage implements OnInit {
   ngOnInit() {
     this.pollInterval = 3000
 
-    interval(this.pollInterval).subscribe(_ => {
+    this.intervalSubscription = interval(this.pollInterval).subscribe(_ => {
       this.checkForUnfetchedNotifications()
     })
     this.serviceman = this.sessionService.getCurrentServiceman()
@@ -65,6 +67,10 @@ export class HomeScreenPage implements OnInit {
   ionViewWillEnter() {
     this.upcomingBooking = null
     this.loadHomeContent()
+  }
+
+  ionViewWillLeave() {
+    this.intervalSubscription.unsubscribe()
   }
 
   loadHomeContent() {
@@ -202,7 +208,7 @@ export class HomeScreenPage implements OnInit {
   }
 
   redirectToBookingsScreen() {
-    this.router.navigate(['/booking-screen/' + this.upcomingBooking.bookingSlot.slotId])
+    this.router.navigate(['/booking-screen/' + this.upcomingBooking.bookingId])
   }
 
   redirectToNotificationsScreen() {

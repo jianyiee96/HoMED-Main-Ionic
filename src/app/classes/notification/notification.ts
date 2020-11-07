@@ -1,3 +1,4 @@
+import { NotificationTypeEnum } from '../notificationtype-enum'
 import { Serviceman } from '../serviceman/serviceman'
 
 export class Notification {
@@ -9,6 +10,8 @@ export class Notification {
     isRead: boolean
     isFetched: boolean
     serviceman: Serviceman
+    dynamicId: number
+    notificationTypeEnum: NotificationTypeEnum
 
     constructor(
         notificationId?: number,
@@ -17,7 +20,9 @@ export class Notification {
         message?: string,
         isRead?: boolean,
         isFetched?: boolean,
-        serviceman?: Serviceman
+        serviceman?: Serviceman,
+        dynamicId?: number,
+        notificationTypeEnum?: NotificationTypeEnum,
     ) {
 
         this.notificationId = notificationId
@@ -27,6 +32,8 @@ export class Notification {
         this.isRead = isRead
         this.isFetched = isFetched
         this.serviceman = serviceman
+        this.dynamicId = dynamicId
+        this.notificationTypeEnum = notificationTypeEnum
 
     }
 

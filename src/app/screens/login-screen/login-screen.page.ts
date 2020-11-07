@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AlertController, Animation, AnimationController } from '@ionic/angular';
+import { AlertController, Animation, AnimationController, ToastController } from '@ionic/angular';
 
 import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
 import { SessionService } from 'src/app/services/session/session.service';
@@ -38,6 +38,7 @@ export class LoginScreenPage implements OnInit {
     private timerService: TimerService,
     private animationController: AnimationController,
     public alertController: AlertController,
+    private toastController: ToastController,
     private fcm: FCM
   ) {
   }
@@ -74,31 +75,7 @@ export class LoginScreenPage implements OnInit {
               this.timerService.startPrimaryTimer()
               this.sessionService.setToken(this.serviceman.token)
 
-              this.fcm.getToken().then(token => {
-                console.log(token);
-                this.servicemanService.assignFcmToken(token).subscribe(
-                  response => {
-                    console.log(response);
-                  },
-                  error => {
-                    console.log(error);
-                  }
-                )
-              });
-
-              this.fcm.onNotification().subscribe(data => {
-                console.log(data);
-                if (data.wasTapped) {
-                  console.log('Received in background');
-                } else {
-                  console.log('Received in foreground');
-                }
-              });
-
-              this.fcm.onTokenRefresh().subscribe(token => {
-                console.log(`TOKEN REFRESHED, NEW TOKEN: `);
-                console.log(token);
-              });
+              this.fcmRegistration()
 
               this.router.navigate(['/home-screen'])
             } else {
@@ -116,6 +93,55 @@ export class LoginScreenPage implements OnInit {
 
     }
 
+  }
+
+  fcmRegistration() {
+    this.fcm.getToken().then(token => {
+      console.log(token);
+      this.servicemanService.assignFcmToken(token).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    });
+
+    this.fcm.onNotification().subscribe(data => {
+      if (data.wasTapped) {
+        console.log('Received in background');
+      } else {
+        this.presentNewInAppNotification(data["title"])
+        console.log('Received in foreground');
+      }
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token => {
+      console.log(`TOKEN REFRESHED, NEW TOKEN: `);
+      console.log(token);
+    });
+  }
+
+  async presentNewInAppNotification(messageToDisplay: string) {
+    const toast = await this.toastController.create({
+      message: messageToDisplay,
+      cssClass: "inAppToastStyle",
+      duration: 3500,
+      position: "top",
+      mode: "ios",
+      buttons: [
+        {
+          side: 'end',
+          role: 'cancel',
+          text: 'View',
+          handler: () => {
+            this.router.navigate(['/notification-screen'])
+          }
+        }
+      ]
+    })
+    toast.present()
   }
 
   async activateAccountPrompt() {

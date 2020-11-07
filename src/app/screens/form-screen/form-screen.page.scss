@@ -1,9 +1,9 @@
 ion-content {
-    --ion-background-color:#e3dfc8;
+    --ion-background-color:#D4D4D4;
 }
 
 ion-card {
-    --background: #f5f1da;
+    --background: #bbbfca;
 }
 
 ion-card-title {
@@ -18,7 +18,7 @@ ion-card-subtitle {
 ion-button {
     padding-left: 15px;
     padding-right: 15px;
-    --background: #f8bd7f;
+    --background: #495464;
     font-size: x-large;
 }
 
@@ -29,7 +29,7 @@ ion-fab-button {
 .override-ion-button {
     padding-left: 0px;
     padding-right: 0px;
-    color: #f5f1da;
+    color: #bbbfca;
     --background: #00416d;
     font-size: small;
 }

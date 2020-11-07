@@ -3,11 +3,12 @@ ion-title {
 }
 
 ion-content {
-    --ion-background-color:#e3dfc8;
+    --ion-background-color:#D4D4D4;
 }
 
 div {
-    margin-left: 5%;
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
 ion-button {
@@ -15,4 +16,9 @@ ion-button {
     padding-right: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.optionButtonCol {
+    display: flex;
+    justify-content: center;
 }
