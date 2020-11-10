@@ -45,9 +45,19 @@ export class AppComponent implements OnInit {
       icon: 'git-network'
     },
     {
+      title: 'Medical Board',
+      url: '/medical-board-screen',
+      icon: 'clipboard'
+    },
+    {
       title: `Notification`,
       url: '/notification-screen',
       icon: 'mail'
+    },
+    {
+      title: `Medical Status`,
+      url: '/status-screen',
+      icon: 'analytics'
     },
     {
       title: 'Account',
@@ -109,18 +119,18 @@ export class AppComponent implements OnInit {
   updateNotificationCount(notificationCount: number) {
     if (notificationCount > 1) {
 
-      this.appPages[4].title = `${this.notificationCount} Notifications`
-      this.appPages[4].icon = `mail-unread`
+      this.appPages[5].title = `${this.notificationCount} Notifications`
+      this.appPages[5].icon = `mail-unread`
 
     } else if (notificationCount === 1) {
 
-      this.appPages[4].title = `${this.notificationCount} Notification`
-      this.appPages[4].icon = `mail-unread`
+      this.appPages[5].title = `${this.notificationCount} Notification`
+      this.appPages[5].icon = `mail-unread`
 
     } else if (notificationCount === 0) {
 
-      this.appPages[4].title = `Notification`
-      this.appPages[4].icon = `mail`
+      this.appPages[5].title = `Notification`
+      this.appPages[5].icon = `mail`
 
     }
   }

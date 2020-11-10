@@ -109,6 +109,21 @@ const routes: Routes = [
     loadChildren: () => import('./modals/view-notification-modal/view-notification-modal.module').then(m => m.ViewNotificationModalPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'medical-board-screen',
+    loadChildren: () => import('./screens/medical-board-screen/medical-board-screen.module').then( m => m.MedicalBoardScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'status-screen',
+    loadChildren: () => import('./screens/status-screen/status-screen.module').then( m => m.StatusScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'view-outcome-modal',
+    loadChildren: () => import('./modals/view-outcome-modal/view-outcome-modal.module').then( m => m.ViewOutcomeModalPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
