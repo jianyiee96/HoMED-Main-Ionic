@@ -4,6 +4,7 @@ HoMED Ionic Client targeted for HomeTeam Servicemen.
 
 # Commands
 npm install
+
 ionic cordova prepare android
 
 ionic cordova run android -l
