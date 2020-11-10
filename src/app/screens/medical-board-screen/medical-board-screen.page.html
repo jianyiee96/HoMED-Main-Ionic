@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Medical Board</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segmentModel" color="danger">
+    <ion-segment-button value="upcoming">
+      <ion-label>Upcoming</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="completed">
+      <ion-label>Completed</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="segmentModel === 'upcoming'">
+    <ion-card mode="ios" *ngFor="let mbcase of upcomingMedicalBoardCaseWrappers">
+
+      <ion-card-header>
+        <ion-card-title style="margin-left: 5px; font-size: x-large; color: #3d3d3d;">
+          Medical Board Case ID: {{mbcase.medicalBoardCase.medicalBoardCaseId}}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-item>
+        <ion-col style="margin-bottom: 10px;">
+          <ion-label>
+            <span style="font-weight: bold;">Status</span>:
+            <span style="color: #00416d;">{{mbcase.medicalBoardCase.medicalBoardCaseStatus}}</span>
+          </ion-label>
+          <ion-note style="color: black; font-size: small;"
+            *ngIf="mbcase.medicalBoardCase.medicalBoardCaseStatus == 'WAITING'">
+            This medical board case is still under scheduling by a medical staff member.
+          </ion-note>
+        </ion-col>
+      </ion-item>
+
+      <ion-item *ngIf="mbcase.medicalBoardCase.medicalBoardCaseStatus == 'SCHEDULED'">
+        <ion-label>
+          <ion-row>
+            <ion-col>
+              <span style="font-weight: bold;">Assigned Chairman</span>:
+            </ion-col>
+            <ion-col>
+              <span style="color: #00416d;">Dr {{mbcase.chairman}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="mbcase.medicalBoardCase.medicalBoardCaseStatus == 'SCHEDULED'">
+        <ion-col>
+          <ion-label style="margin-bottom: 10px;">
+            <span style="font-weight: bold;">Start Date</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'dd/MM/yyyy HH:mm'}}</span>
+          </ion-label>
+          <ion-label>
+            <span style="font-weight: bold;">End Date</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledEndDate | date:'dd/MM/yyyy HH:mm'}}</span>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+
+      <ion-item>
+        <ion-col *ngIf="mbcase.medicalBoardCase.medicalBoardType == 'ABSENCE'" style="margin-bottom: 10px;">
+          <ion-label>
+            <span style="font-weight: bold;">Type</span>:
+            <ion-chip color="tertiary">ABSENCE</ion-chip>
+          </ion-label>
+          <ion-note style="color: black; font-size: small;">
+            *NOTE: This is a <u>Medical Board in Absence Case</u>. You will not be present during the board for your
+            case.
+          </ion-note>
+        </ion-col>
+        <ion-col *ngIf="mbcase.medicalBoardCase.medicalBoardType == 'PRESENCE'" style="margin-bottom: 10px;">
+          <ion-label>
+            <span style="font-weight: bold;">Type</span>:
+            <ion-chip color="danger">PRESENCE</ion-chip>
+          </ion-label>
+          <ion-note style="color: black; font-size: small;">
+            *NOTE: This is a <u>Medical Board in Presence Case</u>. You are required to be present during the board for
+            your case.
+          </ion-note>
+        </ion-col>
+      </ion-item>
+
+    </ion-card>
+  </div>
+
+  <div *ngIf="segmentModel === 'completed'">
+    <ion-card mode='ios' *ngFor='let mbcase of completedMedicalBoardCaseWrappers'>
+
+      <ion-card-header>
+        <ion-card-title style="margin-left: 5px; font-size: x-large; color: #3d3d3d;">
+          Medical Board Case ID: {{mbcase.medicalBoardCase.medicalBoardCaseId}}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-item>
+        <ion-label>
+          <ion-row>
+            <ion-col>
+              <span style="font-weight: bold;">Assigned Chairman</span>:
+            </ion-col>
+            <ion-col>
+              <span style="color: #00416d;">Dr {{mbcase.chairman}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-col>
+          <ion-label style="margin-bottom: 10px;">
+            <span style="font-weight: bold;">Start Date</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'dd/MM/yyyy HH:mm'}}</span>
+          </ion-label>
+          <ion-label>
+            <span style="font-weight: bold;">End Date</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledEndDate | date:'dd/MM/yyyy HH:mm'}}</span>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+
+      <ion-item>
+        <ion-col *ngIf="mbcase.medicalBoardCase.medicalBoardType == 'ABSENCE'" style="margin-bottom: 10px;">
+          <ion-label>
+            <span style="font-weight: bold;">Type</span>:
+            <ion-chip color="tertiary">ABSENCE</ion-chip>
+          </ion-label>
+        </ion-col>
+        <ion-col *ngIf="mbcase.medicalBoardCase.medicalBoardType == 'PRESENCE'" style="margin-bottom: 10px;">
+          <ion-label>
+            <span style="font-weight: bold;">Type</span>:
+            <ion-chip color="danger">PRESENCE</ion-chip>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+
+      <ion-item>
+        <ion-col>
+          <ion-label style="margin-bottom: 10px;">
+            <ion-button slot="end" style="--background: #00416d;" (click)="presentViewOutcomeModal(mbcase)">View
+              Outcome
+            </ion-button>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+
+    </ion-card>
+  </div>
+
+</ion-content>

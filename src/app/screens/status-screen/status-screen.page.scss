@@ -1,0 +1,15 @@
+ion-content {
+    --ion-background-color:#D4D4D4;
+}
+
+ion-item {
+    --background: #a0a3ad
+}
+
+.pesCard {
+    height: 23%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    --background: linear-gradient(#182e50, #a0a3ad);
+}

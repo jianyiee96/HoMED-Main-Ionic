@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Medical Status</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card mode="ios" class="pesCard">
+    <ion-card-title>
+      <span style="color: whitesmoke;">
+        <ion-row>
+          <ion-col size="8">
+            Physical Employment Standard (PES)
+          </ion-col>
+          <ion-col style="font-size: 300%;">
+            B1
+          </ion-col>
+        </ion-row>
+      </span>
+    </ion-card-title>
+  </ion-card>
+
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segmentModel" color="tertiary">
+    <ion-segment-button value="activeStatuses">
+      <ion-label>Active Statuses</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="expiredStatuses">
+      <ion-label>Expired Statuses</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="segmentModel === 'activeStatuses'">
+    <ion-card mode="ios" *ngFor="let status of activeConditionStatusWrappers">
+
+      <ion-item >
+        <ion-icon name="bandage-outline" slot="start" ></ion-icon>
+        <ion-col size="4" >
+          <b>Status</b>:
+        </ion-col>
+        <ion-col >
+          {{status.conditionStatus.description}}
+        </ion-col>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+        <ion-col size="4">
+          <b>Validity</b>:
+        </ion-col>
+        <ion-col *ngIf="status.conditionStatus.statusEndDate !== undefined">
+          {{status.conditionStartDate}} - {{status.conditionStatus.statusEndDate}}
+        </ion-col>
+        <ion-col *ngIf="status.conditionStatus.statusEndDate === undefined">
+          PERMANENT
+        </ion-col>
+      </ion-item>
+
+    </ion-card>
+  </div>
+
+  <div *ngIf="segmentModel === 'expiredStatuses'">
+    <ion-card mode="ios" *ngFor="let status of expiredConditionStatusWrappers">
+
+      <ion-item>
+        <ion-icon name="bandage-outline" slot="start"></ion-icon>
+        <ion-col size="4">
+          <b>Status</b>:
+        </ion-col>
+        <ion-col>
+          {{status.conditionStatus.description}}
+        </ion-col>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-col size="4">
+          <b>Validity</b>:
+        </ion-col>
+        <ion-col>
+          EXPIRED
+        </ion-col>
+      </ion-item>
+
+    </ion-card>
+  </div>
+
+</ion-content>
