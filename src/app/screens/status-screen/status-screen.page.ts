@@ -36,14 +36,20 @@ export class StatusScreenPage implements OnInit {
           if (status.conditionStatus.statusEndDate !== undefined) {
             status.conditionStatus.statusEndDate = this.convertUTCStringToSingaporeDate(status.conditionStatus.statusEndDate)
 
-            if (this.checkIsStatusStillActive(status.conditionStatus.statusEndDate.getTime())) {
+            if (this.checkIsStatusStillActive(status.conditionStatus.statusEndDate.getTime()) && status.conditionStatus.isActive) {
               this.activeConditionStatusWrappers.push(status)
             } else {
               this.expiredConditionStatusWrappers.push(status)
             }
 
           } else {
-            this.activeConditionStatusWrappers.push(status)
+
+            if (status.conditionStatus.isActive) {
+              this.activeConditionStatusWrappers.push(status)
+            } else {
+              this.expiredConditionStatusWrappers.push(status)
+            }
+
           }
 
         })
