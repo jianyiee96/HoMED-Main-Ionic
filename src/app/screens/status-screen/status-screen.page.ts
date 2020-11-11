@@ -61,14 +61,14 @@ export class StatusScreenPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    console.log(this.segmentModel);
+    // console.log(this.segmentModel);
   }
 
   checkIsStatusStillActive(expiredDate: number) {
     let currentDate = new Date()
     let currentDateInNumbers = currentDate.getTime()
 
-    if (expiredDate < currentDateInNumbers) {
+    if (expiredDate > currentDateInNumbers) {
       return true
     }
     return false

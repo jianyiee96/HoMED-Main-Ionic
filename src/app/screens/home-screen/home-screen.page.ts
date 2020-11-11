@@ -5,10 +5,12 @@ import { interval, Subscription } from 'rxjs';
 
 import { Booking } from 'src/app/classes/booking/booking';
 import { Consultation } from 'src/app/classes/consultation/consultation';
+import { MedicalBoardCaseWrapper } from 'src/app/classes/medical-board-case-wrapper/medical-board-case-wrapper';
 import { Notification } from 'src/app/classes/notification/notification';
 import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 import { ConsultationService } from 'src/app/services/consultation/consultation.service';
 import { FormService } from 'src/app/services/form/form.service';
+import { MedicalBoardService } from 'src/app/services/medicalboard/medical-board.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 import { SessionService } from 'src/app/services/session/session.service';
@@ -25,6 +27,7 @@ export class HomeScreenPage implements OnInit {
 
   waitingConsultationToShow: Consultation
   positionInQueueToShow: number
+  upcomingMedicalBoard: MedicalBoardCaseWrapper
   upcomingBooking: Booking
   taskCount: number
   unreadNotificationsCount: number
@@ -36,6 +39,7 @@ export class HomeScreenPage implements OnInit {
 
   constructor(
     private sessionService: SessionService,
+    private medicalBoardService: MedicalBoardService,
     private schedulerService: SchedulerService,
     private consultationService: ConsultationService,
     private notificationService: NotificationService,
@@ -75,12 +79,31 @@ export class HomeScreenPage implements OnInit {
 
   loadHomeContent() {
 
+    this.medicalBoardService.retrieveAllServicemanMedicalBoardCases().subscribe(
+      response => {
+        var medicalBoardCaseWrappers: MedicalBoardCaseWrapper[] = response.medicalBoardCases
+
+        for (var idx = 0; idx < medicalBoardCaseWrappers.length; idx++) {
+          if (medicalBoardCaseWrappers[idx].medicalBoardCase.medicalBoardCaseStatus.toString() === "SCHEDULED") {
+            this.upcomingMedicalBoard = medicalBoardCaseWrappers[idx]
+            this.upcomingMedicalBoard.scheduledStartDate = this.convertUTCStringToSingaporeDate(this.upcomingMedicalBoard.scheduledStartDate)
+            this.upcomingMedicalBoard.scheduledEndDate = this.convertUTCStringToSingaporeDate(this.upcomingMedicalBoard.scheduledEndDate)
+            console.log(this.upcomingMedicalBoard);
+            break
+          }
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
+
     this.consultationService.retrieveServicemanConsultations().subscribe(
       response => {
         var consultations: Consultation[] = response.consultations
 
         for (var idx = 0; idx < consultations.length; idx++) {
-          if (consultations[idx].consultationStatusEnum.toString() == "WAITING") {
+          if (consultations[idx].consultationStatusEnum.toString() === "WAITING") {
             this.waitingConsultationToShow = consultations[idx]
 
             this.consultationService.retrieveConsultationQueuePosition(this.waitingConsultationToShow.consultationId).subscribe(
@@ -91,8 +114,11 @@ export class HomeScreenPage implements OnInit {
                 console.log(error);
               }
             )
-
             break
+          }
+          else if (consultations[idx].consultationStatusEnum.toString() == "ONGOING") {
+            this.waitingConsultationToShow = consultations[idx]
+            this.positionInQueueToShow = 0
           }
         }
       },
@@ -183,6 +209,12 @@ export class HomeScreenPage implements OnInit {
               }
             )
             break
+          } else if (consultations[idx].consultationStatusEnum.toString() == "ONGOING") {
+            hasWaiting = true
+            this.waitingConsultationToShow = consultations[idx]
+            this.positionInQueueToShow = 0
+            this.showLoading = false
+            break
           }
         }
 
@@ -201,6 +233,10 @@ export class HomeScreenPage implements OnInit {
   calculateQueueNumber(id: number) {
     var mod = id % 1000
     return ("000" + mod).slice(-3)
+  }
+
+  redirectToMedicalBoardScreen() {
+    this.router.navigate(['/medical-board-screen'])
   }
 
   redirectToFormsScreen() {

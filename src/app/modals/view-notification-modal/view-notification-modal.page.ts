@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
@@ -18,6 +19,7 @@ export class ViewNotificationModalPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,9 @@ export class ViewNotificationModalPage implements OnInit {
         break;
       case NotificationTypeEnum.CONSULTATION:
         this.dismissAndRedirectToConsultation(this.notification.dynamicId)
+        break;
+      case NotificationTypeEnum.MEDICAL_BOARD:
+        this.dismissAndRedirectToMedicalBoard(this.notification.dynamicId)
         break;
       default:
         break;
@@ -59,22 +64,35 @@ export class ViewNotificationModalPage implements OnInit {
   dismissAndRedirectToForm(formInstanceId: number) {
     this.modalController.dismiss({
       'dismissed': true,
-      'formInstanceId': formInstanceId
-    });
+    }).then(_ => {
+      this.router.navigate(["/form-screen/" + formInstanceId])
+    })
   }
 
   dismissAndRedirectToBooking(bookingId: number) {
     this.modalController.dismiss({
       'dismissed': true,
-      'bookingId': bookingId
-    });
+    }).then(_ => {
+      this.router.navigate(["/booking-screen/" + bookingId])
+    })
   }
 
   dismissAndRedirectToConsultation(consultationId: number) {
     this.modalController.dismiss({
       'dismissed': true,
-      'consultationId': consultationId
-    });
+    }).then(_ => {
+      this.router.navigate(["/consultation-screen/" + consultationId])
+    })
+  }
+
+  dismissAndRedirectToMedicalBoard(medicalBoardId: number) {
+    console.log(medicalBoardId);
+
+    this.modalController.dismiss({
+      'dismissed': true,
+    }).then(_ => {
+      this.router.navigate(["/medical-board-screen/" + medicalBoardId])
+    })
   }
 
   convertUTCStringToSingaporeDate(dateCreated) {

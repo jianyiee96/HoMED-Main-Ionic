@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Consultation } from 'src/app/classes/consultation/consultation';
 import { ConsultationService } from 'src/app/services/consultation/consultation.service';
@@ -11,17 +11,22 @@ import { ConsultationService } from 'src/app/services/consultation/consultation.
 })
 export class ConsultationScreenPage implements OnInit {
 
+  passedConsultationId: number
+
   consultations: Consultation[]
 
   constructor(
     private consultationService: ConsultationService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
+    this.passedConsultationId = parseInt(this.activatedRoute.snapshot.paramMap.get('consultationId'));
+
     this.consultationService.retrieveServicemanConsultations().subscribe(
       response => {
         this.consultations = response.consultations
@@ -33,12 +38,18 @@ export class ConsultationScreenPage implements OnInit {
         this.consultations.forEach(consultation => {
           if (consultation.consultationStatusEnum.toString() == "WAITING") {
             this.consultationService.waitingConsultation.push(consultation)
+            if (this.passedConsultationId === consultation.consultationId) {
+              this.redirectToWaitingConsultations()
+            }
           }
           else if (consultation.consultationStatusEnum.toString() == "ONGOING") {
             this.consultationService.ongoingConsultation.push(consultation)
           }
           else if (consultation.consultationStatusEnum.toString() == "COMPLETED") {
             this.consultationService.completedConsultation.push(consultation)
+            if (this.passedConsultationId === consultation.consultationId) {
+              this.redirectToCompletedConsultations()
+            }
           }
         })
       },

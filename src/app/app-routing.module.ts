@@ -90,6 +90,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'consultation-screen/:consultationId',
+    loadChildren: () => import('./screens/consultation-screen/consultation-screen.module').then(m => m.ConsultationScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'waiting-consultations-screen',
     loadChildren: () => import('./screens/waiting-consultations-screen/waiting-consultations-screen.module').then(m => m.WaitingConsultationsScreenPageModule),
     canActivate: [AuthGuard]
@@ -111,17 +116,22 @@ const routes: Routes = [
   },
   {
     path: 'medical-board-screen',
-    loadChildren: () => import('./screens/medical-board-screen/medical-board-screen.module').then( m => m.MedicalBoardScreenPageModule),
+    loadChildren: () => import('./screens/medical-board-screen/medical-board-screen.module').then(m => m.MedicalBoardScreenPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'medical-board-screen/:medicalBoardId',
+    loadChildren: () => import('./screens/medical-board-screen/medical-board-screen.module').then(m => m.MedicalBoardScreenPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'status-screen',
-    loadChildren: () => import('./screens/status-screen/status-screen.module').then( m => m.StatusScreenPageModule),
+    loadChildren: () => import('./screens/status-screen/status-screen.module').then(m => m.StatusScreenPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'view-outcome-modal',
-    loadChildren: () => import('./modals/view-outcome-modal/view-outcome-modal.module').then( m => m.ViewOutcomeModalPageModule),
+    loadChildren: () => import('./modals/view-outcome-modal/view-outcome-modal.module').then(m => m.ViewOutcomeModalPageModule),
     canActivate: [AuthGuard]
   },
 ];

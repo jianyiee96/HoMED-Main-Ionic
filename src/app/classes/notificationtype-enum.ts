@@ -3,4 +3,5 @@ export enum NotificationTypeEnum {
     BOOKING = "BOOKING",
     CONSULTATION = "CONSULTATION",
     FORM = "FORM",
+    MEDICAL_BOARD = "MEDICAL_BOARD"
 }

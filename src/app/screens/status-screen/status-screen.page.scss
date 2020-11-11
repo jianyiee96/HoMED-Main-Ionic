@@ -3,7 +3,11 @@ ion-content {
 }
 
 ion-item {
-    --background: #a0a3ad
+    --background: #414F68
+}
+
+ion-col, ion-icon{
+    color: #E9F7F7
 }
 
 .pesCard {
@@ -11,5 +15,13 @@ ion-item {
     display: flex; 
     align-items: center; 
     justify-content: center;
-    --background: linear-gradient(#182e50, #a0a3ad);
+    --background: linear-gradient(#a0a3ad, #182e50);
+}
+
+.zeroStatusesLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    font-style: oblique;
 }
