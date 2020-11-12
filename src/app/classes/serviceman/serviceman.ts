@@ -1,5 +1,6 @@
 import { BloodTypeEnum } from '../bloodtype-enum'
 import { GenderEnum } from '../gender-enum'
+import { PesStatusEnum } from '../pesstatus-enum'
 import { ServicemanRoleEnum } from '../servicemanrole-enum'
 
 export class Serviceman {
@@ -14,6 +15,7 @@ export class Serviceman {
     password: string
     address: Address
     isActivated: boolean
+    pesStatus: PesStatusEnum
     role: ServicemanRoleEnum
     token: string
 
@@ -28,6 +30,7 @@ export class Serviceman {
         email?: string,
         address?: Address,
         isActivated?: boolean,
+        pesStatus?: PesStatusEnum,
         role?: ServicemanRoleEnum,
         token?: string
     ) {
@@ -42,6 +45,7 @@ export class Serviceman {
         this.address = address
         this.email = email
         this.isActivated = isActivated
+        this.pesStatus = pesStatus
         this.role = role
         this.token = token
 
