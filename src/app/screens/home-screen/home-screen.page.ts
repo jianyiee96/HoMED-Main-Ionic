@@ -69,6 +69,7 @@ export class HomeScreenPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.upcomingMedicalBoard = null
     this.upcomingBooking = null
     this.loadHomeContent()
   }
