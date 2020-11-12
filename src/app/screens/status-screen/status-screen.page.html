@@ -17,7 +17,7 @@
             Physical Employment Standard (PES)
           </ion-col>
           <ion-col style="font-size: 300%;">
-            B1
+            {{currentServiceman?.pesStatus}}
           </ion-col>
         </ion-row>
       </span>
@@ -33,15 +33,24 @@
     </ion-segment-button>
   </ion-segment>
 
+  <div class="zeroStatusesLabel"
+    *ngIf="activeConditionStatusWrappers?.length === 0 && segmentModel === 'activeStatuses'">
+    <ion-text>You have no active statuses.</ion-text>
+  </div>
+  <div class="zeroStatusesLabel"
+    *ngIf="expiredConditionStatusWrappers?.length === 0 && segmentModel === 'expiredStatuses'">
+    <ion-text>You have no expired statuses.</ion-text>
+  </div>
+
   <div *ngIf="segmentModel === 'activeStatuses'">
     <ion-card mode="ios" *ngFor="let status of activeConditionStatusWrappers">
 
-      <ion-item >
-        <ion-icon name="bandage-outline" slot="start" ></ion-icon>
-        <ion-col size="4" >
+      <ion-item>
+        <ion-icon name="bandage-outline" slot="start"></ion-icon>
+        <ion-col size="4" style="color: #E9F7F7;">
           <b>Status</b>:
         </ion-col>
-        <ion-col >
+        <ion-col>
           {{status.conditionStatus.description}}
         </ion-col>
       </ion-item>
@@ -52,7 +61,8 @@
           <b>Validity</b>:
         </ion-col>
         <ion-col *ngIf="status.conditionStatus.statusEndDate !== undefined">
-          {{status.conditionStartDate}} - {{status.conditionStatus.statusEndDate}}
+          {{status.conditionStartDate | date:'dd/MM/yyyy'}} -
+          {{status.conditionStatus.statusEndDate | date:'dd/MM/yyyy'}}
         </ion-col>
         <ion-col *ngIf="status.conditionStatus.statusEndDate === undefined">
           PERMANENT

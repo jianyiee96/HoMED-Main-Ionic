@@ -78,6 +78,12 @@ export class ServicemanService {
     );
   }
 
+  retrieveServicemanDetails(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveServicemanDetails?servicemanId=" + this.sessionService.getCurrentServiceman().servicemanId, this.sessionService.getSecuredHttpOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   assignFcmToken(fcmToken: string) {
     let assignFcmTokenReq = {
       "servicemanId": this.sessionService.getCurrentServiceman().servicemanId,

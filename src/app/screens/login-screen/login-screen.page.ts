@@ -75,7 +75,11 @@ export class LoginScreenPage implements OnInit {
               this.timerService.startPrimaryTimer()
               this.sessionService.setToken(this.serviceman.token)
 
-              this.fcmRegistration()
+              try {
+                this.fcmRegistration()
+              } catch (error) {
+                console.error(`Failed to retrieve FCM Token, Ionic App will not be receiving push notifications and in-app banner notifications.`);
+              }
 
               this.router.navigate(['/home-screen'])
             } else {

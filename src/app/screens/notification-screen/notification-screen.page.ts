@@ -172,18 +172,7 @@ export class NotificationScreenPage implements OnInit {
     });
 
     modal.onDidDismiss().then((value) => {
-      if (value.data["formInstanceId"] != null) {
-        this.router.navigate(["/form-screen/" + value.data["formInstanceId"]])
-      }
-      else if (value.data["bookingId"] != null) {
-        this.router.navigate(["/booking-screen/" + value.data["bookingId"]])
-      }
-      else if (value.data["consultationId"] != null) {
-        this.router.navigate(["/consultation-screen"])
-      }
-      else {
-        this.retrieveAllServicemanNotifications()
-      }
+      this.retrieveAllServicemanNotifications()
     })
 
     return await modal.present();

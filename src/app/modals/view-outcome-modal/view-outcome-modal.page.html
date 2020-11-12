@@ -29,20 +29,32 @@
   <div class="sectionContent">
     <ion-grid>
 
-      <ion-row *ngFor="let status of medicalBoardCaseWrapper.conditionStatuses">
-        <ion-col>
-          <ion-row>
-            <ion-text><b>Status</b>: {{status.conditionStatus.description}}</ion-text>
-          </ion-row>
-          <ion-row *ngIf="status.conditionStatus.statusEndDate !== undefined">
-            <ion-text><b>Validity</b>: {{status.conditionStartDate | date:'dd/MM/yyyy'}} -
-              {{status.conditionStatus.statusEndDate | date:'dd/MM/yyyy'}}</ion-text>
-          </ion-row>
-          <ion-row *ngIf="status.conditionStatus.statusEndDate === undefined">
-            <ion-text><b>Validity</b>: PERMANENT</ion-text>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+      <div *ngIf="medicalBoardCaseWrapper.conditionStatuses.length > 0">
+        <ion-row *ngFor="let status of medicalBoardCaseWrapper.conditionStatuses">
+          <ion-col>
+            <ion-row>
+              <ion-text><b>Status</b>: {{status.conditionStatus.description}}</ion-text>
+            </ion-row>
+            <ion-row *ngIf="status.conditionStatus.statusEndDate !== undefined">
+              <ion-text><b>Validity</b>: {{status.conditionStartDate | date:'dd/MM/yyyy'}} -
+                {{status.conditionStatus.statusEndDate | date:'dd/MM/yyyy'}}</ion-text>
+            </ion-row>
+            <ion-row *ngIf="status.conditionStatus.statusEndDate === undefined">
+              <ion-text><b>Validity</b>: PERMANENT</ion-text>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div *ngIf="medicalBoardCaseWrapper.conditionStatuses.length === 0">
+        <ion-row>
+          <ion-col>
+            <ion-row>
+              <ion-text>No status update.</ion-text>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
 
     </ion-grid>
   </div>

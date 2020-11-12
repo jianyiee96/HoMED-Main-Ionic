@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ConditionStatusWrapper } from 'src/app/classes/medical-board-case-wrapper/medical-board-case-wrapper';
+import { Serviceman } from 'src/app/classes/serviceman/serviceman';
 import { MedicalBoardService } from 'src/app/services/medicalboard/medical-board.service';
+import { ServicemanService } from 'src/app/services/serviceman/serviceman.service';
+import { SessionService } from 'src/app/services/session/session.service';
 
 @Component({
   selector: 'app-status-screen',
@@ -15,14 +19,27 @@ export class StatusScreenPage implements OnInit {
 
   segmentModel = "activeStatuses"
 
+  currentServiceman: Serviceman
+
   constructor(
-    private medicalBoardService: MedicalBoardService
+    private medicalBoardService: MedicalBoardService,
+    private sessionService: SessionService,
+    private servicemanService: ServicemanService,
   ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
+    this.servicemanService.retrieveServicemanDetails().subscribe(
+      response => {
+        this.currentServiceman = response.serviceman
+        this.sessionService.setCurrentServiceman(this.currentServiceman)
+      },
+      error => {
+        console.log(error);
+      }
+    )
     this.medicalBoardService.retrieveAllServicemanStatuses().subscribe(
       response => {
         this.allConditionStatusWrappers = response.conditionStatuses
@@ -61,14 +78,14 @@ export class StatusScreenPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    console.log(this.segmentModel);
+    // console.log(this.segmentModel);
   }
 
   checkIsStatusStillActive(expiredDate: number) {
     let currentDate = new Date()
     let currentDateInNumbers = currentDate.getTime()
 
-    if (expiredDate < currentDateInNumbers) {
+    if (expiredDate > currentDateInNumbers) {
       return true
     }
     return false

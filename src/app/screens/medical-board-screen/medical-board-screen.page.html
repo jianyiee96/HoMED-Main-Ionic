@@ -18,6 +18,13 @@
     </ion-segment-button>
   </ion-segment>
 
+  <div class="zeroBoardsLabel" *ngIf="upcomingMedicalBoardCaseWrappers?.length === 0 && segmentModel === 'upcoming'">
+    <ion-text>You have no upcoming medical boards.</ion-text>
+  </div>
+  <div class="zeroBoardsLabel" *ngIf="completedMedicalBoardCaseWrappers?.length === 0 && segmentModel === 'completed'">
+    <ion-text>You have no completed medical boards.</ion-text>
+  </div>
+
   <div *ngIf="segmentModel === 'upcoming'">
     <ion-card mode="ios" *ngFor="let mbcase of upcomingMedicalBoardCaseWrappers">
 
@@ -56,12 +63,16 @@
       <ion-item *ngIf="mbcase.medicalBoardCase.medicalBoardCaseStatus == 'SCHEDULED'">
         <ion-col>
           <ion-label style="margin-bottom: 10px;">
-            <span style="font-weight: bold;">Start Date</span>:
-            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'dd/MM/yyyy HH:mm'}}</span>
+            <span style="font-weight: bold;">Date</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'dd/MM/yyyy'}}</span>
+          </ion-label>
+          <ion-label style="margin-bottom: 10px;">
+            <span style="font-weight: bold;">Start Time</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'HH:mm'}}</span>
           </ion-label>
           <ion-label>
-            <span style="font-weight: bold;">End Date</span>:
-            <span style="color: #00416d;">{{mbcase.scheduledEndDate | date:'dd/MM/yyyy HH:mm'}}</span>
+            <span style="font-weight: bold;">End Time</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledEndDate | date:'HH:mm'}}</span>
           </ion-label>
         </ion-col>
       </ion-item>
@@ -117,12 +128,16 @@
       <ion-item>
         <ion-col>
           <ion-label style="margin-bottom: 10px;">
-            <span style="font-weight: bold;">Start Date</span>:
-            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'dd/MM/yyyy HH:mm'}}</span>
+            <span style="font-weight: bold;">Date</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'dd/MM/yyyy'}}</span>
+          </ion-label>
+          <ion-label style="margin-bottom: 10px;">
+            <span style="font-weight: bold;">Start Time</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledStartDate | date:'HH:mm'}}</span>
           </ion-label>
           <ion-label>
-            <span style="font-weight: bold;">End Date</span>:
-            <span style="color: #00416d;">{{mbcase.scheduledEndDate | date:'dd/MM/yyyy HH:mm'}}</span>
+            <span style="font-weight: bold;">End Time</span>:
+            <span style="color: #00416d;">{{mbcase.scheduledEndDate | date:'HH:mm'}}</span>
           </ion-label>
         </ion-col>
       </ion-item>
