@@ -22,12 +22,11 @@
 
 </ion-content>
 
-<ion-footer class="ion-no-border">
+<ion-footer class="ion-no-border" *ngIf="notification.dynamicId !== undefined">
   <ion-toolbar transparent no-border>
     <ion-row>
       <ion-col class="optionButtonCol">
-        <ion-button (click)="redirect()" [disabled]="notification.dynamicId === undefined"
-          style="--background: #00416d; width: 190px;">
+        <ion-button (click)="redirect()" style="--background: #00416d; width: 190px;">
           View
         </ion-button>
       </ion-col>
@@ -37,6 +36,15 @@
         </ion-button>
       </ion-col>
     </ion-row>
+    <ion-button (click)="dismiss()" expand="block" style="--background: #495464">Close</ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer class="ion-no-border" *ngIf="notification.dynamicId === undefined">
+  <ion-toolbar transparent no-border>
+    <ion-button (click)="deleteNotification()" expand="block" style="--background: #c93d06;">
+      Delete
+    </ion-button>
     <ion-button (click)="dismiss()" expand="block" style="--background: #495464">Close</ion-button>
   </ion-toolbar>
 </ion-footer>

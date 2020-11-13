@@ -9,6 +9,10 @@
 
 <ion-content fullscreen [scrollEvents]="true" (ionScroll)="scrollHandler($event)" (ionScrollEnd)="scrollStop($event)">
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="zeroNotificationsLabel" *ngIf="allNotifications?.length === 0">
     <ion-text>You have zero notifications.</ion-text>
   </div>

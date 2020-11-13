@@ -91,13 +91,9 @@
 
           <ion-col>
             <ion-card-title style="font-size: large; margin-top: 10px; margin-left: 5px; margin-bottom: 10px;">
-              <ion-card-subtitle style="color: #0c1a33;">Start Time:</ion-card-subtitle>
+              <ion-card-subtitle style="color: #0c1a33;">Time:</ion-card-subtitle>
               <div style="color: whitesmoke; margin-bottom: 5%;">
                 {{upcomingMedicalBoard?.scheduledStartDate| date:'HH:mm'}}
-              </div>
-              <ion-card-subtitle style="color: #0c1a33;">End Time:</ion-card-subtitle>
-              <div style="color: whitesmoke;">
-                {{upcomingMedicalBoard?.scheduledEndDate| date:'HH:mm'}}
               </div>
             </ion-card-title>
           </ion-col>
@@ -188,7 +184,7 @@
 
         <ion-row style="align-items: center;">
           <ion-col size="3">
-            <ion-card-title style="font-size: 280%; color: whitesmoke;">
+            <ion-card-title style="font-size: 215%; color: whitesmoke; text-align: center;">
               {{unreadNotificationsCount}}
             </ion-card-title>
           </ion-col>
