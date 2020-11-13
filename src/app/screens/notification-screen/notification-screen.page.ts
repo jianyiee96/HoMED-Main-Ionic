@@ -36,6 +36,13 @@ export class NotificationScreenPage implements OnInit {
     this.retrieveAllServicemanNotifications()
   }
 
+  doRefresh(event) {
+    this.retrieveAllServicemanNotifications()
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
   retrieveAllServicemanNotifications() {
     var n2
     var n3
