@@ -138,7 +138,7 @@ export class BookingParamsScreenPage implements OnInit {
 
   redirectToBookingScreen() {
     this.navController.pop()
-    // this.router.navigate(["/booking-screen"])
+    this.router.navigate(["/booking-screen"])
   }
 
   convertUTCStringToSingaporeDate(dateCreated) {

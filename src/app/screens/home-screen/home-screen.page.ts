@@ -89,7 +89,6 @@ export class HomeScreenPage implements OnInit {
             this.upcomingMedicalBoard = medicalBoardCaseWrappers[idx]
             this.upcomingMedicalBoard.scheduledStartDate = this.convertUTCStringToSingaporeDate(this.upcomingMedicalBoard.scheduledStartDate)
             this.upcomingMedicalBoard.scheduledEndDate = this.convertUTCStringToSingaporeDate(this.upcomingMedicalBoard.scheduledEndDate)
-            console.log(this.upcomingMedicalBoard);
             break
           }
         }

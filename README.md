@@ -3,12 +3,13 @@
 HoMED Ionic Client targeted for HomeTeam Servicemen.
 
 # Commands
-npm install
+```bash
+npm install # Required Step
 
-ionic cordova prepare android
+ionic cordova prepare android # Required Step
 
-ionic cordova run android -l
-
+ionic cordova run android -l # To test on Android devices
+```
 # File Generation
 - When generating new page, append 'Screen' to name of page and apply Pascal Casing (e.g. StartScreen, LoginScreen)
 ```bash
