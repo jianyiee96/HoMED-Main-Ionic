@@ -1,15 +1,25 @@
-# HoMED-Main-Ionic
+# Project: HoMED-Main-Ionic
 
 HoMED Ionic Client targeted for HomeTeam Servicemen.
 
-# Commands
-npm install
+# Deployment Commands
+```bash
+npm install # Required Step
 
-ionic cordova prepare android
+ionic cordova prepare # Required Step
 
-ionic cordova run android -l
+ionic cordova run android -l # To test on Android devices
+```
 
-# File Generation
+# Coding Conventions
+## Code
+- Organize import statements according to their respective frameworks. (e.g. @ionic, @angular, local directories)
+- As much as possible, place styling in .scss file rather than inline
+- Apart from import statements, avoid putting ';' when coding in TypeScript
+- Enforce access modifiers to be as secure as possible
+- Make sure image also has 'alt' text (preferably same as file name)
+
+## File Generation
 - When generating new page, append 'Screen' to name of page and apply Pascal Casing (e.g. StartScreen, LoginScreen)
 ```bash
 ionic g page screens/StartScreen
@@ -34,10 +44,3 @@ ionic g class classes/serviceman/Serviceman
 ```bash
 // create file with name: http.config.interceptor.ts
 ```
-# Coding Conventions
-
-- Organize import statements according to their respective frameworks. (e.g. @ionic, @angular, local directories)
-- As much as possible, place styling in .scss file rather than inline
-- Apart from import statements, avoid putting ';' when coding in TypeScript
-- Enforce access modifiers to be as secure as possible
-- Make sure image also has 'alt' text (preferably same as file name)

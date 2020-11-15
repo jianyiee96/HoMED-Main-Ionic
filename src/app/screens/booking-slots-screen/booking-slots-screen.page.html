@@ -29,7 +29,7 @@
     <ion-item *ngFor="let bs of filteredBookingSlots; let i = index" style="margin: 5%;">
 
       <ion-label>{{bs.startDateTime | date:'HH:mm'}} - {{bs.endDateTime | date:'HH:mm'}}</ion-label>
-      <ion-radio slot="end" color="warning" value="{{i}}" [disabled]="bs.booking != null"></ion-radio>
+      <ion-radio slot="end" color="tertiary" value="{{i}}" [disabled]="bs.booking != null"></ion-radio>
 
     </ion-item>
   </ion-radio-group>

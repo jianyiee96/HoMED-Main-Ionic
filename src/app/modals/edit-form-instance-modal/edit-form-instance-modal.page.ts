@@ -178,13 +178,13 @@ export class EditFormInstanceModalPage implements OnInit {
       })
     }
 
-    // options.push({
-    //   text: 'Save',
-    //   icon: 'save',
-    //   handler: () => {
-    //     this.update(form)
-    //   }
-    // })
+    options.push({
+      text: 'Save',
+      icon: 'save',
+      handler: () => {
+        this.update(form)
+      }
+    })
 
     if (this.formInstance.booking != null) {
       options.push(
