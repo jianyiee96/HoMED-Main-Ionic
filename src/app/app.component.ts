@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private sessionService: SessionService,
+    public sessionService: SessionService,
     private formService: FormService,
     private timerService: TimerService,
     private notificationService: NotificationService,

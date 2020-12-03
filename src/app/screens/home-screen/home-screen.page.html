@@ -78,11 +78,11 @@
           <ion-col style="align-self: center;">
             <ion-card-title style="font-size: large; margin-top: 10px; margin-left: 5px; margin-bottom: 10px;">
               <ion-card-subtitle style="color: #0c1a33;">Presence:</ion-card-subtitle>
-              <span *ngIf="upcomingMedicalBoard.medicalBoardCase.medicalBoardType === 'PRESENCE'"
+              <span *ngIf="upcomingMedicalBoard.medicalBoardCase.medicalBoardType.toString() === 'PRESENCE'"
                 style="color: whitesmoke;">
                 <u>REQUIRED</u>
               </span>
-              <span *ngIf="upcomingMedicalBoard.medicalBoardCase.medicalBoardType === 'ABSENCE'"
+              <span *ngIf="upcomingMedicalBoard.medicalBoardCase.medicalBoardType.toString() === 'ABSENCE'"
                 style="color: whitesmoke;">
                 <u>NOT REQUIRED</u>
               </span>

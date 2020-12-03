@@ -144,13 +144,13 @@
   <hr class="hr">
 
   <div class="sectionHeader" *ngIf="booking.formInstances.length > 0 ">
-    <div *ngIf="booking.bookingStatusEnum == 'UPCOMING'">
+    <div *ngIf="booking.bookingStatusEnum.toString() == 'UPCOMING'">
       <h2><u>REQUIRED FORMS</u></h2>
       <h6 style="color: red;">
         NOTE: You are required to fill up <B><u>all required forms</u></B> before your consultation.
       </h6>
     </div>
-    <div *ngIf="booking.bookingStatusEnum != 'UPCOMING'">
+    <div *ngIf="booking.bookingStatusEnum.toString() != 'UPCOMING'">
       <h2><u>ATTACHED FORMS</u></h2>
     </div>
   </div>
@@ -173,7 +173,7 @@
 
 <ion-footer class="ion-no-border">
   <ion-toolbar transparent no-border>
-    <ion-button *ngIf="booking.bookingStatusEnum == 'UPCOMING'" (click)="invokeCancelBooking()" expand="block"
+    <ion-button *ngIf="booking.bookingStatusEnum.toString() == 'UPCOMING'" (click)="invokeCancelBooking()" expand="block"
       style="--background: #c93d06">Cancel Booking</ion-button>
     <ion-button (click)="dismiss()" expand="block" style="--background: #00416d">Close</ion-button>
   </ion-toolbar>
